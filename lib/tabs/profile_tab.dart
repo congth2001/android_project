@@ -1,69 +1,113 @@
 import 'package:fakebook/widgets/separator_widget.dart';
+import 'package:fakebook/widgets/write_something_widget.dart';
 import 'package:flutter/material.dart';
 
 class ProfileTab extends StatelessWidget {
+  const ProfileTab({super.key});
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Container(
-            height: 360.0,
+            height: 380.0,
             child: Stack(
               children: <Widget>[
                 Container(
-                  margin: EdgeInsets.symmetric(horizontal: 15.0, vertical: 15.0),
-                  height: 180.0,
-                  decoration: BoxDecoration(
+                  height: 220.0,
+                  decoration: const BoxDecoration(
                     image: DecorationImage(image: AssetImage('assets/cover.jpg'), fit: BoxFit.cover),
-                    borderRadius: BorderRadius.circular(10.0)
                   ),
                 ),
 
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: <Widget>[
-                    CircleAvatar(
-                      backgroundImage: AssetImage('assets/Mike Tyler.jpg'),
-                      radius: 70.0,
-                    ),
-                    SizedBox(height: 20.0),
-                    Text('Mike Tyler', style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold)),
-                    SizedBox(height: 20.0),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        Container(
-                          height: 40.0,
-                          width: MediaQuery.of(context).size.width - 80,
-                          decoration: BoxDecoration(
-                            color: Colors.blue,
-                            borderRadius: BorderRadius.circular(5.0)
-                          ),
-                          child: Center(child: Text('Add to Story', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16.0))),
+                Padding(
+                  padding: const EdgeInsets.only(left: 10.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: <Widget>[
+                      Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.white, width: 5),
+                          borderRadius: const BorderRadius.all(Radius.circular(100)),
                         ),
-                        Container(
-                          height: 40.0,
-                          width: 45.0,
-                          decoration: BoxDecoration(
-                            color: Colors.grey[300],
-                            borderRadius: BorderRadius.circular(5.0)
-                          ),
-                          child: Icon(Icons.more_horiz),
-                        )
-                      ],
-                    )
-                  ],
+                        child: const CircleAvatar(
+                          backgroundImage: AssetImage('assets/Mike Tyler.jpg'),
+                          radius: 80.0,
+                        ),
+                      ),
+                      const SizedBox(height: 10.0),
+                      const Padding(
+                        padding: EdgeInsets.only(left: 5),
+                        child: Text('Mike Tyler', style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.bold)),
+                      ),
+                      const SizedBox(height: 20.0),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 5),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            Container(
+                              height: 38.0,
+                              width: MediaQuery.of(context).size.width/2 - 48,
+                              decoration: BoxDecoration(
+                                color: Colors.blue[700],
+                                borderRadius: BorderRadius.circular(5.0)
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: const [
+                                  Icon(Icons.post_add, color: Colors.white),
+                                  Text(' Create', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16.0)),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(width: 10),
+                            Container(
+                              height: 38.0,
+                              width: MediaQuery.of(context).size.width/2 - 48,
+                              decoration: BoxDecoration(
+                                  color: Colors.grey[300],
+                                  borderRadius: BorderRadius.circular(5.0)
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: const [
+                                  Icon(Icons.edit, color: Colors.black),
+                                  Text(' Edit profile', style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16.0)),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(width: 10),
+                            Container(
+                              height: 38.0,
+                              width: 46.0,
+                              decoration: BoxDecoration(
+                                color: Colors.grey[300],
+                                borderRadius: BorderRadius.circular(5.0)
+                              ),
+                              child: Icon(Icons.more_horiz),
+                            )
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
                 )
               ],
             ),
           ),
 
+          const SizedBox(height: 15),
+          SeparatorWidget(),
+          const SizedBox(height: 25),
           Padding(
-            padding: const EdgeInsets.fromLTRB(15.0, 0.0, 15.0, 0.0),
-            child: Divider(height: 40.0),
+            padding: const EdgeInsets.only(left: 15),
+            child: Text('Details', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
           ),
-
+          const SizedBox(height: 10),
           Container(
             padding: EdgeInsets.symmetric(horizontal: 15.0),
             child: Column(
@@ -95,18 +139,18 @@ class ProfileTab extends StatelessWidget {
                 SizedBox(height: 15.0),
 
                 Container(
-                  height: 40.0,
+                  height: 35.0,
                   decoration: BoxDecoration(
-                    color: Colors.lightBlueAccent.withOpacity(0.25),
+                    color: Colors.blue[100]?.withOpacity(0.5),
                     borderRadius: BorderRadius.circular(5.0),
                   ),
-                  child: Center(child: Text('Edit Public Details', style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold, fontSize: 16.0))),
+                  child: Center(child: Text('Edit Public Details', style: TextStyle(color: Colors.blue[800], fontWeight: FontWeight.w500, fontSize: 16.0))),
                 ),
               ],
             ),
           ),
 
-          Divider(height: 40.0),
+          SizedBox(height: 20.0),
 
           Container(
             padding: EdgeInsets.symmetric(horizontal: 15.0),
@@ -119,12 +163,12 @@ class ProfileTab extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        Text('Friends', style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.bold)),
+                        Text('Friends', style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold)),
                         SizedBox(height: 6.0),
-                        Text('536 friends', style: TextStyle(fontSize: 16.0, color: Colors.grey[800])),
+                        Text('536 friends', style: TextStyle(fontSize: 16.0, color: Colors.grey[600])),
                       ],
                     ),
-                    Text('Find Friends', style: TextStyle(fontSize: 16.0, color: Colors.blue)),
+                    Text('Find Friends', style: TextStyle(fontSize: 16.0, color: Colors.blue[700])),
                   ],
                 ),
 
@@ -145,7 +189,7 @@ class ProfileTab extends StatelessWidget {
                             ),
                           ),
                           SizedBox(height: 5.0),
-                          Text('Samantha', style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold))
+                          Text('Samantha', style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w500))
                         ],
                       ),
                       Column(
@@ -160,7 +204,7 @@ class ProfileTab extends StatelessWidget {
                             ),
                           ),
                           SizedBox(height: 5.0),
-                          Text('Andrew', style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold))
+                          Text('Andrew', style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w500))
                         ],
                       ),
                       Column(
@@ -175,7 +219,7 @@ class ProfileTab extends StatelessWidget {
                             ),
                           ),
                           SizedBox(height: 5.0),
-                          Text('Sam Wilson', style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold))
+                          Text('Sam Wilson', style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w500))
                         ],
                       ),
                     ],
@@ -199,7 +243,7 @@ class ProfileTab extends StatelessWidget {
                             ),
                           ),
                           SizedBox(height: 5.0),
-                          Text('Steven', style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold))
+                          Text('Steven', style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w500))
                         ],
                       ),
                       Column(
@@ -214,7 +258,7 @@ class ProfileTab extends StatelessWidget {
                             ),
                           ),
                           SizedBox(height: 5.0),
-                          Text('Greg', style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold))
+                          Text('Greg', style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w500))
                         ],
                       ),
                       Column(
@@ -229,7 +273,7 @@ class ProfileTab extends StatelessWidget {
                             ),
                           ),
                           SizedBox(height: 5.0),
-                          Text('Andy', style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold))
+                          Text('Andy', style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w500))
                         ],
                       ),
                     ],
@@ -238,17 +282,114 @@ class ProfileTab extends StatelessWidget {
 
                 Container(
                   margin: EdgeInsets.symmetric(vertical: 15.0),
-                  height: 40.0,
+                  height: 35.0,
                   decoration: BoxDecoration(
                     color: Colors.grey[300],
                     borderRadius: BorderRadius.circular(5.0),
                   ),
-                  child: Center(child: Text('See All Friends', style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16.0))),
+                  child: Center(child: Text('See All Friends', style: TextStyle(color: Colors.black, fontWeight: FontWeight.w500, fontSize: 16.0))),
                 ),
               ],
             ),
           ),
-          SeparatorWidget()
+
+          SeparatorWidget(),
+
+          Container(
+            child: Column(
+              children: [
+                const SizedBox(height: 15),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text('Posts', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+                      Text('Filters', style: TextStyle(color: Colors.blue[700], fontSize: 16)),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 15),
+                WriteSomethingWidget(),
+                Container(
+                  margin: EdgeInsets.all(15),
+                  height: 35.0,
+                  decoration: BoxDecoration(
+                    color: Colors.grey[300],
+                    borderRadius: BorderRadius.circular(5.0),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      Icon(Icons.newspaper, color: Colors.black),
+                      Text(' Manage posts', style: TextStyle(color: Colors.black, fontWeight: FontWeight.w500, fontSize: 16.0)),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+
+          SeparatorWidget(),
+
+          Container(
+            padding: EdgeInsets.all(15),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children:[
+                Container(
+                  height: 35.0,
+                  width: MediaQuery.of(context).size.width/3 - 30,
+                  decoration: BoxDecoration(
+                      color: Colors.grey[300],
+                      borderRadius: BorderRadius.circular(25)
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      Icon(Icons.photo_library),
+                      Text(' Photos', style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16.0)),
+                    ],
+                  ),
+                ),
+                const SizedBox(width: 10),
+                Container(
+                  height: 35.0,
+                  width: MediaQuery.of(context).size.width/3 - 30,
+                  decoration: BoxDecoration(
+                      color: Colors.grey[300],
+                      borderRadius: BorderRadius.circular(25)
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      Icon(Icons.account_circle),
+                      Text(' Avatars', style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16.0)),
+                    ],
+                  ),
+                ),
+                const SizedBox(width: 10),
+                Container(
+                  height: 35.0,
+                  width: MediaQuery.of(context).size.width/3 - 40,
+                  decoration: BoxDecoration(
+                      color: Colors.grey[300],
+                      borderRadius: BorderRadius.circular(25)
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      Icon(Icons.music_note),
+                      Text('Music', style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16.0)),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+
+          SeparatorWidget(),
+
         ],
       )
     );
