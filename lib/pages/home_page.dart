@@ -1,6 +1,4 @@
 import 'package:fakebook/tabs/home_tab.dart';
-import 'package:fakebook/tabs/friends_tab.dart';
-import 'package:fakebook/tabs/profile_tab.dart';
 import 'package:fakebook/tabs/notifications_tab.dart';
 import 'package:fakebook/tabs/menu_tab.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +17,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(vsync: this, length: 5);
+    _tabController = TabController(vsync: this, length: 3);
   }
 
   @override
@@ -40,6 +38,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
             Text('facebook', style: TextStyle(color: Colors.blueAccent[400], fontSize: 27.0, fontWeight: FontWeight.bold)),
             const SizedBox(width: 165),
             MaterialButton(
+              elevation: 0,
               minWidth: 5,
               color: Colors.grey[200],
               shape: const CircleBorder(),
@@ -47,6 +46,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
               onPressed: () {},
             ),
             MaterialButton(
+              elevation: 0,
               minWidth: 5,
               color: Colors.grey[200],
               shape: const CircleBorder(),
@@ -56,7 +56,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
           ])
         ),
         backgroundColor: Colors.white,
-        elevation: 0.0,
+        elevation: 0.5,
         bottom: TabBar(
           indicatorColor: Colors.blueAccent,
           controller: _tabController,
@@ -64,8 +64,6 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
           labelColor: Colors.blueAccent,
           tabs: const [
             Tab(icon: Icon(Icons.home, size: 30.0)),
-            Tab(icon: Icon(Icons.people, size: 30.0)),
-            Tab(icon: Icon(Icons.account_circle, size: 30.0)),
             Tab(icon: Icon(Icons.notifications, size: 30.0)),
             Tab(icon: Icon(Icons.menu, size: 30.0))
           ],
@@ -73,10 +71,8 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
       ),
       body: TabBarView(
         controller: _tabController,
-        children: [
+        children: const [
           HomeTab(),
-          FriendsTab(),
-          ProfileTab(),
           NotificationsTab(),
           MenuTab()
         ]

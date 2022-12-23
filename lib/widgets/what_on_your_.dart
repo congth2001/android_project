@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../pages/profile_page.dart';
+
 class WriteSomethingWidget extends StatelessWidget {
   const WriteSomethingWidget({super.key});
 
@@ -9,28 +11,47 @@ class WriteSomethingWidget extends StatelessWidget {
       child: Column(
         children: <Widget>[
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
+            padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 10.0),
+            decoration: BoxDecoration(color: Colors.white),
             child: Row(
               //mainAxisAlignment: MainAxisAlignment.spaceAround,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                CircleAvatar(
-                  radius: 24.0,
-                  backgroundImage: AssetImage('assets/Mike Tyler.jpg'),
-                ),
-                SizedBox(width: 10.0),
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
-                  height: 40.0,
-                  width: MediaQuery.of(context).size.width/1.5,
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      width: 1.0,
-                      color: Colors.grey[400]!
-                    ),
-                    borderRadius: BorderRadius.circular(40.0)
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.white, // background
+                    elevation: 0,
+                    padding: EdgeInsets.only(left: -1)
                   ),
-                  child: Text("What's on your mind?"),
+                  child:CircleAvatar(
+                    radius: 24.0,
+                    backgroundImage: AssetImage('assets/Mike Tyler.jpg'),
+                  ),
+                  onPressed: () => {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const ProfilePage()),
+                    )
+                  },
+                ),
+                Container(
+                  width: MediaQuery.of(context).size.width/1.5,
+                  child: OutlinedButton(
+                    style: OutlinedButton.styleFrom(
+                      backgroundColor: Colors.white, // background
+                      foregroundColor: Colors.black,
+                      elevation: 0,
+                      side: BorderSide(color: Colors.grey.shade400),
+                      shape: const StadiumBorder(),
+                    ),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(" What's on your mind?", style: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w400)),
+                      ],
+                    ),
+                    onPressed: () => {},
+                  ),
                 ),
 
                 MaterialButton(

@@ -1,8 +1,7 @@
-import 'package:fakebook/widgets/write_something_widget.dart';
+import 'package:fakebook/widgets/what_on_your_.dart';
 import 'package:fakebook/widgets/separator_widget.dart';
 import 'package:fakebook/widgets/post_widget.dart';
 import 'package:fakebook/widgets/stories_widget.dart';
-import 'package:fakebook/widgets/online_widget.dart';
 import 'package:fakebook/models/post.dart';
 import 'package:flutter/material.dart';
 

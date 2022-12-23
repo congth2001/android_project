@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:fakebook/widgets/notification_widget.dart';
 import 'package:fakebook/models/user_notification.dart';
+
+import '../pages/friend_page.dart';
 class NotificationsTab extends StatelessWidget {
   const NotificationsTab({super.key});
 
@@ -26,6 +28,7 @@ class NotificationsTab extends StatelessWidget {
                   children: <Widget>[
                     MaterialButton(
                       onPressed: () {},
+                      elevation: 0,
                       color: Colors.grey[300],
                       shape: const CircleBorder(),
                       child: const Icon(Icons.search, color: Colors.black),
@@ -42,10 +45,16 @@ class NotificationsTab extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 const Text('Friend requests', style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold)),
-                Positioned(child:
-                  Padding(
-                    padding: const EdgeInsets.only(right: 10.0),
-                    child: Text('See All', style: TextStyle(color: Colors.blue[800])),
+                Padding(
+                  padding: const EdgeInsets.only(right: 10.0),
+                  child: MaterialButton(
+                    elevation: 0,
+                    child: Text('See All', style: TextStyle(color: Colors.blue[700], fontSize: 16)),
+                    onPressed: () => {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const FriendPage()),
+                    )},
                   )
                 )
               ],
@@ -53,7 +62,7 @@ class NotificationsTab extends StatelessWidget {
           ),
 
           Padding(
-            padding: const EdgeInsets.fromLTRB(15.0, 15.0, 0.0, 0.0),
+            padding: const EdgeInsets.only(left: 15.0),
             child: Row(
               children: [
                 Stack(
@@ -105,23 +114,21 @@ class NotificationsTab extends StatelessWidget {
                     Row(
                       children: <Widget>[
                         Container(
-                          padding: EdgeInsets.symmetric(horizontal: 35.0, vertical: 10.0),
-                          width: 138.0,
+                          padding: EdgeInsets.symmetric(horizontal: 35.0, vertical: 8.0),
                           decoration: BoxDecoration(
                               color: Colors.blue[700],
-                              borderRadius: BorderRadius.circular(5.0),
+                              borderRadius: BorderRadius.circular(5.0)
                           ),
-                          child: const Text('Confirm', style: TextStyle(color: Colors.white, fontSize: 15.0, fontWeight: FontWeight.w500), textAlign: TextAlign.center),
+                          child: Text('Confirm', style: TextStyle(color: Colors.white, fontSize: 15.0)),
                         ),
                         SizedBox(width: 10.0),
                         Container(
-                          padding: EdgeInsets.symmetric(horizontal: 35.0, vertical: 10.0),
-                          width: 138.0,
+                          padding: EdgeInsets.symmetric(horizontal: 35.0, vertical: 8.0),
                           decoration: BoxDecoration(
                               color: Colors.grey[300],
                               borderRadius: BorderRadius.circular(5.0)
                           ),
-                          child: const Text('Delete', style: TextStyle(color: Colors.black, fontSize: 15.0, fontWeight: FontWeight.w500), textAlign: TextAlign.center),
+                          child: Text('Delete', style: TextStyle(color: Colors.black, fontSize: 15.0)),
                         ),
                       ],
                     )
