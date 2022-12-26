@@ -4,7 +4,6 @@ import 'package:fakebook/tabs/menu_tab.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -71,7 +70,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
       ),
       body: TabBarView(
         controller: _tabController,
-        children: const [
+        children: [
           HomeTab(),
           NotificationsTab(),
           MenuTab()

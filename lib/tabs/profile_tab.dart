@@ -3,7 +3,6 @@ import 'package:fakebook/widgets/what_on_your_.dart';
 import 'package:flutter/material.dart';
 
 class ProfileTab extends StatelessWidget {
-  const ProfileTab({super.key});
 
   @override
   Widget build(BuildContext context) {

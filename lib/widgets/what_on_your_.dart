@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import '../pages/profile_page.dart';
 
 class WriteSomethingWidget extends StatelessWidget {
-  const WriteSomethingWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +29,7 @@ class WriteSomethingWidget extends StatelessWidget {
                   onPressed: () => {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const ProfilePage()),
+                      MaterialPageRoute(builder: (context) => ProfilePage()),
                     )
                   },
                 ),

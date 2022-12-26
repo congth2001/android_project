@@ -69,21 +69,30 @@ class FriendsTab extends StatelessWidget {
                     Row(
                       children: <Widget>[
                         Container(
-                          padding: EdgeInsets.symmetric(horizontal: 35.0, vertical: 8.0),
+                          height: 35,
+                          width: 130,
                           decoration: BoxDecoration(
-                            color: Colors.blue[700],
-                            borderRadius: BorderRadius.circular(5.0)
+                              color: Colors.blue[700],
+                              borderRadius: BorderRadius.circular(5.0)
                           ),
-                          child: Text('Confirm', style: TextStyle(color: Colors.white, fontSize: 15.0)),
+                          child: MaterialButton(
+                            onPressed: () {  },
+                            height: 12,
+                            child: Text('Confirm', style: TextStyle(color: Colors.white, fontSize: 15.0)),
+                          ),
                         ),
-                        SizedBox(width: 10.0),
+                        SizedBox(width: 15),
                         Container(
-                          padding: EdgeInsets.symmetric(horizontal: 35.0, vertical: 8.0),
-                          decoration: BoxDecoration(
-                            color: Colors.grey[300],
-                            borderRadius: BorderRadius.circular(5.0)
-                          ),
-                          child: Text('Delete', style: TextStyle(color: Colors.black, fontSize: 15.0)),
+                            height: 35,
+                            width: 130,
+                            decoration: BoxDecoration(
+                                color: Colors.grey[300],
+                                borderRadius: BorderRadius.circular(5.0)
+                            ),
+                            child: MaterialButton(
+                              onPressed: () {  },
+                              child: Text('Delete', style: TextStyle(color: Colors.black, fontSize: 15.0)),
+                            )
                         ),
                       ],
                     )
@@ -110,21 +119,30 @@ class FriendsTab extends StatelessWidget {
                     Row(
                       children: <Widget>[
                         Container(
-                          padding: EdgeInsets.symmetric(horizontal: 35.0, vertical: 8.0),
+                          height: 35,
+                          width: 130,
                           decoration: BoxDecoration(
-                            color: Colors.blue[700],
-                            borderRadius: BorderRadius.circular(5.0)
+                              color: Colors.blue[700],
+                              borderRadius: BorderRadius.circular(5.0)
                           ),
-                          child: Text('Confirm', style: TextStyle(color: Colors.white, fontSize: 15.0)),
+                          child: MaterialButton(
+                            onPressed: () {  },
+                            height: 12,
+                            child: Text('Confirm', style: TextStyle(color: Colors.white, fontSize: 15.0)),
+                          ),
                         ),
-                        SizedBox(width: 10.0),
+                        SizedBox(width: 15),
                         Container(
-                          padding: EdgeInsets.symmetric(horizontal: 35.0, vertical: 8.0),
-                          decoration: BoxDecoration(
-                            color: Colors.grey[300],
-                            borderRadius: BorderRadius.circular(5.0)
-                          ),
-                          child: Text('Delete', style: TextStyle(color: Colors.black, fontSize: 15.0)),
+                            height: 35,
+                            width: 130,
+                            decoration: BoxDecoration(
+                                color: Colors.grey[300],
+                                borderRadius: BorderRadius.circular(5.0)
+                            ),
+                            child: MaterialButton(
+                              onPressed: () {  },
+                              child: Text('Delete', style: TextStyle(color: Colors.black, fontSize: 15.0)),
+                            )
                         ),
                       ],
                     )
@@ -151,21 +169,30 @@ class FriendsTab extends StatelessWidget {
                     Row(
                       children: <Widget>[
                         Container(
-                          padding: EdgeInsets.symmetric(horizontal: 35.0, vertical: 8.0),
+                          height: 35,
+                          width: 130,
                           decoration: BoxDecoration(
-                            color: Colors.blue[700],
-                            borderRadius: BorderRadius.circular(5.0)
+                              color: Colors.blue[700],
+                              borderRadius: BorderRadius.circular(5.0)
                           ),
-                          child: Text('Confirm', style: TextStyle(color: Colors.white, fontSize: 15.0)),
+                          child: MaterialButton(
+                            onPressed: () {  },
+                            height: 12,
+                            child: Text('Confirm', style: TextStyle(color: Colors.white, fontSize: 15.0)),
+                          ),
                         ),
-                        SizedBox(width: 10.0),
+                        SizedBox(width: 15),
                         Container(
-                          padding: EdgeInsets.symmetric(horizontal: 35.0, vertical: 8.0),
-                          decoration: BoxDecoration(
-                            color: Colors.grey[300],
-                            borderRadius: BorderRadius.circular(5.0)
-                          ),
-                          child: Text('Delete', style: TextStyle(color: Colors.black, fontSize: 15.0)),
+                            height: 35,
+                            width: 130,
+                            decoration: BoxDecoration(
+                                color: Colors.grey[300],
+                                borderRadius: BorderRadius.circular(5.0)
+                            ),
+                            child: MaterialButton(
+                              onPressed: () {  },
+                              child: Text('Delete', style: TextStyle(color: Colors.black, fontSize: 15.0)),
+                            )
                         ),
                       ],
                     )
@@ -192,21 +219,30 @@ class FriendsTab extends StatelessWidget {
                     Row(
                       children: <Widget>[
                         Container(
-                          padding: EdgeInsets.symmetric(horizontal: 35.0, vertical: 8.0),
+                          height: 35,
+                          width: 130,
                           decoration: BoxDecoration(
-                            color: Colors.blue[700],
-                            borderRadius: BorderRadius.circular(5.0)
+                              color: Colors.blue[700],
+                              borderRadius: BorderRadius.circular(5.0)
                           ),
-                          child: Text('Confirm', style: TextStyle(color: Colors.white, fontSize: 15.0)),
+                          child: MaterialButton(
+                            onPressed: () {  },
+                            height: 12,
+                            child: Text('Confirm', style: TextStyle(color: Colors.white, fontSize: 15.0)),
+                          ),
                         ),
-                        SizedBox(width: 10.0),
+                        SizedBox(width: 15),
                         Container(
-                          padding: EdgeInsets.symmetric(horizontal: 35.0, vertical: 8.0),
-                          decoration: BoxDecoration(
-                            color: Colors.grey[300],
-                            borderRadius: BorderRadius.circular(5.0)
-                          ),
-                          child: Text('Delete', style: TextStyle(color: Colors.black, fontSize: 15.0)),
+                            height: 35,
+                            width: 130,
+                            decoration: BoxDecoration(
+                                color: Colors.grey[300],
+                                borderRadius: BorderRadius.circular(5.0)
+                            ),
+                            child: MaterialButton(
+                              onPressed: () {  },
+                              child: Text('Delete', style: TextStyle(color: Colors.black, fontSize: 15.0)),
+                            )
                         ),
                       ],
                     )
@@ -233,21 +269,30 @@ class FriendsTab extends StatelessWidget {
                     Row(
                       children: <Widget>[
                         Container(
-                          padding: EdgeInsets.symmetric(horizontal: 35.0, vertical: 8.0),
+                          height: 35,
+                          width: 130,
                           decoration: BoxDecoration(
-                            color: Colors.blue[700],
-                            borderRadius: BorderRadius.circular(5.0)
+                              color: Colors.blue[700],
+                              borderRadius: BorderRadius.circular(5.0)
                           ),
-                          child: Text('Confirm', style: TextStyle(color: Colors.white, fontSize: 15.0)),
+                          child: MaterialButton(
+                            onPressed: () {  },
+                            height: 12,
+                            child: Text('Confirm', style: TextStyle(color: Colors.white, fontSize: 15.0)),
+                          ),
                         ),
-                        SizedBox(width: 10.0),
+                        SizedBox(width: 15),
                         Container(
-                          padding: EdgeInsets.symmetric(horizontal: 35.0, vertical: 8.0),
-                          decoration: BoxDecoration(
-                            color: Colors.grey[300],
-                            borderRadius: BorderRadius.circular(5.0)
-                          ),
-                          child: Text('Delete', style: TextStyle(color: Colors.black, fontSize: 15.0)),
+                            height: 35,
+                            width: 130,
+                            decoration: BoxDecoration(
+                                color: Colors.grey[300],
+                                borderRadius: BorderRadius.circular(5.0)
+                            ),
+                            child: MaterialButton(
+                              onPressed: () {  },
+                              child: Text('Delete', style: TextStyle(color: Colors.black, fontSize: 15.0)),
+                            )
                         ),
                       ],
                     )
@@ -274,21 +319,30 @@ class FriendsTab extends StatelessWidget {
                     Row(
                       children: <Widget>[
                         Container(
-                          padding: EdgeInsets.symmetric(horizontal: 35.0, vertical: 8.0),
+                          height: 35,
+                          width: 130,
                           decoration: BoxDecoration(
-                            color: Colors.blue[700],
-                            borderRadius: BorderRadius.circular(5.0)
+                              color: Colors.blue[700],
+                              borderRadius: BorderRadius.circular(5.0)
                           ),
-                          child: Text('Confirm', style: TextStyle(color: Colors.white, fontSize: 15.0)),
+                          child: MaterialButton(
+                            onPressed: () {  },
+                            height: 12,
+                            child: Text('Confirm', style: TextStyle(color: Colors.white, fontSize: 15.0)),
+                          ),
                         ),
-                        SizedBox(width: 10.0),
+                        SizedBox(width: 15),
                         Container(
-                          padding: EdgeInsets.symmetric(horizontal: 35.0, vertical: 8.0),
-                          decoration: BoxDecoration(
-                            color: Colors.grey[300],
-                            borderRadius: BorderRadius.circular(5.0)
-                          ),
-                          child: Text('Delete', style: TextStyle(color: Colors.black, fontSize: 15.0)),
+                            height: 35,
+                            width: 130,
+                            decoration: BoxDecoration(
+                                color: Colors.grey[300],
+                                borderRadius: BorderRadius.circular(5.0)
+                            ),
+                            child: MaterialButton(
+                              onPressed: () {  },
+                              child: Text('Delete', style: TextStyle(color: Colors.black, fontSize: 15.0)),
+                            )
                         ),
                       ],
                     )
@@ -315,21 +369,30 @@ class FriendsTab extends StatelessWidget {
                     Row(
                       children: <Widget>[
                         Container(
-                          padding: EdgeInsets.symmetric(horizontal: 35.0, vertical: 8.0),
+                          height: 35,
+                          width: 130,
                           decoration: BoxDecoration(
-                            color: Colors.blue[700],
-                            borderRadius: BorderRadius.circular(5.0)
+                              color: Colors.blue[700],
+                              borderRadius: BorderRadius.circular(5.0)
                           ),
-                          child: Text('Confirm', style: TextStyle(color: Colors.white, fontSize: 15.0)),
+                          child: MaterialButton(
+                            onPressed: () {  },
+                            height: 12,
+                            child: Text('Confirm', style: TextStyle(color: Colors.white, fontSize: 15.0)),
+                          ),
                         ),
-                        SizedBox(width: 10.0),
+                        SizedBox(width: 15),
                         Container(
-                          padding: EdgeInsets.symmetric(horizontal: 35.0, vertical: 8.0),
-                          decoration: BoxDecoration(
-                            color: Colors.grey[300],
-                            borderRadius: BorderRadius.circular(5.0)
-                          ),
-                          child: Text('Delete', style: TextStyle(color: Colors.black, fontSize: 15.0)),
+                            height: 35,
+                            width: 130,
+                            decoration: BoxDecoration(
+                                color: Colors.grey[300],
+                                borderRadius: BorderRadius.circular(5.0)
+                            ),
+                            child: MaterialButton(
+                              onPressed: () {  },
+                              child: Text('Delete', style: TextStyle(color: Colors.black, fontSize: 15.0)),
+                            )
                         ),
                       ],
                     )
@@ -356,21 +419,30 @@ class FriendsTab extends StatelessWidget {
                     Row(
                       children: <Widget>[
                         Container(
-                          padding: EdgeInsets.symmetric(horizontal: 35.0, vertical: 8.0),
+                          height: 35,
+                          width: 130,
                           decoration: BoxDecoration(
-                            color: Colors.blue[700],
-                            borderRadius: BorderRadius.circular(5.0)
+                              color: Colors.blue[700],
+                              borderRadius: BorderRadius.circular(5.0)
                           ),
-                          child: Text('Confirm', style: TextStyle(color: Colors.white, fontSize: 15.0)),
+                          child: MaterialButton(
+                            onPressed: () {  },
+                            height: 12,
+                            child: Text('Confirm', style: TextStyle(color: Colors.white, fontSize: 15.0)),
+                          ),
                         ),
-                        SizedBox(width: 10.0),
+                        SizedBox(width: 15),
                         Container(
-                          padding: EdgeInsets.symmetric(horizontal: 35.0, vertical: 8.0),
-                          decoration: BoxDecoration(
-                            color: Colors.grey[300],
-                            borderRadius: BorderRadius.circular(5.0)
-                          ),
-                          child: Text('Delete', style: TextStyle(color: Colors.black, fontSize: 15.0)),
+                            height: 35,
+                            width: 130,
+                            decoration: BoxDecoration(
+                                color: Colors.grey[300],
+                                borderRadius: BorderRadius.circular(5.0)
+                            ),
+                            child: MaterialButton(
+                              onPressed: () {  },
+                              child: Text('Delete', style: TextStyle(color: Colors.black, fontSize: 15.0)),
+                            )
                         ),
                       ],
                     )
@@ -420,21 +492,30 @@ class FriendsTab extends StatelessWidget {
                     Row(
                       children: <Widget>[
                         Container(
-                          padding: EdgeInsets.symmetric(horizontal: 25.0, vertical: 8.0),
+                          height: 35,
+                          width: 130,
                           decoration: BoxDecoration(
-                            color: Colors.blue[700],
-                            borderRadius: BorderRadius.circular(5.0)
+                              color: Colors.blue[700],
+                              borderRadius: BorderRadius.circular(5.0)
                           ),
-                          child: Text('Add Friend', style: TextStyle(color: Colors.white, fontSize: 15.0)),
+                          child: MaterialButton(
+                            onPressed: () {  },
+                            height: 12,
+                            child: Text('Add Friend', style: TextStyle(color: Colors.white, fontSize: 15.0)),
+                          ),
                         ),
-                        SizedBox(width: 10.0),
+                        SizedBox(width: 15),
                         Container(
-                          padding: EdgeInsets.symmetric(horizontal: 28.0, vertical: 8.0),
-                          decoration: BoxDecoration(
-                            color: Colors.grey[300],
-                            borderRadius: BorderRadius.circular(5.0)
-                          ),
-                          child: Text('Remove', style: TextStyle(color: Colors.black, fontSize: 15.0)),
+                            height: 35,
+                            width: 130,
+                            decoration: BoxDecoration(
+                                color: Colors.grey[300],
+                                borderRadius: BorderRadius.circular(5.0)
+                            ),
+                            child: MaterialButton(
+                              onPressed: () {  },
+                              child: Text('Remove', style: TextStyle(color: Colors.black, fontSize: 15.0)),
+                            )
                         ),
                       ],
                     )
@@ -461,21 +542,30 @@ class FriendsTab extends StatelessWidget {
                     Row(
                       children: <Widget>[
                         Container(
-                          padding: EdgeInsets.symmetric(horizontal: 25.0, vertical: 8.0),
+                          height: 35,
+                          width: 130,
                           decoration: BoxDecoration(
-                            color: Colors.blue[700],
-                            borderRadius: BorderRadius.circular(5.0)
+                              color: Colors.blue[700],
+                              borderRadius: BorderRadius.circular(5.0)
                           ),
-                          child: Text('Add Friend', style: TextStyle(color: Colors.white, fontSize: 15.0)),
+                          child: MaterialButton(
+                            onPressed: () {  },
+                            height: 12,
+                            child: Text('Add Friend', style: TextStyle(color: Colors.white, fontSize: 15.0)),
+                          ),
                         ),
-                        SizedBox(width: 10.0),
+                        SizedBox(width: 15),
                         Container(
-                          padding: EdgeInsets.symmetric(horizontal: 28.0, vertical: 8.0),
-                          decoration: BoxDecoration(
-                            color: Colors.grey[300],
-                            borderRadius: BorderRadius.circular(5.0)
-                          ),
-                          child: Text('Remove', style: TextStyle(color: Colors.black, fontSize: 15.0)),
+                            height: 35,
+                            width: 130,
+                            decoration: BoxDecoration(
+                                color: Colors.grey[300],
+                                borderRadius: BorderRadius.circular(5.0)
+                            ),
+                            child: MaterialButton(
+                              onPressed: () {  },
+                              child: Text('Remove', style: TextStyle(color: Colors.black, fontSize: 15.0)),
+                            )
                         ),
                       ],
                     )
@@ -502,21 +592,30 @@ class FriendsTab extends StatelessWidget {
                     Row(
                       children: <Widget>[
                         Container(
-                          padding: EdgeInsets.symmetric(horizontal: 25.0, vertical: 8.0),
+                          height: 35,
+                          width: 130,
                           decoration: BoxDecoration(
-                            color: Colors.blue[700],
-                            borderRadius: BorderRadius.circular(5.0)
+                              color: Colors.blue[700],
+                              borderRadius: BorderRadius.circular(5.0)
                           ),
-                          child: Text('Add Friend', style: TextStyle(color: Colors.white, fontSize: 15.0)),
+                          child: MaterialButton(
+                            onPressed: () {  },
+                            height: 12,
+                            child: Text('Add Friend', style: TextStyle(color: Colors.white, fontSize: 15.0)),
+                          ),
                         ),
-                        SizedBox(width: 10.0),
+                        SizedBox(width: 15),
                         Container(
-                          padding: EdgeInsets.symmetric(horizontal: 28.0, vertical: 8.0),
-                          decoration: BoxDecoration(
-                            color: Colors.grey[300],
-                            borderRadius: BorderRadius.circular(5.0)
-                          ),
-                          child: Text('Remove', style: TextStyle(color: Colors.black, fontSize: 15.0)),
+                            height: 35,
+                            width: 130,
+                            decoration: BoxDecoration(
+                                color: Colors.grey[300],
+                                borderRadius: BorderRadius.circular(5.0)
+                            ),
+                            child: MaterialButton(
+                              onPressed: () {  },
+                              child: Text('Remove', style: TextStyle(color: Colors.black, fontSize: 15.0)),
+                            )
                         ),
                       ],
                     )
@@ -543,21 +642,30 @@ class FriendsTab extends StatelessWidget {
                     Row(
                       children: <Widget>[
                         Container(
-                          padding: EdgeInsets.symmetric(horizontal: 25.0, vertical: 8.0),
+                          height: 35,
+                          width: 130,
                           decoration: BoxDecoration(
-                            color: Colors.blue[700],
-                            borderRadius: BorderRadius.circular(5.0)
+                              color: Colors.blue[700],
+                              borderRadius: BorderRadius.circular(5.0)
                           ),
-                          child: Text('Adđ Friend', style: TextStyle(color: Colors.white, fontSize: 15.0)),
+                          child: MaterialButton(
+                            onPressed: () {  },
+                            height: 12,
+                            child: Text('Add Friend', style: TextStyle(color: Colors.white, fontSize: 15.0)),
+                          ),
                         ),
-                        SizedBox(width: 10.0),
+                        SizedBox(width: 15),
                         Container(
-                          padding: EdgeInsets.symmetric(horizontal: 28.0, vertical: 8.0),
-                          decoration: BoxDecoration(
-                            color: Colors.grey[300],
-                            borderRadius: BorderRadius.circular(5.0)
-                          ),
-                          child: Text('Remove', style: TextStyle(color: Colors.black, fontSize: 15.0)),
+                            height: 35,
+                            width: 130,
+                            decoration: BoxDecoration(
+                                color: Colors.grey[300],
+                                borderRadius: BorderRadius.circular(5.0)
+                            ),
+                            child: MaterialButton(
+                              onPressed: () {  },
+                              child: Text('Remove', style: TextStyle(color: Colors.black, fontSize: 15.0)),
+                            )
                         ),
                       ],
                     )
@@ -584,21 +692,30 @@ class FriendsTab extends StatelessWidget {
                     Row(
                       children: <Widget>[
                         Container(
-                          padding: EdgeInsets.symmetric(horizontal: 25.0, vertical: 8.0),
+                          height: 35,
+                          width: 130,
                           decoration: BoxDecoration(
-                            color: Colors.blue[700],
-                            borderRadius: BorderRadius.circular(5.0)
+                              color: Colors.blue[700],
+                              borderRadius: BorderRadius.circular(5.0)
                           ),
-                          child: Text('Add Friend', style: TextStyle(color: Colors.white, fontSize: 15.0)),
+                          child: MaterialButton(
+                            onPressed: () {  },
+                            height: 12,
+                            child: Text('Add Friend', style: TextStyle(color: Colors.white, fontSize: 15.0)),
+                          ),
                         ),
-                        SizedBox(width: 10.0),
+                        SizedBox(width: 15),
                         Container(
-                          padding: EdgeInsets.symmetric(horizontal: 28.0, vertical: 8.0),
-                          decoration: BoxDecoration(
-                            color: Colors.grey[300],
-                            borderRadius: BorderRadius.circular(5.0)
-                          ),
-                          child: Text('Remove', style: TextStyle(color: Colors.black, fontSize: 15.0)),
+                            height: 35,
+                            width: 130,
+                            decoration: BoxDecoration(
+                                color: Colors.grey[300],
+                                borderRadius: BorderRadius.circular(5.0)
+                            ),
+                            child: MaterialButton(
+                              onPressed: () {  },
+                              child: Text('Remove', style: TextStyle(color: Colors.black, fontSize: 15.0)),
+                            )
                         ),
                       ],
                     )
@@ -625,21 +742,30 @@ class FriendsTab extends StatelessWidget {
                     Row(
                       children: <Widget>[
                         Container(
-                          padding: EdgeInsets.symmetric(horizontal: 25.0, vertical: 8.0),
+                          height: 35,
+                          width: 130,
                           decoration: BoxDecoration(
-                            color: Colors.blue[700],
-                            borderRadius: BorderRadius.circular(5.0)
+                              color: Colors.blue[700],
+                              borderRadius: BorderRadius.circular(5.0)
                           ),
-                          child: Text('Add Friend', style: TextStyle(color: Colors.white, fontSize: 15.0)),
+                          child: MaterialButton(
+                            onPressed: () {  },
+                            height: 12,
+                            child: Text('Add Friend', style: TextStyle(color: Colors.white, fontSize: 15.0)),
+                          ),
                         ),
-                        SizedBox(width: 10.0),
+                        SizedBox(width: 15),
                         Container(
-                          padding: EdgeInsets.symmetric(horizontal: 28.0, vertical: 8.0),
-                          decoration: BoxDecoration(
-                            color: Colors.grey[300],
-                            borderRadius: BorderRadius.circular(5.0)
-                          ),
-                          child: Text('Remove', style: TextStyle(color: Colors.black, fontSize: 15.0)),
+                            height: 35,
+                            width: 130,
+                            decoration: BoxDecoration(
+                                color: Colors.grey[300],
+                                borderRadius: BorderRadius.circular(5.0)
+                            ),
+                            child: MaterialButton(
+                              onPressed: () {},
+                              child: Text('Remove', style: TextStyle(color: Colors.black, fontSize: 15.0)),
+                            )
                         ),
                       ],
                     )

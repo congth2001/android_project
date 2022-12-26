@@ -4,7 +4,6 @@ import '../pages/friend_page.dart';
 import '../pages/profile_page.dart';
 
 class MenuTab extends StatelessWidget {
-  const MenuTab({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +48,7 @@ class MenuTab extends StatelessWidget {
               onPressed : () => {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const ProfilePage()),
+                  MaterialPageRoute(builder: (context) => ProfilePage()),
                 )
               },
               child: Row(
@@ -107,7 +106,7 @@ class MenuTab extends StatelessWidget {
                       onPressed : () => {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => const FriendPage()),
+                          MaterialPageRoute(builder: (context) => FriendPage()),
                         )
                       },
                       child: Container(

@@ -2,7 +2,6 @@ import 'package:fakebook/tabs/friends_tab.dart';
 import 'package:flutter/material.dart';
 
 class FriendPage extends StatefulWidget {
-  const FriendPage({super.key});
 
   @override
   _FriendPageState createState() => _FriendPageState();

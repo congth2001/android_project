@@ -2,7 +2,6 @@ import 'package:fakebook/tabs/profile_tab.dart';
 import 'package:flutter/material.dart';
 
 class ProfilePage extends StatefulWidget {
-  const ProfilePage({super.key});
 
   @override
   _ProfilePageState createState() => _ProfilePageState();
@@ -41,7 +40,7 @@ class _ProfilePageState extends State<ProfilePage> with SingleTickerProviderStat
         backgroundColor: Colors.white,
         elevation: 0.0,
       ),
-      body: const ProfileTab(),
+      body: ProfileTab(),
     );
   }
 }
