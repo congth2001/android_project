@@ -46,7 +46,7 @@ class _FriendPageState extends State<FriendPage> with SingleTickerProviderStateM
             ),
         ),
         backgroundColor: Colors.white,
-        elevation: 0.0,
+        elevation: 0.5,
       ),
       body: FriendsTab(),
     );
