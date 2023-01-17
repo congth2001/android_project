@@ -1,4 +1,4 @@
-import 'package:fakebook/pages/home_page.dart';
+import 'package:fakebook/pages/landing_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'fakebook',
       debugShowCheckedModeBanner: false,
-      home: HomePage(),
+      home: LandingPage(),
     );
   }
 }
