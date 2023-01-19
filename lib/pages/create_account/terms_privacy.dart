@@ -1,7 +1,9 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:fakebook/pages/create_account/creating_account.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import '../../shared/font_size.dart';
 import '../landing_page.dart';
 
@@ -14,8 +16,15 @@ class TermsAndPrivacyPage extends StatefulWidget {
 
 class _TermsAndPrivacyPageState extends State<TermsAndPrivacyPage> {
 
+  InAppWebViewController? webViewController;
+  late var url;
+  var initialUrl = 'https://www.facebook.com/policies_center';
+  double progress = 0;
+
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
     return Scaffold(
         appBar: AppBar(
             toolbarHeight: 40,
@@ -67,6 +76,29 @@ class _TermsAndPrivacyPageState extends State<TermsAndPrivacyPage> {
             title: Text('Terms & Privacy',
                 style: TextStyle(
                     color: Colors.black, fontSize: FontSize.titleSize))),
-        body: Container());
+        body: Column(
+          children: [
+            Expanded(child: InAppWebView(
+              initialUrlRequest: URLRequest(url: Uri.parse(initialUrl)),
+            ),)
+          ],
+        ),
+        floatingActionButton: SizedBox(
+          width: width-32,
+          height: 30,
+          child: FloatingActionButton(
+            onPressed: (){
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context)=>CreatingAccountPage())
+              );
+            },
+            child: Text('Sign up', style: TextStyle(color: Colors.white)),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(5.0))
+          ),
+          ),
+        ),
+        );
   }
 }

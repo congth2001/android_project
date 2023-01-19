@@ -16,6 +16,7 @@ class LandingPage extends StatefulWidget {
 }
 
 class _LandingPageState extends State<LandingPage> {
+  bool isDisplay = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,8 +28,8 @@ class _LandingPageState extends State<LandingPage> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Icon(Icons.facebook_rounded, size: 70, color: Colors.blue),
-                SizedBox(height: 30),
-                SizedBox(
+                if(isDisplay) SizedBox(height: 30),
+                if(isDisplay) SizedBox(
                     width: double.infinity,
                     height: 80,
                     child: TextButton(
@@ -55,26 +56,80 @@ class _LandingPageState extends State<LandingPage> {
                                   )),
                               Text('Andrew',
                                   style: TextStyle(
-                                      fontSize: FontSize.titleSize, color: Colors.black))
+                                      fontSize: FontSize.titleSize,
+                                      color: Colors.black))
                             ]),
                             PopupMenuButton(
-                              icon: Icon(Icons.more_vert, color: Colors.black, size: 20),
+                              icon: Icon(Icons.more_vert,
+                                  color: Colors.black, size: 20),
                               position: PopupMenuPosition.under,
                               onSelected: (value) {
-                                // your logic
+                                if (value == 0) {
+                                  showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) =>
+                                          AlertDialog(
+                                              title: Text(
+                                                  'Remove account from device',
+                                                  style: TextStyle(
+                                                      fontSize:
+                                                          FontSize.titleSize,
+                                                      fontWeight:
+                                                          FontWeight.bold)),
+                                              content: Text(
+                                                  "You'll need to enter your phone number or email and password to log in again.",
+                                                  style: TextStyle(
+                                                      color: Color.fromARGB(
+                                                          255, 88, 88, 88),
+                                                      fontSize: FontSize
+                                                          .contentSize)),
+                                              actions: [
+                                                TextButton(
+                                                  child: Text('CANCEL',
+                                                      style: TextStyle(
+                                                          fontSize: FontSize
+                                                              .contentSize,
+                                                          color: Colors.black)),
+                                                  onPressed: () {
+                                                    Navigator.pop(
+                                                        context, 'Cancel');
+                                                  },
+                                                ),
+                                                TextButton(
+                                                  child: Text('REMOVE ACCOUNT',
+                                                      style: TextStyle(
+                                                          fontSize: FontSize
+                                                              .contentSize,
+                                                          color: Color.fromARGB(
+                                                              255,
+                                                              10,
+                                                              90,
+                                                              156))),
+                                                  onPressed: () {
+                                                    setState(() {
+                                                      isDisplay = false;
+                                                    });
+                                                    Navigator.pop(
+                                                        context, 'Remove');
+                                                  },
+                                                ),
+                                              ]));
+                                }
                               },
                               itemBuilder: (BuildContext bc) {
                                 return const [
                                   PopupMenuItem(
                                     value: 0,
                                     height: 30,
-                                    textStyle: TextStyle(fontSize: FontSize.contentSize),
+                                    textStyle: TextStyle(
+                                        fontSize: FontSize.contentSize),
                                     child: Text("Remove account from device"),
                                   ),
                                   PopupMenuItem(
                                     value: 1,
                                     height: 30,
-                                    textStyle: TextStyle(fontSize: FontSize.contentSize),
+                                    textStyle: TextStyle(
+                                        fontSize: FontSize.contentSize),
                                     child: Text("Mute push notifications"),
                                   ),
                                 ];
@@ -123,9 +178,9 @@ class _LandingPageState extends State<LandingPage> {
                         style: TextButton.styleFrom(textStyle: TextStyle()),
                         onPressed: () {
                           Navigator.push(
-                            context,
-                            MaterialPageRoute(builder:(context)=>FindAccountPage())
-                          );
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => FindAccountPage()));
                         },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
@@ -153,10 +208,10 @@ class _LandingPageState extends State<LandingPage> {
                           textStyle: TextStyle()),
                       onPressed: () {
                         Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => CreateNewAccount()),
-                          );
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => CreateNewAccount()),
+                        );
                       },
                       child: Text('CREATE NEW FACEBOOK ACCOUNT',
                           style: TextStyle(
