@@ -1,7 +1,12 @@
+import 'package:fakebook/pages/search_page.dart';
 import 'package:fakebook/tabs/home_tab.dart';
 import 'package:fakebook/tabs/notifications_tab.dart';
 import 'package:fakebook/tabs/menu_tab.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+import '../tabs/friends_tab.dart';
+import '../tabs/watch_tab.dart';
 
 class HomePage extends StatefulWidget {
 
@@ -16,7 +21,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(vsync: this, length: 3);
+    _tabController = TabController(vsync: this, length: 5);
   }
 
   @override
@@ -41,15 +46,20 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
               minWidth: 5,
               color: Colors.grey[200],
               shape: const CircleBorder(),
-              child: const Icon(Icons.search, color: Colors.black),
-              onPressed: () {},
+              child: const Icon(FontAwesomeIcons.magnifyingGlass, color: Colors.black, size: 20),
+              onPressed: () => {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SearchPage()),
+                )
+              },
             ),
             MaterialButton(
               elevation: 0,
               minWidth: 5,
               color: Colors.grey[200],
               shape: const CircleBorder(),
-              child: const Icon(Icons.message, color: Colors.black),
+              child: const Icon(FontAwesomeIcons.facebookMessenger, color: Colors.black, size: 22),
               onPressed: () {},
             ),
           ])
@@ -63,6 +73,8 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
           labelColor: Colors.blueAccent,
           tabs: const [
             Tab(icon: Icon(Icons.home, size: 30.0)),
+            Tab(icon: Icon(Icons.group, size: 30.0)),
+            Tab(icon: Icon(Icons.ondemand_video, size: 30.0)),
             Tab(icon: Icon(Icons.notifications, size: 30.0)),
             Tab(icon: Icon(Icons.menu, size: 30.0))
           ],
@@ -72,6 +84,8 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
         controller: _tabController,
         children: [
           HomeTab(),
+          FriendsTab(),
+          WatchTab(),
           NotificationsTab(),
           MenuTab()
         ]

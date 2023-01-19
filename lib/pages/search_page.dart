@@ -1,18 +1,34 @@
 import 'package:fakebook/widgets/friend_list_widget.dart';
 import 'package:flutter/material.dart';
 
-class FriendListPage extends StatefulWidget {
+class SearchPage extends StatefulWidget {
 
   @override
-  _FriendListPage createState() => _FriendListPage();
+  _SearchPage createState() => _SearchPage();
 }
 
-class _FriendListPage extends State<FriendListPage> with SingleTickerProviderStateMixin {
+class _SearchPage extends State<SearchPage> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Your Friends', style: TextStyle(color: Colors.black, fontSize: 17, fontWeight: FontWeight.w400)),
+        title: Container(
+          height: 40,
+          decoration: BoxDecoration(
+            color: Colors.blueGrey[50],
+            borderRadius: BorderRadius.circular(30.0)
+          ),
+          child: TextField(
+            textAlignVertical: TextAlignVertical.center,
+            cursorColor: Colors.grey[800],
+            cursorHeight: 24,
+            decoration: InputDecoration(
+              prefixIcon: Icon(Icons.search, color: Colors.grey[500]),
+              hintText: 'Search',
+              border: InputBorder.none,
+            ),
+          ),
+        ),
         leading: ElevatedButton(
           style: ElevatedButton.styleFrom(
             backgroundColor: Colors.white, // background
@@ -30,42 +46,22 @@ class _FriendListPage extends State<FriendListPage> with SingleTickerProviderSta
       ),
       body: SingleChildScrollView(
         child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 15.0),
+          padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 5.0),
           color: Colors.white,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                height: 40,
-                decoration: BoxDecoration(
-                  color: Colors.grey[200],
-                  borderRadius: BorderRadius.circular(30.0)
-                ),
-                child: TextField(
-                  textAlignVertical: TextAlignVertical.center,
-                  cursorColor: Colors.grey[800],
-                  cursorHeight: 24,
-                  decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.search, color: Colors.grey[500]),
-                    hintText: 'Search Friends',
-                    border: InputBorder.none,
-                  ),
-                ),
-              ),
-
-              SizedBox(height: 15),
-
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  Text('100 friends', style: TextStyle(fontSize: 19.0, fontWeight: FontWeight.bold)),
+                  Text('Recent searches', style: TextStyle(fontSize: 19.0, fontWeight: FontWeight.bold)),
 
                   Container(
                     transform: Matrix4.translationValues(15.0, 0.0, 0.0),
                     child: MaterialButton(
                       elevation: 0,
-                      child: Text('Sort', style: TextStyle(color: Colors.blue[700], fontSize: 16)),
+                      child: Text('See all', style: TextStyle(color: Colors.blue[700], fontSize: 16)),
                       onPressed: () => {}
                     ),
                   )

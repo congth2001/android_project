@@ -3,6 +3,7 @@ import 'package:fakebook/widgets/notification_widget.dart';
 import 'package:fakebook/models/user_notification.dart';
 
 import '../pages/friend_page.dart';
+import '../pages/search_page.dart';
 class NotificationsTab extends StatelessWidget {
 
   @override
@@ -26,11 +27,16 @@ class NotificationsTab extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: <Widget>[
                     MaterialButton(
-                      onPressed: () {},
                       elevation: 0,
                       color: Colors.grey[300],
                       shape: const CircleBorder(),
                       child: const Icon(Icons.search, color: Colors.black),
+                      onPressed: () => {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => SearchPage()),
+                        )
+                      },
                     )
                   ],
                 ),

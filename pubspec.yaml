@@ -38,6 +38,8 @@ dependencies:
   cupertino_icons: ^1.0.5
   font_awesome_flutter: ^10.3.0
   like_button: ^2.0.5
+  youtube_player_flutter: ^8.1.2
+  audioplayers_android: ^1.1.4
 
 dev_dependencies:
   flutter_test:

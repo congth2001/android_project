@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../pages/friend_page.dart';
 import '../pages/profile_page.dart';
+import '../pages/search_page.dart';
 
 class MenuTab extends StatelessWidget {
 
@@ -33,7 +34,12 @@ class MenuTab extends StatelessWidget {
                   color: Colors.grey[300],
                   shape: const CircleBorder(),
                   child: const Icon(Icons.search, color: Colors.black),
-                  onPressed: () {},
+                  onPressed: () => {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => SearchPage()),
+                    )
+                  },
                 ),
               ],),
             ),
