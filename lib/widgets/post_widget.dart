@@ -16,9 +16,9 @@ class PostWidget extends StatelessWidget {
     return Container(
       padding: EdgeInsets.only(left: 15, right: 15, top: 15),
       child: Column(
-        children: <Widget>[
+        children: [
           Row(
-            children: <Widget>[
+            children: [
               CircleAvatar(
                 backgroundImage: AssetImage(post.profileImageUrl),
                 radius: 20.0,
@@ -27,7 +27,7 @@ class PostWidget extends StatelessWidget {
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
+                children: [
                   Text(post.username, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17.0)),
                   SizedBox(height: 5.0),
                   Text(post.time)
@@ -44,9 +44,9 @@ class PostWidget extends StatelessWidget {
 
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
+            children: [
               Row(
-                children: <Widget>[
+                children: [
                   Stack(children: [
                     CircleAvatar(
                       radius: 8.0,
@@ -60,7 +60,7 @@ class PostWidget extends StatelessWidget {
                 ],
               ),
               Row(
-                children: <Widget>[
+                children: [
                   Text('${post.comments} comments  •  '),
                   Text('${post.shares} shares'),
                 ],
@@ -74,7 +74,7 @@ class PostWidget extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
+            children: [
               Container(
                 width: MediaQuery.of(context).size.width/3-30,
                 height: 45,

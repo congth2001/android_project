@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../pages/friend_page.dart';
 import '../pages/profile_page.dart';
+import '../pages/search_page.dart';
 
 class MenuTab extends StatelessWidget {
   @override
@@ -16,30 +17,31 @@ class MenuTab extends StatelessWidget {
           children: [
             Padding(
               padding: const EdgeInsets.fromLTRB(15.0, 5.0, 0.0, 5.0),
-              child: Row(
-                children: [
-                  const Text('Menu',
-                      style: TextStyle(
-                          fontSize: 25.0, fontWeight: FontWeight.bold)),
-                  const SizedBox(width: 210),
-                  MaterialButton(
-                    elevation: 0,
-                    minWidth: 5,
-                    color: Colors.grey[300],
-                    shape: const CircleBorder(),
-                    child: const Icon(Icons.settings, color: Colors.black87),
-                    onPressed: () {},
-                  ),
-                  MaterialButton(
-                    elevation: 0,
-                    minWidth: 5,
-                    color: Colors.grey[300],
-                    shape: const CircleBorder(),
-                    child: const Icon(Icons.search, color: Colors.black),
-                    onPressed: () {},
-                  ),
-                ],
-              ),
+              child: Row(children: [
+                const Text('Menu', style: TextStyle(fontSize: 25.0, fontWeight: FontWeight.bold)),
+                const SizedBox(width: 210),
+                MaterialButton(
+                  elevation: 0,
+                  minWidth: 5,
+                  color: Colors.grey[300],
+                  shape: const CircleBorder(),
+                  child: const Icon(Icons.settings, color: Colors.black87),
+                  onPressed: () {},
+                ),
+                MaterialButton(
+                  elevation: 0,
+                  minWidth: 5,
+                  color: Colors.grey[300],
+                  shape: const CircleBorder(),
+                  child: const Icon(Icons.search, color: Colors.black),
+                  onPressed: () => {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => SearchPage()),
+                    )
+                  },
+                ),
+              ],),
             ),
             ElevatedButton(
               style: ElevatedButton.styleFrom(

@@ -38,6 +38,8 @@ dependencies:
   cupertino_icons: ^1.0.5
   font_awesome_flutter: ^10.3.0
   like_button: ^2.0.5
+  youtube_player_flutter: ^8.1.2
+  audioplayers_android: ^1.1.4
   scroll_date_picker: ^3.6.1
   flutter_inappwebview: ^5.7.2+3
   loading_animation_widget: ^1.2.0+4
