@@ -16,7 +16,7 @@ class LandingPage extends StatefulWidget {
 }
 
 class _LandingPageState extends State<LandingPage> {
-  bool isDisplay = true;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,8 +28,8 @@ class _LandingPageState extends State<LandingPage> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Icon(Icons.facebook_rounded, size: 70, color: Colors.blue),
-                if(isDisplay) SizedBox(height: 30),
-                if(isDisplay) SizedBox(
+                SizedBox(height: 30),
+                SizedBox(
                     width: double.infinity,
                     height: 80,
                     child: TextButton(
@@ -106,9 +106,6 @@ class _LandingPageState extends State<LandingPage> {
                                                               90,
                                                               156))),
                                                   onPressed: () {
-                                                    setState(() {
-                                                      isDisplay = false;
-                                                    });
                                                     Navigator.pop(
                                                         context, 'Remove');
                                                   },

@@ -7,6 +7,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../tabs/friends_tab.dart';
 import '../tabs/watch_tab.dart';
+import 'chat/chat_main_page.dart';
 
 class HomePage extends StatefulWidget {
 
@@ -60,7 +61,12 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
               color: Colors.grey[200],
               shape: const CircleBorder(),
               child: const Icon(FontAwesomeIcons.facebookMessenger, color: Colors.black, size: 22),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ChatMainPage()),
+                );
+              },
             ),
           ])
         ),

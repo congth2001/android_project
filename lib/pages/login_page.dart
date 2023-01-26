@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import '../shared/font_size.dart';
 import 'home_page.dart';
+import 'find_account_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -157,7 +158,12 @@ class LoginPageState extends State<LoginPage> {
               SizedBox(height: 30),
               TextButton(
                 child: Text('Forgot password?', style: TextStyle(fontSize: FontSize.contentSize)),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context)=> const FindAccountPage())
+                  );
+                },
               ),
               SizedBox(height: 90),
             ],

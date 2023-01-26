@@ -4,6 +4,9 @@ import 'package:fakebook/pages/create_account/create_new_account.dart';
 import 'package:fakebook/shared/font_size.dart';
 import 'package:flutter/material.dart';
 
+import 'find_account_page.dart';
+import 'home_page.dart';
+
 class LoginAnotherAccount extends StatefulWidget {
   const LoginAnotherAccount({Key? key}) : super(key: key);
 
@@ -72,12 +75,22 @@ class _LoginAnotherAccountState extends State<LoginAnotherAccount> {
               child: SizedBox(
                   width: double.infinity,
                   height: 30,
-                  child: ElevatedButton(onPressed: () {}, child: Text('Log In', style: TextStyle(fontSize: FontSize.contentSize),))),
+                  child: ElevatedButton(onPressed: () {
+                    Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => HomePage()),
+                );
+                  }, child: Text('Log In', style: TextStyle(fontSize: FontSize.contentSize),))),
             ),
             SizedBox(height: 15),
             TextButton(
               child: Text('Forgot password?', style: TextStyle(fontSize: FontSize.contentSize),),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => FindAccountPage()),
+                );
+              },
             ),
             SizedBox(height: 30),
             Text("---------------------- OR ----------------------"),
