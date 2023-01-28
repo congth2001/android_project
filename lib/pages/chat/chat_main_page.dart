@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ChatMainPage extends StatefulWidget {
   const ChatMainPage({Key? key}) : super(key: key);
@@ -39,10 +40,10 @@ class _ChatMainPageState extends State<ChatMainPage> {
             },
             currentIndex: currentPage,
             unselectedItemColor: Colors.grey[600],
-            selectedItemColor: Colors.black,
+            selectedItemColor: Colors.blue,
             items: [
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.chat_bubble_outline),
+                  icon: Icon(FontAwesomeIcons.rocketchat),
                   label: 'Chats'
                 ),
                 BottomNavigationBarItem(

@@ -53,30 +53,33 @@ class _MessageRequestDetailState extends State<MessageRequestDetail> {
           )),
       body: Container(
           color: Colors.white,
-          child: Column(
-            children: [
-              Container(
-                height: 50,
-                width: 50,
-                margin: const EdgeInsets.only(top: 30, bottom: 10),
-                decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    image: DecorationImage(
-                        fit: BoxFit.cover,
-                        image: AssetImage("assets/andrew.jpg"))),
-              ),
-              Text('Andrew',
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18)),
-              SizedBox(height: 10),
-              Text('Facebook',
-                  style: TextStyle(color: Colors.black, fontSize: 12)),
-              Text("You're not friends on Facebook",
-                  style: TextStyle(color: Colors.grey[400], fontSize: 12)),
-              SizedBox(height: 40),
-            ],
+          child: Center(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  height: 50,
+                  width: 50,
+                  margin: const EdgeInsets.only(top: 30, bottom: 10),
+                  decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      image: DecorationImage(
+                          fit: BoxFit.cover,
+                          image: AssetImage("assets/andrew.jpg"))),
+                ),
+                Text('Andrew',
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18)),
+                SizedBox(height: 10),
+                Text('Facebook',
+                    style: TextStyle(color: Colors.black, fontSize: 12)),
+                Text("You're not friends on Facebook",
+                    style: TextStyle(color: Colors.grey[400], fontSize: 12)),
+                SizedBox(height: 40),
+              ],
+            ),
           )),
       bottomSheet: Container(
         decoration: BoxDecoration(
