@@ -37,38 +37,47 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
       appBar: AppBar(
         titleSpacing: 0.0,
         centerTitle: false,
-        title: Transform(
-          transform:  Matrix4.translationValues(10.0, 0.0, 0.0),
-          child: Row(children: [
-            Text('facebook', style: TextStyle(color: Colors.blueAccent[400], fontSize: 27.0, fontWeight: FontWeight.bold)),
-            const SizedBox(width: 165),
-            MaterialButton(
-              elevation: 0,
-              minWidth: 5,
-              color: Colors.grey[200],
-              shape: const CircleBorder(),
-              child: const Icon(FontAwesomeIcons.magnifyingGlass, color: Colors.black, size: 20),
-              onPressed: () => {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => SearchPage()),
-                )
-              },
-            ),
-            MaterialButton(
-              elevation: 0,
-              minWidth: 5,
-              color: Colors.grey[200],
-              shape: const CircleBorder(),
-              child: const Icon(FontAwesomeIcons.facebookMessenger, color: Colors.black, size: 22),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => ChatMainPage()),
-                );
-              },
-            ),
-          ])
+        leading: Container(
+          padding: EdgeInsets.only(left: 10, top: 10),
+          child: Text('facebook', style: TextStyle(color: Colors.blueAccent[400], fontSize: 27.0, fontWeight: FontWeight.bold)),
+        ),
+        leadingWidth: 250,
+        title: Container(
+          // transform: Matrix4.translationValues(-45.0, 0.0, 0.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              // Text('facebook', style: TextStyle(color: Colors.blueAccent[400], fontSize: 27.0, fontWeight: FontWeight.bold)),
+              //const SizedBox(width: 120),
+              Row(children: [
+                MaterialButton(
+                  elevation: 0,
+                  minWidth: 5,
+                  color: Colors.grey[200],
+                  shape: const CircleBorder(),
+                  child: const Icon(FontAwesomeIcons.magnifyingGlass, color: Colors.black, size: 20),
+                  onPressed: () => {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => SearchPage()),
+                    )
+                  },
+                ),
+                MaterialButton(
+                  elevation: 0,
+                  minWidth: 5,
+                  color: Colors.grey[200],
+                  shape: const CircleBorder(),
+                  child: const Icon(FontAwesomeIcons.facebookMessenger, color: Colors.black, size: 22),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => ChatMainPage()),
+                    );
+                  },
+                ),
+              ],),
+          ]),
         ),
         backgroundColor: Colors.white,
         elevation: 0.5,
