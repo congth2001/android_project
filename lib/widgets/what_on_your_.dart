@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../pages/create_post_page.dart';
 import '../pages/profile_page.dart';
 
 class WriteSomethingWidget extends StatelessWidget {
@@ -22,7 +23,7 @@ class WriteSomethingWidget extends StatelessWidget {
                     elevation: 0,
                     padding: EdgeInsets.only(left: -1)
                   ),
-                  child:CircleAvatar(
+                  child: CircleAvatar(
                     radius: 24.0,
                     backgroundImage: AssetImage('assets/Mike Tyler.jpg'),
                   ),
@@ -49,7 +50,12 @@ class WriteSomethingWidget extends StatelessWidget {
                         const Text(" What's on your mind?", style: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w400)),
                       ],
                     ),
-                    onPressed: () => {},
+                    onPressed: () => {
+                      Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => CreatePostPage()),
+                    )
+                    },
                   ),
                 ),
 
