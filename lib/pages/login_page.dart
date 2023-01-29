@@ -146,10 +146,7 @@ class LoginPageState extends State<LoginPage> {
                                         )
                                       ]));
                         } else {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => HomePage()),
-                          );
+                           Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (BuildContext context) => HomePage()), (route) => false);
                         }
                       }
                     },

@@ -1,3 +1,4 @@
+import 'package:fakebook/pages/create_post/create_post_main.dart';
 import 'package:flutter/material.dart';
 
 import '../pages/create_post_page.dart';
@@ -44,11 +45,20 @@ class WriteSomethingWidget extends StatelessWidget {
                       side: BorderSide(color: Colors.grey.shade400),
                       shape: const StadiumBorder(),
                     ),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(" What's on your mind?", style: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w400)),
-                      ],
+                    child: InkWell(
+                      hoverColor: Colors.white,
+                      onTap: (){
+                        Navigator.push(
+                            context, 
+                            MaterialPageRoute(builder: (context)=> CreatePostMain())
+                          );
+                      },
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(" What's on your mind?", style: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w400)),
+                        ],
+                      ),
                     ),
                     onPressed: () => {
                       Navigator.push(

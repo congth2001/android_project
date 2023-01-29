@@ -3,6 +3,9 @@ import 'package:fakebook/models/post.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:like_button/like_button.dart';
 
+import '../shared/font_size.dart';
+import 'comment_widget.dart';
+
 class PostWidget extends StatelessWidget {
 
   Post post;
@@ -18,6 +21,7 @@ class PostWidget extends StatelessWidget {
       child: Column(
         children: [
           Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               CircleAvatar(
                 backgroundImage: AssetImage(post.profileImageUrl),
@@ -33,6 +37,202 @@ class PostWidget extends StatelessWidget {
                   Text(post.time)
                 ],
               ),
+              Spacer(),
+              IconButton(
+                onPressed: (){
+                  if(post.username == 'Sam Wilson'){
+                    showModalBottomSheet(
+                        context: context,
+                        builder: (BuilderContext) {
+                          return SizedBox(
+                              height: 130,
+                              child: Container(
+                                  padding: const EdgeInsets.all(8),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      InkWell(
+                                        hoverColor: Colors.white,
+                                        onTap: () {},
+                                        child: Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            Icon(Icons.notifications_off,
+                                                color: Colors.black),
+                                            SizedBox(width: 10),
+                                            Text('Turn off notifications for this post',
+                                                style: TextStyle(
+                                                    fontSize: 14,
+                                                    color: Colors.black,
+                                                    )),
+                                          ],
+                                        ),
+                                      ),
+                                      SizedBox(height: 15),
+                                      InkWell(
+                                        hoverColor: Colors.white,
+                                        onTap: () {
+                                          showDialog(
+                      context: context,
+                      builder: (BuildContext context) => AlertDialog(
+                        insetPadding: EdgeInsets.symmetric(horizontal: 16),
+                              title: Text(
+                                  'Delete post?',
+                                  style: TextStyle(
+                                      fontSize: FontSize.titleSize,
+                                      fontWeight: FontWeight.bold)),
+                              content: Text(
+                                  "You can edit the post if you need to make changes.",
+                                  style: TextStyle(
+                                      color: Color.fromARGB(255, 88, 88, 88),
+                                      fontSize: FontSize.contentSize)),
+                              actions: [
+                                TextButton(
+                                  child: Text('DELETE',
+                                      style: TextStyle(
+                                          fontSize: FontSize.contentSize, color: Colors.blue)),
+                                  onPressed: () {
+                                    
+                                  },
+                                ),
+                                TextButton(
+                                  child: Text('EDIT',
+                                      style: TextStyle(
+                                          fontSize: FontSize.contentSize,
+                                          color: Colors.black)),
+                                  onPressed: () {
+                                    
+                                  },
+                                ),
+                                TextButton(
+                                  child: Text('CANCEL',
+                                      style: TextStyle(
+                                          fontSize: FontSize.contentSize,
+                                          color: Colors.black)),
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                              ]));
+                                        },
+                                        child: Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            Icon(Icons.delete,
+                                                color: Colors.black),
+                                            SizedBox(width: 10),
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text('Delete post',
+                                                    style: TextStyle(
+                                                        fontSize: 14,
+                                                        color: Colors.black,
+                                                        )),
+                                              ],
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                      SizedBox(height: 15),
+                                      InkWell(
+                                        hoverColor: Colors.white,
+                                        onTap: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            Icon(Icons.edit,
+                                                color: Colors.black),
+                                            SizedBox(width: 10),
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text('Edit post',
+                                                    style: TextStyle(
+                                                        fontSize: 14,
+                                                        color: Colors.black,
+                                                        )),
+                                              ],
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                      SizedBox(height: 10)
+                                    ],
+                                  )));});
+                  }else{
+                    showModalBottomSheet(
+                        context: context,
+                        builder: (BuilderContext) {
+                          return SizedBox(
+                              height: 100,
+                              child: Container(
+                                  padding: const EdgeInsets.all(8),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      InkWell(
+                                        hoverColor: Colors.white,
+                                        onTap: () {},
+                                        child: Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            Icon(Icons.report,
+                                                color: Colors.black),
+                                            SizedBox(width: 10),
+                                            Text('Report post',
+                                                style: TextStyle(
+                                                    fontSize: 14,
+                                                    color: Colors.black,
+                                                    )),
+                                          ],
+                                        ),
+                                      ),
+                                      
+                                      SizedBox(height: 15),
+                                      InkWell(
+                                        hoverColor: Colors.white,
+                                        onTap: () {
+                                          
+                                        },
+                                        child: Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            Icon(Icons.notifications,
+                                                color: Colors.black),
+                                            SizedBox(width: 10),
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text('Turn on notifications for this post',
+                                                    style: TextStyle(
+                                                        fontSize: 14,
+                                                        color: Colors.black,
+                                                        )),
+                                              ],
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                      SizedBox(height: 10)
+                                    ],
+                                  )));});
+                  }
+                },
+                icon: Icon(Icons.more_horiz, color: Colors.black)
+              )
             ],
           ),
 
@@ -61,8 +261,7 @@ class PostWidget extends StatelessWidget {
               ),
               Row(
                 children: [
-                  Text('${post.comments} comments  •  '),
-                  Text('${post.shares} shares'),
+                  Text('${post.comments} comments'),
                 ],
               ),
             ],
@@ -105,7 +304,12 @@ class PostWidget extends StatelessWidget {
                 height: 45,
                 child: (
                   MaterialButton(
-                      onPressed: () {  },
+                      onPressed: () { 
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context)=>CommentPage())
+                        );
+                       },
                       child: Row(children: [
                         Icon(FontAwesomeIcons.message, color: Colors.black54, size: 20.0),
                         Text('  Comment', style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w400))
@@ -115,20 +319,6 @@ class PostWidget extends StatelessWidget {
                 )
               ),
 
-              Container(
-                width: MediaQuery.of(context).size.width/3-10,
-                height: 45,
-                child: (
-                    MaterialButton(
-                        onPressed: () {  },
-                        child: Row(children: [
-                          Icon(FontAwesomeIcons.share, color: Colors.black54, size: 20.0),
-                          Text('  Share', style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w400))
-                        ],
-                          mainAxisAlignment: MainAxisAlignment.center,)
-                    )
-                ),
-              ),
             ],
           )
         ],

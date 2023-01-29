@@ -1,23 +1,49 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'dart:async';
+import 'package:fakebook/pages/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
 import '../../shared/font_size.dart';
+import 'feelings_activities_main.dart';
 
 class CreatePostMain extends StatefulWidget {
-  const CreatePostMain({Key? key}) : super(key: key);
+  final String? emoijOrActivityImage;
+  final String? emoijOrActivityName;
+  final String? emojiOrActivityType;
+  const CreatePostMain({Key? key, this.emoijOrActivityImage, this.emoijOrActivityName, this.emojiOrActivityType}) : super(key: key);
 
   @override
   State<CreatePostMain> createState() => _CreatePostMainState();
 }
 
 class _CreatePostMainState extends State<CreatePostMain> {
+  final contentController = TextEditingController();
+  bool isDisabled = true;
+  bool isFocus = false;
+
+  @override
+  void dispose() {
+    contentController.dispose();
+    super.dispose();
+  }
+  @override
+  void initState(){
+    super.initState();
+    if(widget.emojiOrActivityType != null && widget.emojiOrActivityType != ''){
+      setState((){
+        isDisabled = false;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
@@ -25,7 +51,128 @@ class _CreatePostMainState extends State<CreatePostMain> {
             leading: IconButton(
                 icon:
                     const Icon(Icons.arrow_back, color: Colors.black, size: 20),
-                onPressed: () {}),
+                onPressed: () {
+                  if (isDisabled)
+                    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (BuildContext context) => HomePage()), (route) => false);
+                  else {
+                    showModalBottomSheet(
+                        context: context,
+                        builder: (BuilderContext) {
+                          return SizedBox(
+                              height: 200,
+                              child: Container(
+                                  padding: const EdgeInsets.all(8),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        'Want to finish your post later?',
+                                        style: TextStyle(
+                                            fontSize: 12, color: Colors.black),
+                                      ),
+                                      SizedBox(height: 5),
+                                      Text(
+                                        'Save it as a draft or you can continue editing it.',
+                                        style: TextStyle(
+                                            fontSize: 11,
+                                            color: Colors.grey[500]),
+                                      ),
+                                      SizedBox(height: 15),
+                                      InkWell(
+                                        hoverColor: Colors.white,
+                                        onTap: () {
+                                          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (BuildContext context) => HomePage()), (route) => false);
+                                        },
+                                        child: Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            Icon(Icons.bookmark_border,
+                                                color: Colors.grey),
+                                            SizedBox(width: 10),
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text('Save as draft',
+                                                    style: TextStyle(
+                                                        fontSize: 14,
+                                                        color: Colors.black,
+                                                        fontWeight:
+                                                            FontWeight.bold)),
+                                                Text(
+                                                    "You'll receive a notification with your draft.",
+                                                    style: TextStyle(
+                                                        color: Colors.grey[500],
+                                                        fontSize: 10))
+                                              ],
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                      SizedBox(height: 15),
+                                      InkWell(
+                                        hoverColor: Colors.white,
+                                        onTap: () {
+                                          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (BuildContext context) => HomePage()), (route) => false);
+                                        },
+                                        child: Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            Icon(Icons.delete,
+                                                color: Colors.grey),
+                                            SizedBox(width: 10),
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text('Discard post',
+                                                    style: TextStyle(
+                                                        fontSize: 14,
+                                                        color: Colors.black,
+                                                        fontWeight:
+                                                            FontWeight.bold)),
+                                              ],
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                      SizedBox(height: 15),
+                                      InkWell(
+                                        hoverColor: Colors.white,
+                                        onTap: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            Icon(Icons.check,
+                                                color: Colors.blue),
+                                            SizedBox(width: 10),
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text('Continue editing',
+                                                    style: TextStyle(
+                                                        fontSize: 14,
+                                                        color: Colors.blue,
+                                                        fontWeight:
+                                                            FontWeight.bold)),
+                                              ],
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                      SizedBox(height: 15)
+                                    ],
+                                  )));
+                        });
+                  }
+                }),
             backgroundColor: Colors.white,
             title: Row(
               children: [
@@ -38,23 +185,29 @@ class _CreatePostMainState extends State<CreatePostMain> {
                       color: Colors.blue,
                       borderRadius: BorderRadius.all(Radius.circular(6))),
                   child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor:
+                            isDisabled ? Colors.grey[200] : Colors.blue,
+                        shadowColor: Colors.white),
                     onPressed: () {},
-                    child: Text('POST', style: TextStyle(color: Colors.white)),
+                    child: Text('POST',
+                        style: TextStyle(
+                            color:
+                                isDisabled ? Colors.grey[400] : Colors.white)),
                   ),
                 )
               ],
             )),
         body: SingleChildScrollView(
           child: Container(
-            color: Colors.red,
-            padding: const EdgeInsets.all(8),
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
             child: Column(children: [
               SizedBox(height: 10),
               Row(
                 children: [
                   Container(
-                    height: 45,
-                    width: 45,
+                    height: 40,
+                    width: 40,
                     margin: const EdgeInsets.only(left: 8),
                     decoration: BoxDecoration(
                         shape: BoxShape.circle,
@@ -63,12 +216,30 @@ class _CreatePostMainState extends State<CreatePostMain> {
                             image: AssetImage("assets/andrew.jpg"))),
                   ),
                   SizedBox(width: 5),
-                  Column(children: [
-                    Text('Andrew',
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                            fontSize: FontSize.titleSize)),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                    Row(
+                      // ignore: prefer_const_literals_to_create_immutables
+                      children: [
+                        Text('Andrew',
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: FontSize.contentSize)),
+                        if(widget.emoijOrActivityName != null && widget.emoijOrActivityName != '') Text(' - '),
+                        if(widget.emoijOrActivityImage !=null && widget.emoijOrActivityImage != '') CircleAvatar(
+                          backgroundImage:
+                              AssetImage(widget.emoijOrActivityImage ?? ''),
+                          radius: 10,
+                        ),
+                        Text(' '),
+                        if(widget.emoijOrActivityName != null && widget.emojiOrActivityType == 'emoji' && widget.emoijOrActivityName != '') Text('Feeling', style: TextStyle(fontSize: FontSize.contentSize, color: Colors.grey)),
+                        Text(' '),
+                        Text(widget.emoijOrActivityName ?? '', style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: FontSize.contentSize)),
+                        if(widget.emoijOrActivityName != null && widget.emoijOrActivityName != '') Text('.')
+                      ],
+                    ),
                     SizedBox(height: 4),
                     Container(
                         height: 20,
@@ -87,70 +258,130 @@ class _CreatePostMainState extends State<CreatePostMain> {
                             ])),
                   ])
                 ],
-              )
-              ,
+              ),
               Container(
-                color: Colors.green,
-                height: 500,
-                width: 200,
-                child: TextField(
-                  maxLines: 20,
-                ))
+                  width: width - 32,
+                  child: Focus(
+                    onFocusChange: (hasFocus) {
+                      setState(() {
+                        isFocus = true;
+                      });
+                    },
+                    child: TextField(
+                      controller: contentController,
+                      onChanged: (text) {
+                        if(widget.emojiOrActivityType == null || widget.emojiOrActivityType == ''){
+                          if(text.isNotEmpty){
+                            setState((){
+                              isDisabled = false;
+                            });
+                          }else{
+                            setState((){
+                              isDisabled = true;
+                            });
+                            }
+                          }
+                        
+                      },
+                      maxLines: null,
+                      style: TextStyle(fontSize: 20),
+                      decoration: InputDecoration(
+                          hintText: "What's on your mind?",
+                          hintStyle: TextStyle(color: Colors.grey[400]),
+                          border: InputBorder.none),
+                    ),
+                  )),
             ]),
           ),
         ),
-        bottomSheet: Container(
-            height: 90,
-            decoration: BoxDecoration(
-                color: Colors.white,
-                border: Border(top: BorderSide(color: Colors.grey))),
-            child: Column(
-              children: [
-                Container(
-                  width: double.infinity,
-                  height: 40,
-                  padding: const EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      border: Border(
-                        bottom: BorderSide(color: Colors.grey),
-                      )),
-                  child: TextButton(
-                      onPressed: () {},
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Icon(Icons.photo_library, color: Colors.green),
-                          SizedBox(width: 8),
-                          Text('Photo/video',
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: FontSize.contentSize)),
-                        ],
-                      )),
-                ),
-                Container(
-                  width: double.infinity,
-                  height: 40,
-                  padding: const EdgeInsets.all(8),
-                  decoration: BoxDecoration(
+        bottomSheet: !isFocus
+            ? Container(
+                height: 90,
+                decoration: BoxDecoration(
                     color: Colors.white,
-                  ),
-                  child: TextButton(
+                    border: Border(top: BorderSide(color: Colors.grey))),
+                child: Column(
+                  children: [
+                    Container(
+                      width: double.infinity,
+                      height: 40,
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          border: Border(
+                            bottom: BorderSide(color: Colors.grey),
+                          )),
+                      child: TextButton(
+                          onPressed: () {},
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Icon(Icons.photo_library, color: Colors.green),
+                              SizedBox(width: 8),
+                              Text('Photo/video',
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: FontSize.contentSize)),
+                            ],
+                          )),
+                    ),
+                    Container(
+                      width: double.infinity,
+                      height: 40,
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                      ),
+                      child: TextButton(
+                          onPressed: () {
+                            Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (BuildContext context) => FeelingsAndActivities(
+                              imageUrl: widget.emoijOrActivityImage ?? '',
+                              name: widget.emoijOrActivityName ?? '',
+                              type: widget.emojiOrActivityType ?? ''
+                            )), (route) => false);
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Icon(Icons.insert_emoticon, color: Colors.orange),
+                              SizedBox(width: 8),
+                              Text('Feeling/activity',
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: FontSize.contentSize)),
+                            ],
+                          )),
+                    )
+                  ],
+                ))
+            : Container(
+                height: 40,
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    border: Border(
+                        top: BorderSide(color: Colors.grey),
+                        bottom: BorderSide(color: Colors.grey))),
+                child: Row(
+                  children: [
+                    Text('Add to your post'),
+                    Spacer(),
+                    IconButton(
                       onPressed: () {},
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Icon(Icons.insert_emoticon, color: Colors.orange),
-                          SizedBox(width: 8),
-                          Text('Feeling/activity',
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: FontSize.contentSize)),
-                        ],
-                      )),
-                )
-              ],
-            )));
+                      icon: Icon(Icons.photo_library, color: Colors.green),
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (BuildContext context) => FeelingsAndActivities(
+                          imageUrl: widget.emoijOrActivityImage ?? '',
+                          name: widget.emoijOrActivityName ?? '',
+                          type: widget.emojiOrActivityType ?? ''
+                        )), (route) => false);
+                      },
+                      icon: Icon(Icons.insert_emoticon, color: Colors.orange),
+                    )
+                  ],
+                ),
+              ));
   }
 }
