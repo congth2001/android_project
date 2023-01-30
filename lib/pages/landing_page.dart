@@ -19,6 +19,7 @@ class LandingPage extends StatefulWidget {
 class _LandingPageState extends State<LandingPage> {
   String username = "";
   bool showAccount = true;
+  String avatar = "";
 
   @override
   void initState() {
@@ -40,6 +41,7 @@ class _LandingPageState extends State<LandingPage> {
       // update username
       setState(() {
         username = usernameTmp.toString();
+        avatar = prefs.getString('avatar').toString();
       });
     }
   }
@@ -78,8 +80,7 @@ class _LandingPageState extends State<LandingPage> {
                                 Container(
                                     margin: const EdgeInsets.only(right: 20),
                                     child: CircleAvatar(
-                                      backgroundImage:
-                                          AssetImage('assets/andrew.jpg'),
+                                      backgroundImage: NetworkImage(avatar),
                                       radius: 25,
                                     )),
                                 Text(username.toString(),

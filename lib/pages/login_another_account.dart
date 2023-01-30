@@ -92,11 +92,6 @@ class _LoginAnotherAccountState extends State<LoginAnotherAccount> {
                   height: 30,
                   child: ElevatedButton(
                       onPressed: () {
-                        //     Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(builder: (context) => HomePage()),
-                        //
-                        // );
                         var phoneNumber = phonenumberController.text + "";
                         var password = passwordController.text + "";
                         UserRequest.login(phoneNumber, password).then((result) {

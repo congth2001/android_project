@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'dart:convert';
+
 import 'package:fakebook/network/user_request.dart';
 import 'package:fakebook/pages/create_account/creating_account.dart';
 import 'package:flutter/material.dart';
@@ -109,13 +111,21 @@ class _TermsAndPrivacyPageState extends State<TermsAndPrivacyPage> {
           onPressed: () {
             // Call API
             UserRequest.register(username, phoneNumber, password)
-                .then((result) {
-              print(result);
-              // Direct to next page
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => CreatingAccountPage()));
+                .then((res) async {
+              if (res.statusCode == 201) {
+                print(res.body);
+                final user = jsonDecode(res.body);
+                // Obtain shared preferences.
+                final prefs = await SharedPreferences.getInstance();
+                // Save an String value to 'username' key.
+                await prefs.setString('userID', user['data']['id']);
+                await prefs.setString('avatar', user['data']['avatar']);
+                // Direct to next page
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => CreatingAccountPage()));
+              }
             });
           },
           child: Text('Sign up', style: TextStyle(color: Colors.white)),
