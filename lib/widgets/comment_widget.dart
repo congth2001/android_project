@@ -3,6 +3,8 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:like_button/like_button.dart';
+import 'who_like.dart';
+import '../pages/profile_page.dart';
 
 import '../models/comment.dart';
 
@@ -26,14 +28,22 @@ class _CommentPageState extends State<CommentPage> {
         automaticallyImplyLeading: false,
         title: Row(
           children: [
-            Row(
+            InkWell(
+              hoverColor: Colors.white,
+              onTap: (){
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context)=>WhoLikePage())
+                );
+              },
+            child: Row(
               children: [
                 Icon(Icons.thumb_up, color: Colors.blue, size: 20),
                 SizedBox(width: 5),
                 Text('190', style: TextStyle(color: Colors.black, fontSize: 14)),
                 Icon(Icons.keyboard_arrow_right, color: Colors.black)
               ],
-            ),
+            )),
             Spacer(),
             LikeButton(
                       size: 60.0,
@@ -64,7 +74,15 @@ class _CommentPageState extends State<CommentPage> {
           var comment = listOfComments.elementAt(index);
             return Row(
               children: [
-                Container(
+                InkWell(
+                  hoverColor: Colors.white,
+                  onTap: (){
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context)=>ProfilePage())
+                    );
+                  },
+                child: Container(
                   height: 30,
                   width: 30,
                   decoration: BoxDecoration(
@@ -72,7 +90,7 @@ class _CommentPageState extends State<CommentPage> {
                       image: DecorationImage(
                           fit: BoxFit.cover,
                           image: AssetImage(comment.imageUrlUser))),
-                ),
+                )),
                 SizedBox(width: 10),
                 Expanded(
                     child: Column(
@@ -127,7 +145,7 @@ class _CommentPageState extends State<CommentPage> {
                   },
                   decoration: InputDecoration(
                       contentPadding: EdgeInsets.all(0),
-                      hintText: 'Aa',
+                      hintText: 'Write a comment...',
                       hintStyle: TextStyle(color: Colors.grey[500]),
                       suffixIcon:
                           Icon(Icons.tag_faces, color: Colors.blue, size: 18),
