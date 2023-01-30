@@ -1,5 +1,5 @@
-class Post{
-  String profileImageUrl;
+class Post {
+  String profileavatar;
   String username;
   String time;
   String content;
@@ -7,7 +7,7 @@ class Post{
   int comments;
 
   Post({
-    required this.profileImageUrl,
+    required this.profileavatar,
     required this.username,
     required this.time,
     required this.content,
@@ -17,9 +17,44 @@ class Post{
 }
 
 List<Post> posts = [
-  new Post(profileImageUrl: 'assets/Sam Wilson.jpg', username: 'Sam Wilson', time: '5h', content: 'Hey guys whats up, This is Sam Wilson. I am currently in singapore. Came here to make some amazing memories', likes: 63, comments: 11),
-  new Post(profileImageUrl: 'assets/jeremy.jpg', username: 'Jeremy', time: '13h', content: 'I am going to make a Flutter complete course, where i will be teaching all the things that a developer would need to know in order to become a great flutter developer. Course is for beginners, and will be taught everything related to flutter from scratch!!', likes: 52, comments: 1),
-  new Post(profileImageUrl: 'assets/mathew.jpg', username: 'Mathew Hallberg', time: '2d', content: 'Hey guys this is Mathew, I recently created a cool AR/VR application and pushed it to github, interested people can go and see the working of the app. I hope you guys like it!', likes: 61, comments: 3),
-  new Post(profileImageUrl: 'assets/eddison.jpg', username: 'Eddison', time: '1w', content: 'Good afternoon people, hope you are doing well. STAY HOME STAY SAFE. Hope you are healthy and happy. Wish you good health guys :)', likes: 233, comments: 6),
-  new Post(profileImageUrl: 'assets/olivia.jpg', username: 'Olivia', time: '3w', content: 'I am starting a job in Los Angeles next week, this is my first ever job. Wish me luck guys', likes: 77, comments: 7),
+  new Post(
+      profileavatar: 'assets/Sam Wilson.jpg',
+      username: 'Sam Wilson',
+      time: '5h',
+      content:
+          'Hey guys whats up, This is Sam Wilson. I am currently in singapore. Came here to make some amazing memories',
+      likes: 63,
+      comments: 11),
+  new Post(
+      profileavatar: 'assets/jeremy.jpg',
+      username: 'Jeremy',
+      time: '13h',
+      content:
+          'I am going to make a Flutter complete course, where i will be teaching all the things that a developer would need to know in order to become a great flutter developer. Course is for beginners, and will be taught everything related to flutter from scratch!!',
+      likes: 52,
+      comments: 1),
+  new Post(
+      profileavatar: 'assets/mathew.jpg',
+      username: 'Mathew Hallberg',
+      time: '2d',
+      content:
+          'Hey guys this is Mathew, I recently created a cool AR/VR application and pushed it to github, interested people can go and see the working of the app. I hope you guys like it!',
+      likes: 61,
+      comments: 3),
+  new Post(
+      profileavatar: 'assets/eddison.jpg',
+      username: 'Eddison',
+      time: '1w',
+      content:
+          'Good afternoon people, hope you are doing well. STAY HOME STAY SAFE. Hope you are healthy and happy. Wish you good health guys :)',
+      likes: 233,
+      comments: 6),
+  new Post(
+      profileavatar: 'assets/olivia.jpg',
+      username: 'Olivia',
+      time: '3w',
+      content:
+          'I am starting a job in Los Angeles next week, this is my first ever job. Wish me luck guys',
+      likes: 77,
+      comments: 7),
 ];

@@ -2,12 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:fakebook/models/user_notification.dart';
 
 class NotificationWidget extends StatelessWidget {
-
   final UserNotification notification;
 
-  NotificationWidget({
-    required this.notification
-  });
+  NotificationWidget({required this.notification});
 
   @override
   Widget build(BuildContext context) {
@@ -22,18 +19,19 @@ class NotificationWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               CircleAvatar(
-                backgroundImage: AssetImage(notification.imageUrl),
+                backgroundImage: AssetImage(notification.avatar),
                 radius: 35.0,
               ),
-
               SizedBox(width: 15.0),
-
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text(notification.content, style: TextStyle(fontSize: 17.0, fontWeight: FontWeight.bold)),
-                  Text(notification.time, style: TextStyle(fontSize: 15.0, color: Colors.grey)),
+                  Text(notification.content,
+                      style: TextStyle(
+                          fontSize: 17.0, fontWeight: FontWeight.bold)),
+                  Text(notification.time,
+                      style: TextStyle(fontSize: 15.0, color: Colors.grey)),
                 ],
               ),
             ],

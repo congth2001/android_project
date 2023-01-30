@@ -14,7 +14,12 @@ class CreatePostMain extends StatefulWidget {
   final String? emoijOrActivityImage;
   final String? emoijOrActivityName;
   final String? emojiOrActivityType;
-  const CreatePostMain({Key? key, this.emoijOrActivityImage, this.emoijOrActivityName, this.emojiOrActivityType}) : super(key: key);
+  const CreatePostMain(
+      {Key? key,
+      this.emoijOrActivityImage,
+      this.emoijOrActivityName,
+      this.emojiOrActivityType})
+      : super(key: key);
 
   @override
   State<CreatePostMain> createState() => _CreatePostMainState();
@@ -30,11 +35,13 @@ class _CreatePostMainState extends State<CreatePostMain> {
     contentController.dispose();
     super.dispose();
   }
+
   @override
-  void initState(){
+  void initState() {
     super.initState();
-    if(widget.emojiOrActivityType != null && widget.emojiOrActivityType != ''){
-      setState((){
+    if (widget.emojiOrActivityType != null &&
+        widget.emojiOrActivityType != '') {
+      setState(() {
         isDisabled = false;
       });
     }
@@ -53,7 +60,11 @@ class _CreatePostMainState extends State<CreatePostMain> {
                     const Icon(Icons.arrow_back, color: Colors.black, size: 20),
                 onPressed: () {
                   if (isDisabled)
-                    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (BuildContext context) => HomePage()), (route) => false);
+                    Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                            builder: (BuildContext context) => HomePage()),
+                        (route) => false);
                   else {
                     showModalBottomSheet(
                         context: context,
@@ -82,7 +93,13 @@ class _CreatePostMainState extends State<CreatePostMain> {
                                       InkWell(
                                         hoverColor: Colors.white,
                                         onTap: () {
-                                          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (BuildContext context) => HomePage()), (route) => false);
+                                          Navigator.pushAndRemoveUntil(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder:
+                                                      (BuildContext context) =>
+                                                          HomePage()),
+                                              (route) => false);
                                         },
                                         child: Row(
                                           crossAxisAlignment:
@@ -115,7 +132,13 @@ class _CreatePostMainState extends State<CreatePostMain> {
                                       InkWell(
                                         hoverColor: Colors.white,
                                         onTap: () {
-                                          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (BuildContext context) => HomePage()), (route) => false);
+                                          Navigator.pushAndRemoveUntil(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder:
+                                                      (BuildContext context) =>
+                                                          HomePage()),
+                                              (route) => false);
                                         },
                                         child: Row(
                                           crossAxisAlignment:
@@ -217,46 +240,64 @@ class _CreatePostMainState extends State<CreatePostMain> {
                   ),
                   SizedBox(width: 5),
                   Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                    Row(
-                      // ignore: prefer_const_literals_to_create_immutables
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Andrew',
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                fontSize: FontSize.contentSize)),
-                        if(widget.emoijOrActivityName != null && widget.emoijOrActivityName != '') Text(' - '),
-                        if(widget.emoijOrActivityImage !=null && widget.emoijOrActivityImage != '') CircleAvatar(
-                          backgroundImage:
-                              AssetImage(widget.emoijOrActivityImage ?? ''),
-                          radius: 10,
+                        Row(
+                          // ignore: prefer_const_literals_to_create_immutables
+                          children: [
+                            Text('Andrew',
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: FontSize.contentSize)),
+                            if (widget.emoijOrActivityName != null &&
+                                widget.emoijOrActivityName != '')
+                              Text(' - '),
+                            if (widget.emoijOrActivityImage != null &&
+                                widget.emoijOrActivityImage != '')
+                              CircleAvatar(
+                                backgroundImage: AssetImage(
+                                    widget.emoijOrActivityImage ?? ''),
+                                radius: 10,
+                              ),
+                            Text(' '),
+                            if (widget.emoijOrActivityName != null &&
+                                widget.emojiOrActivityType == 'emoji' &&
+                                widget.emoijOrActivityName != '')
+                              Text('Feeling',
+                                  style: TextStyle(
+                                      fontSize: FontSize.contentSize,
+                                      color: Colors.grey)),
+                            Text(' '),
+                            Text(widget.emoijOrActivityName ?? '',
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: FontSize.contentSize)),
+                            if (widget.emoijOrActivityName != null &&
+                                widget.emoijOrActivityName != '')
+                              Text('.')
+                          ],
                         ),
-                        Text(' '),
-                        if(widget.emoijOrActivityName != null && widget.emojiOrActivityType == 'emoji' && widget.emoijOrActivityName != '') Text('Feeling', style: TextStyle(fontSize: FontSize.contentSize, color: Colors.grey)),
-                        Text(' '),
-                        Text(widget.emoijOrActivityName ?? '', style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: FontSize.contentSize)),
-                        if(widget.emoijOrActivityName != null && widget.emoijOrActivityName != '') Text('.')
-                      ],
-                    ),
-                    SizedBox(height: 4),
-                    Container(
-                        height: 20,
-                        width: 60,
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            border: Border.all(
-                                color: Color.fromARGB(255, 201, 200, 200)),
-                            borderRadius: BorderRadius.all(Radius.circular(4))),
-                        child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(Icons.public, color: Colors.grey, size: 12),
-                              SizedBox(width: 3),
-                              Text('Public', style: TextStyle(fontSize: 11))
-                            ])),
-                  ])
+                        SizedBox(height: 4),
+                        Container(
+                            height: 20,
+                            width: 60,
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                border: Border.all(
+                                    color: Color.fromARGB(255, 201, 200, 200)),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(4))),
+                            child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(Icons.public,
+                                      color: Colors.grey, size: 12),
+                                  SizedBox(width: 3),
+                                  Text('Public', style: TextStyle(fontSize: 11))
+                                ])),
+                      ])
                 ],
               ),
               Container(
@@ -270,18 +311,18 @@ class _CreatePostMainState extends State<CreatePostMain> {
                     child: TextField(
                       controller: contentController,
                       onChanged: (text) {
-                        if(widget.emojiOrActivityType == null || widget.emojiOrActivityType == ''){
-                          if(text.isNotEmpty){
-                            setState((){
+                        if (widget.emojiOrActivityType == null ||
+                            widget.emojiOrActivityType == '') {
+                          if (text.isNotEmpty) {
+                            setState(() {
                               isDisabled = false;
                             });
-                          }else{
-                            setState((){
+                          } else {
+                            setState(() {
                               isDisabled = true;
                             });
-                            }
                           }
-                        
+                        }
                       },
                       maxLines: null,
                       style: TextStyle(fontSize: 20),
@@ -334,11 +375,19 @@ class _CreatePostMainState extends State<CreatePostMain> {
                       ),
                       child: TextButton(
                           onPressed: () {
-                            Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (BuildContext context) => FeelingsAndActivities(
-                              imageUrl: widget.emoijOrActivityImage ?? '',
-                              name: widget.emoijOrActivityName ?? '',
-                              type: widget.emojiOrActivityType ?? ''
-                            )), (route) => false);
+                            Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (BuildContext context) =>
+                                        FeelingsAndActivities(
+                                            avatar:
+                                                widget.emoijOrActivityImage ??
+                                                    '',
+                                            name: widget.emoijOrActivityName ??
+                                                '',
+                                            type: widget.emojiOrActivityType ??
+                                                '')),
+                                (route) => false);
                           },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
@@ -372,11 +421,17 @@ class _CreatePostMainState extends State<CreatePostMain> {
                     ),
                     IconButton(
                       onPressed: () {
-                        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (BuildContext context) => FeelingsAndActivities(
-                          imageUrl: widget.emoijOrActivityImage ?? '',
-                          name: widget.emoijOrActivityName ?? '',
-                          type: widget.emojiOrActivityType ?? ''
-                        )), (route) => false);
+                        Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                                builder: (BuildContext context) =>
+                                    FeelingsAndActivities(
+                                        avatar:
+                                            widget.emoijOrActivityImage ?? '',
+                                        name: widget.emoijOrActivityName ?? '',
+                                        type:
+                                            widget.emojiOrActivityType ?? '')),
+                            (route) => false);
                       },
                       icon: Icon(Icons.insert_emoticon, color: Colors.orange),
                     )

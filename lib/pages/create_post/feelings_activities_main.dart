@@ -9,10 +9,11 @@ import 'package:flutter/src/widgets/framework.dart';
 import '../../shared/font_size.dart';
 
 class FeelingsAndActivities extends StatefulWidget {
-  final String? imageUrl;
+  final String? avatar;
   final String? name;
   final String? type;
-  const FeelingsAndActivities({Key? key, this.imageUrl, this.name, this.type}) : super(key: key);
+  const FeelingsAndActivities({Key? key, this.avatar, this.name, this.type})
+      : super(key: key);
 
   @override
   State<FeelingsAndActivities> createState() => _FeelingsAndActivitiesState();
@@ -30,7 +31,7 @@ class _FeelingsAndActivitiesState extends State<FeelingsAndActivities>
     controller.addListener(() {
       setState(() {});
     });
-    if(widget.imageUrl != null && widget.name != ''){
+    if (widget.avatar != null && widget.name != '') {
       setState(() {
         hasEmojiOrActivitySelected = true;
       });
@@ -49,89 +50,105 @@ class _FeelingsAndActivitiesState extends State<FeelingsAndActivities>
       length: 2,
       child: Scaffold(
           appBar: AppBar(
-            toolbarHeight: 100,
-            backgroundColor: Colors.white,
-            title: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    IconButton(
-                        icon: Icon(Icons.arrow_back,
-                            color: Colors.black, size: 20),
-                        onPressed: () {
-                          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (BuildContext context) => CreatePostMain(
-                            emoijOrActivityImage: widget.imageUrl ?? '',
-                            emoijOrActivityName: widget.name ?? '',
-                            emojiOrActivityType: widget.type ?? ''
-                          )), (route) => false);
-                        }),
-                    Text(
-                        controller.index == 0
-                            ? 'How are you feeling?'
-                            : 'What are you doing?',
-                        style: TextStyle(
-                            color: Colors.black, fontSize: FontSize.titleSize)),
-                  ],
-                ),
-                TabBar(
-                  unselectedLabelColor: Colors.grey,
-                  labelColor: Colors.blue,
-                  labelStyle: TextStyle(fontSize: 12),
-                  controller: controller,
-                  tabs: [Tab(text: 'FEELINGS'), Tab(text: 'ACTIVITIES')],
-                )
-              ],
-            ),
-            bottom: PreferredSize(
-              preferredSize: Size.fromHeight(40),
-              child: !hasEmojiOrActivitySelected ? Container(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  border: Border(
-                    top: BorderSide(color: Colors.grey),
-                    bottom: BorderSide(color: Colors.grey)
-                  )
-                ),
-                child: TextField(
-                  decoration: InputDecoration(
-                    hintText: 'Search',
-                    hintStyle: TextStyle(color: Colors.grey[400]),
-                    prefixIcon: Icon(Icons.search, color: Colors.grey),
-                    border: InputBorder.none,
-                    filled: true,
-                    fillColor: Colors.white,
+              toolbarHeight: 100,
+              backgroundColor: Colors.white,
+              title: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      IconButton(
+                          icon: Icon(Icons.arrow_back,
+                              color: Colors.black, size: 20),
+                          onPressed: () {
+                            Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (BuildContext context) =>
+                                        CreatePostMain(
+                                            emoijOrActivityImage:
+                                                widget.avatar ?? '',
+                                            emoijOrActivityName:
+                                                widget.name ?? '',
+                                            emojiOrActivityType:
+                                                widget.type ?? '')),
+                                (route) => false);
+                          }),
+                      Text(
+                          controller.index == 0
+                              ? 'How are you feeling?'
+                              : 'What are you doing?',
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: FontSize.titleSize)),
+                    ],
                   ),
-                ),
-              ) : Container(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                        if(widget.imageUrl != '') CircleAvatar(
-                          backgroundImage: AssetImage(widget.imageUrl ?? ''),
-                          radius: 15,
-                        ),
-                        SizedBox(width: 10),
-                        Text(widget.name ?? '', style: TextStyle(color: Colors.black, fontSize: 12)),
-                        Spacer(),
-                        IconButton(
-                          icon: Icon(Icons.clear, color: Colors.grey),
-                          onPressed: (){
-                            Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (BuildContext context) => CreatePostMain(
-                              emoijOrActivityImage: '',
-                              emoijOrActivityName: '',
-                              emojiOrActivityType: '',
-                            )), (route) => false);
-                          },
+                  TabBar(
+                    unselectedLabelColor: Colors.grey,
+                    labelColor: Colors.blue,
+                    labelStyle: TextStyle(fontSize: 12),
+                    controller: controller,
+                    tabs: [Tab(text: 'FEELINGS'), Tab(text: 'ACTIVITIES')],
+                  )
+                ],
+              ),
+              bottom: PreferredSize(
+                  preferredSize: Size.fromHeight(40),
+                  child: !hasEmojiOrActivitySelected
+                      ? Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 8, vertical: 8),
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              border: Border(
+                                  top: BorderSide(color: Colors.grey),
+                                  bottom: BorderSide(color: Colors.grey))),
+                          child: TextField(
+                            decoration: InputDecoration(
+                              hintText: 'Search',
+                              hintStyle: TextStyle(color: Colors.grey[400]),
+                              prefixIcon:
+                                  Icon(Icons.search, color: Colors.grey),
+                              border: InputBorder.none,
+                              filled: true,
+                              fillColor: Colors.white,
+                            ),
+                          ),
                         )
-                  ],
-                )
-              )
-            )
-          ),
+                      : Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              if (widget.avatar != '')
+                                CircleAvatar(
+                                  backgroundImage:
+                                      AssetImage(widget.avatar ?? ''),
+                                  radius: 15,
+                                ),
+                              SizedBox(width: 10),
+                              Text(widget.name ?? '',
+                                  style: TextStyle(
+                                      color: Colors.black, fontSize: 12)),
+                              Spacer(),
+                              IconButton(
+                                icon: Icon(Icons.clear, color: Colors.grey),
+                                onPressed: () {
+                                  Navigator.pushAndRemoveUntil(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (BuildContext context) =>
+                                              CreatePostMain(
+                                                emoijOrActivityImage: '',
+                                                emoijOrActivityName: '',
+                                                emojiOrActivityType: '',
+                                              )),
+                                      (route) => false);
+                                },
+                              )
+                            ],
+                          )))),
           body: TabBarView(
             controller: controller,
             children: [FeelingsTab(), ActivitiesTab()],

@@ -17,6 +17,12 @@ class ChatView extends StatefulWidget {
 }
 
 class _ChatViewState extends State<ChatView> {
+  List<User> users = List<User>.empty();
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -35,9 +41,9 @@ class _ChatViewState extends State<ChatView> {
                       child: InkWell(
                         onTap: () {
                           Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context)=>ChatSettings())
-                          );
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ChatSettings()));
                         },
                         child: Container(
                           height: 30,
@@ -79,9 +85,9 @@ class _ChatViewState extends State<ChatView> {
                       child: InkWell(
                         onTap: () {
                           Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context)=> ChatNewView())
-                          );
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ChatNewView()));
                         },
                         hoverColor: Colors.white,
                         child: Container(
@@ -121,7 +127,7 @@ class _ChatViewState extends State<ChatView> {
                                     image: DecorationImage(
                                         fit: BoxFit.cover,
                                         image: AssetImage(
-                                            user.imageUrl))),
+                                            user.avatar.toString()))),
                               ),
                               Positioned(
                                 bottom: 0,
@@ -138,7 +144,7 @@ class _ChatViewState extends State<ChatView> {
                               ),
                             ]),
                             SizedBox(height: 3),
-                            Text(user.name,
+                            Text(user.username.toString(),
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                     color: Colors.black, fontSize: 12))
@@ -147,48 +153,54 @@ class _ChatViewState extends State<ChatView> {
                       );
                     }),
                   )),
-                  SizedBox(height: 15),
+              SizedBox(height: 15),
               ...List.generate(users.length, (index) {
                 var user = users.elementAt(index);
                 return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
                   child: InkWell(
-                    onTap: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>ChatDetailView()));
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ChatDetailView()));
                     },
                     child: Row(
                       children: [
                         Stack(alignment: Alignment.bottomRight, children: [
-                                Container(
-                                  height: 45,
-                                  width: 45,
-                                  margin: const EdgeInsets.only(left: 8),
-                                  decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      image: DecorationImage(
-                                          fit: BoxFit.cover,
-                                          image: AssetImage(
-                                              user.imageUrl))),
-                                ),
-                                Positioned(
-                                  bottom: 0,
-                                  right: 0,
-                                  child: Container(
-                                      width: 12,
-                                      height: 12,
-                                      decoration: BoxDecoration(
-                                        color: Colors.green,
-                                        shape: BoxShape.circle,
-                                        border: Border.all(
-                                            color: Colors.white, width: 2),
-                                      )),
-                                ),
-                              ]),
+                          Container(
+                            height: 45,
+                            width: 45,
+                            margin: const EdgeInsets.only(left: 8),
+                            decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                image: DecorationImage(
+                                    fit: BoxFit.cover,
+                                    image: AssetImage(user.avatar.toString()))),
+                          ),
+                          Positioned(
+                            bottom: 0,
+                            right: 0,
+                            child: Container(
+                                width: 12,
+                                height: 12,
+                                decoration: BoxDecoration(
+                                  color: Colors.green,
+                                  shape: BoxShape.circle,
+                                  border:
+                                      Border.all(color: Colors.white, width: 2),
+                                )),
+                          ),
+                        ]),
                         SizedBox(width: 10),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(user.name, style: TextStyle(color: Colors.black, fontSize: FontSize.contentSize)),
+                            Text(user.username.toString(),
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: FontSize.contentSize)),
                             SizedBox(height: 5),
                             Text(
                               'Hello. My name is Lan. 12:43pm',

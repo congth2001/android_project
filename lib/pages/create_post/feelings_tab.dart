@@ -14,55 +14,58 @@ class FeelingsTab extends StatefulWidget {
 }
 
 class _FeelingsTabState extends State<FeelingsTab> {
-  String imageUrl = '';
+  String avatar = '';
   String name = '';
   String type = 'emoji';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: 
-          GridView(
-            gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-              maxCrossAxisExtent: 200,
-              childAspectRatio: 4/1,
-            ),
-            children: listOfFeelings.map((item) => InkWell(
-              hoverColor: Colors.white,
-              onTap: (){
-                setState(() {
-                  imageUrl = item.imageUrl;
-                  name = item.name;
-                });
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context)=>CreatePostMain(
-                    emoijOrActivityName: name,
-                    emoijOrActivityImage: imageUrl,
-                    emojiOrActivityType: type
-                  ))
-                );
-              },
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  border: Border.all(color: Colors.grey),
-                ),
-              padding: const EdgeInsets.all(8),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
+      body: GridView(
+        gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+          maxCrossAxisExtent: 200,
+          childAspectRatio: 4 / 1,
+        ),
+        children: listOfFeelings
+            .map(
+              (item) => InkWell(
+                hoverColor: Colors.white,
+                onTap: () {
+                  setState(() {
+                    avatar = item.avatar;
+                    name = item.name;
+                  });
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => CreatePostMain(
+                              emoijOrActivityName: name,
+                              emoijOrActivityImage: avatar,
+                              emojiOrActivityType: type)));
+                },
+                child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      border: Border.all(color: Colors.grey),
+                    ),
+                    padding: const EdgeInsets.all(8),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
                         CircleAvatar(
-                          backgroundImage: AssetImage(item.imageUrl),
+                          backgroundImage: AssetImage(item.avatar),
                           radius: 15,
                         ),
                         SizedBox(width: 10),
-                        Text(item.name, style: TextStyle(color: Colors.black, fontSize: 12))
-                  ],
-                )),
-            ),).toList(),
-          ),
+                        Text(item.name,
+                            style: TextStyle(color: Colors.black, fontSize: 12))
+                      ],
+                    )),
+              ),
+            )
+            .toList(),
+      ),
     );
   }
 }
