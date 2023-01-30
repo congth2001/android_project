@@ -1,26 +1,30 @@
 import 'package:flutter/material.dart';
 
 class CreatePostPage extends StatefulWidget {
-
   @override
   _CreatePostPage createState() => _CreatePostPage();
 }
 
-class _CreatePostPage extends State<CreatePostPage> with SingleTickerProviderStateMixin {
+class _CreatePostPage extends State<CreatePostPage>
+    with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children:[
-            Text('Create post', style: TextStyle(color: Colors.black, fontSize: 17, fontWeight: FontWeight.w400)),
+          children: [
+            Text('Create post',
+                style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 17,
+                    fontWeight: FontWeight.w400)),
             ElevatedButton(
               style: ElevatedButton.styleFrom(backgroundColor: Colors.grey),
               onPressed: () {},
               child: Text('Post'),
             )
-          ], 
+          ],
         ),
         leading: ElevatedButton(
           style: ElevatedButton.styleFrom(
@@ -30,9 +34,7 @@ class _CreatePostPage extends State<CreatePostPage> with SingleTickerProviderSta
             shape: const CircleBorder(),
           ),
           child: const Icon(Icons.arrow_back, color: Colors.black, size: 30),
-          onPressed: () => {
-            Navigator.pop(context)
-          },
+          onPressed: () => {Navigator.pop(context)},
         ),
         backgroundColor: Colors.white,
         elevation: 0.5,

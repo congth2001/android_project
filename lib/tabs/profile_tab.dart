@@ -19,7 +19,6 @@ class _ProfileTabState extends State<ProfileTab> {
     super.initState();
     UserRequest.getUserByID('638b1ad746be731d08acbcab').then((result) {
       setState(() {
-        print(result);
         user = result;
       });
     });
@@ -60,7 +59,7 @@ class _ProfileTabState extends State<ProfileTab> {
                       ),
                     ),
                     const SizedBox(height: 10.0),
-                    const Padding(
+                    Padding(
                       padding: EdgeInsets.only(left: 5),
                       child: Text(user.username.toString(),
                           style: TextStyle(

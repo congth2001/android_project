@@ -32,7 +32,7 @@ class UserRequest {
   }
 
   /*
-   * @desc get info all of users
+   * @desc API get info all of users
    * @date 30/1/2023 
    */
   static Future<List<User>> getAllUser() async {
@@ -53,7 +53,7 @@ class UserRequest {
   }
 
   /*
-   * @desc login
+   * @desc API login
    * @date 30/1/2023 
    */
   static Future login(String phoneNumber, String password) async {
@@ -78,7 +78,7 @@ class UserRequest {
   }
 
   /*
-   * @desc login
+   * @desc API lấy thông tin theo ID
    * @date 30/1/2023 
    */
   static Future getUserByID(String id) async {

@@ -2,12 +2,12 @@ import 'package:fakebook/tabs/profile_tab.dart';
 import 'package:flutter/material.dart';
 
 class ProfilePage extends StatefulWidget {
-
   @override
   _ProfilePageState createState() => _ProfilePageState();
 }
 
-class _ProfilePageState extends State<ProfilePage> with SingleTickerProviderStateMixin {
+class _ProfilePageState extends State<ProfilePage>
+    with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,7 +21,11 @@ class _ProfilePageState extends State<ProfilePage> with SingleTickerProviderStat
           ),
           child: Row(children: [
             Icon(Icons.search, color: Colors.grey[500]),
-            Text(' Search', style: TextStyle(color: Colors.grey[500], fontSize: 16,)),
+            Text(' Search',
+                style: TextStyle(
+                  color: Colors.grey[500],
+                  fontSize: 16,
+                )),
           ]),
           onPressed: () => {},
         ),
@@ -33,9 +37,7 @@ class _ProfilePageState extends State<ProfilePage> with SingleTickerProviderStat
             shape: const CircleBorder(),
           ),
           child: const Icon(Icons.arrow_back, color: Colors.black, size: 30),
-          onPressed: () => {
-            Navigator.pop(context)
-          },
+          onPressed: () => {Navigator.pop(context)},
         ),
         backgroundColor: Colors.white,
         elevation: 0.0,

@@ -1,60 +1,56 @@
 class Post {
-  String profileavatar;
-  String username;
-  String time;
-  String content;
-  int likes;
-  int comments;
+  List<String>? images;
+  Null? videos;
+  List<String>? like;
+  int? countComments;
+  bool? isLike;
+  String? sId;
+  String? author;
+  String? described;
+  String? createdAt;
+  String? updatedAt;
+  int? iV;
 
-  Post({
-    required this.profileavatar,
-    required this.username,
-    required this.time,
-    required this.content,
-    required this.likes,
-    required this.comments,
-  });
+  Post(
+      {this.images,
+      this.videos,
+      this.like,
+      this.countComments,
+      this.isLike,
+      this.sId,
+      this.author,
+      this.described,
+      this.createdAt,
+      this.updatedAt,
+      this.iV});
+
+  Post.fromJson(Map<String, dynamic> json) {
+    images = json['images'].cast<String>();
+    videos = json['videos'];
+    like = json['like'].cast<String>();
+    countComments = json['countComments'];
+    isLike = json['isLike'];
+    sId = json['_id'];
+    author = json['author'];
+    described = json['described'];
+    createdAt = json['createdAt'];
+    updatedAt = json['updatedAt'];
+    iV = json['__v'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['images'] = this.images;
+    data['videos'] = this.videos;
+    data['like'] = this.like;
+    data['countComments'] = this.countComments;
+    data['isLike'] = this.isLike;
+    data['_id'] = this.sId;
+    data['author'] = this.author;
+    data['described'] = this.described;
+    data['createdAt'] = this.createdAt;
+    data['updatedAt'] = this.updatedAt;
+    data['__v'] = this.iV;
+    return data;
+  }
 }
-
-List<Post> posts = [
-  new Post(
-      profileavatar: 'assets/Sam Wilson.jpg',
-      username: 'Sam Wilson',
-      time: '5h',
-      content:
-          'Hey guys whats up, This is Sam Wilson. I am currently in singapore. Came here to make some amazing memories',
-      likes: 63,
-      comments: 11),
-  new Post(
-      profileavatar: 'assets/jeremy.jpg',
-      username: 'Jeremy',
-      time: '13h',
-      content:
-          'I am going to make a Flutter complete course, where i will be teaching all the things that a developer would need to know in order to become a great flutter developer. Course is for beginners, and will be taught everything related to flutter from scratch!!',
-      likes: 52,
-      comments: 1),
-  new Post(
-      profileavatar: 'assets/mathew.jpg',
-      username: 'Mathew Hallberg',
-      time: '2d',
-      content:
-          'Hey guys this is Mathew, I recently created a cool AR/VR application and pushed it to github, interested people can go and see the working of the app. I hope you guys like it!',
-      likes: 61,
-      comments: 3),
-  new Post(
-      profileavatar: 'assets/eddison.jpg',
-      username: 'Eddison',
-      time: '1w',
-      content:
-          'Good afternoon people, hope you are doing well. STAY HOME STAY SAFE. Hope you are healthy and happy. Wish you good health guys :)',
-      likes: 233,
-      comments: 6),
-  new Post(
-      profileavatar: 'assets/olivia.jpg',
-      username: 'Olivia',
-      time: '3w',
-      content:
-          'I am starting a job in Los Angeles next week, this is my first ever job. Wish me luck guys',
-      likes: 77,
-      comments: 7),
-];
