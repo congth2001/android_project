@@ -19,7 +19,8 @@ class _ProfileTabState extends State<ProfileTab> {
     super.initState();
     UserRequest.getUserByID('638b1ad746be731d08acbcab').then((result) {
       setState(() {
-        user = result as User;
+        print(result);
+        user = result;
       });
     });
   }

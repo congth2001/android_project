@@ -10,15 +10,25 @@ class UserRequest {
   static var url = Uri();
 
   // get records list
-  static List<User> parseUser(List<dynamic> data) {
+  static List<User> parseUserList(List<dynamic> data) {
     try {
-      print('im here $data');
       List<User> users = data.map((model) => User.fromJson(model)).toList();
       return users;
     } catch (e) {
       print(e.toString());
     }
     return List<User>.empty();
+  }
+
+  // get user
+  static User parseUser(dynamic data) {
+    try {
+      User user = User.fromJson(data);
+      return user;
+    } catch (e) {
+      print(e.toString());
+    }
+    return User();
   }
 
   /*
@@ -34,7 +44,7 @@ class UserRequest {
     final data = jsonDecode(res.body);
     // check and return
     if (res.statusCode == 200) {
-      return compute(parseUser, data['data'] as List<dynamic>);
+      return compute(parseUserList, data['data'] as List<dynamic>);
     } else if (res.statusCode == 404) {
       throw Exception('Not Found');
     } else {
@@ -56,7 +66,7 @@ class UserRequest {
       final data = jsonDecode(res.body);
       // check and return
       if (res.statusCode == 200) {
-        return compute(parseUser, data['data'] as List<dynamic>);
+        return compute(parseUserList, data['data'] as List<dynamic>);
       } else if (res.statusCode == 404) {
         throw Exception('Not Found');
       } else {
@@ -84,11 +94,10 @@ class UserRequest {
         },
       );
       // get return data
-      final data = jsonDecode(res.body);
+      final resBody = jsonDecode(res.body);
       // check and return
       if (res.statusCode == 200) {
-        // data['data'] has jsonMap type
-        return data['data'] as dynamic;
+        return compute(parseUser, resBody['data'] as dynamic);
       } else if (res.statusCode == 404) {
         throw Exception('Not Found');
       } else {
