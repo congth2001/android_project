@@ -23,6 +23,7 @@ class _CommentPageState extends State<CommentPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        elevation: 0,
         toolbarHeight: 40,
         backgroundColor: Colors.white,
         automaticallyImplyLeading: false,
