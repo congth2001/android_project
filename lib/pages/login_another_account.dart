@@ -103,6 +103,35 @@ class _LoginAnotherAccountState extends State<LoginAnotherAccount> {
                               MaterialPageRoute(
                                   builder: (context) => HomePage()),
                             );
+                          }else{
+                            print(result.statusCode);
+                            String errorTitle = 'Incorrect Password';
+                            String errorDetail =
+                                'The password you entered is incorrect. Please try again.';
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) => AlertDialog(
+                                    insetPadding: EdgeInsets.symmetric(horizontal: 32),
+                                    title: Text(errorTitle,
+                                        style: TextStyle(
+                                            fontSize: FontSize.titleSize,
+                                            fontWeight: FontWeight.bold)),
+                                    content: Text(errorDetail,
+                                        style: TextStyle(
+                                            fontSize: FontSize.contentSize,
+                                            color: Color.fromARGB(
+                                                255, 88, 88, 88))),
+                                    actions: [
+                                      TextButton(
+                                        child: Text('OK',
+                                            style: TextStyle(
+                                                fontSize: FontSize.contentSize,
+                                                color: Colors.black)),
+                                        onPressed: () {
+                                          Navigator.pop(context, 'Cancel');
+                                        },
+                                      )
+                                    ]));
                           }
                         });
                       },

@@ -1,0 +1,23 @@
+{
+
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "android_project",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "android_project (profile mode)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "android_project (release mode)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        }
+    ]
+}

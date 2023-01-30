@@ -92,13 +92,14 @@ class UserRequest {
       final res = await http
           .post(url, body: {"phonenumber": phoneNumber, "password": password});
       // check and return
-      if (res.statusCode == 200) {
-        return res;
-      } else if (res.statusCode == 404) {
-        throw Exception('Not Found');
-      } else {
-        throw Exception('Can\'t get users');
-      }
+      // if (res.statusCode == 200) {
+      //   return res;
+      // } else if (res.statusCode == 404) {
+      //   throw Exception('Not Found');
+      // } else {
+      //   throw Exception('Can\'t get users');
+      // }
+      return res;
     } catch (e) {
       print(e.toString());
     }
