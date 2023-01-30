@@ -7,6 +7,7 @@ import 'package:fakebook/pages/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../shared/font_size.dart';
 
@@ -16,6 +17,28 @@ class LandingPage extends StatefulWidget {
 }
 
 class _LandingPageState extends State<LandingPage> {
+  String? username;
+  bool showAccount = true;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getData();
+  }
+
+  getData() async {
+    // Obtain shared preferences.
+    final prefs = await SharedPreferences.getInstance();
+    if (username == "" || username == null) {
+      print("I'm here");
+      setState(() {
+        username = prefs.getString('username');
+        showAccount = false;
+      });
+    }
+    print('landing $username, $showAccount');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,111 +52,115 @@ class _LandingPageState extends State<LandingPage> {
               children: [
                 Icon(Icons.facebook_rounded, size: 70, color: Colors.blue),
                 SizedBox(height: 30),
-                SizedBox(
-                    width: double.infinity,
-                    height: 80,
-                    child: TextButton(
-                        style: TextButton.styleFrom(
-                            foregroundColor: Colors.white,
-                            textStyle: TextStyle()),
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => LoginPage()),
-                          );
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(children: [
-                              Container(
-                                  margin: const EdgeInsets.only(right: 20),
-                                  child: CircleAvatar(
-                                    backgroundImage:
-                                        AssetImage('assets/andrew.jpg'),
-                                    radius: 25,
-                                  )),
-                              Text('Andrew',
-                                  style: TextStyle(
-                                      fontSize: FontSize.titleSize,
-                                      color: Colors.black))
-                            ]),
-                            PopupMenuButton(
-                              icon: Icon(Icons.more_vert,
-                                  color: Colors.black, size: 20),
-                              position: PopupMenuPosition.under,
-                              onSelected: (value) {
-                                if (value == 0) {
-                                  showDialog(
-                                      context: context,
-                                      builder: (BuildContext context) =>
-                                          AlertDialog(
-                                              title: Text(
-                                                  'Remove account from device',
-                                                  style: TextStyle(
-                                                      fontSize:
-                                                          FontSize.titleSize,
-                                                      fontWeight:
-                                                          FontWeight.bold)),
-                                              content: Text(
-                                                  "You'll need to enter your phone number or email and password to log in again.",
-                                                  style: TextStyle(
-                                                      color: Color.fromARGB(
-                                                          255, 88, 88, 88),
-                                                      fontSize: FontSize
-                                                          .contentSize)),
-                                              actions: [
-                                                TextButton(
-                                                  child: Text('CANCEL',
-                                                      style: TextStyle(
-                                                          fontSize: FontSize
-                                                              .contentSize,
-                                                          color: Colors.black)),
-                                                  onPressed: () {
-                                                    Navigator.pop(
-                                                        context, 'Cancel');
-                                                  },
-                                                ),
-                                                TextButton(
-                                                  child: Text('REMOVE ACCOUNT',
-                                                      style: TextStyle(
-                                                          fontSize: FontSize
-                                                              .contentSize,
-                                                          color: Color.fromARGB(
-                                                              255,
-                                                              10,
-                                                              90,
-                                                              156))),
-                                                  onPressed: () {
-                                                    Navigator.pop(
-                                                        context, 'Remove');
-                                                  },
-                                                ),
-                                              ]));
-                                }
-                              },
-                              itemBuilder: (BuildContext bc) {
-                                return const [
-                                  PopupMenuItem(
-                                    value: 0,
-                                    height: 30,
-                                    textStyle: TextStyle(
-                                        fontSize: FontSize.contentSize),
-                                    child: Text("Remove account from device"),
-                                  ),
-                                  PopupMenuItem(
-                                    value: 1,
-                                    height: 30,
-                                    textStyle: TextStyle(
-                                        fontSize: FontSize.contentSize),
-                                    child: Text("Mute push notifications"),
-                                  ),
-                                ];
-                              },
-                            )
-                          ],
-                        ))),
+                if (showAccount)
+                  SizedBox(
+                      width: double.infinity,
+                      height: 80,
+                      child: TextButton(
+                          style: TextButton.styleFrom(
+                              foregroundColor: Colors.white,
+                              textStyle: TextStyle()),
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => LoginPage()),
+                            );
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(children: [
+                                Container(
+                                    margin: const EdgeInsets.only(right: 20),
+                                    child: CircleAvatar(
+                                      backgroundImage:
+                                          AssetImage('assets/andrew.jpg'),
+                                      radius: 25,
+                                    )),
+                                Text(username.toString(),
+                                    style: TextStyle(
+                                        fontSize: FontSize.titleSize,
+                                        color: Colors.black))
+                              ]),
+                              PopupMenuButton(
+                                icon: Icon(Icons.more_vert,
+                                    color: Colors.black, size: 20),
+                                position: PopupMenuPosition.under,
+                                onSelected: (value) {
+                                  if (value == 0) {
+                                    showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) =>
+                                            AlertDialog(
+                                                title: Text(
+                                                    'Remove account from device',
+                                                    style: TextStyle(
+                                                        fontSize:
+                                                            FontSize.titleSize,
+                                                        fontWeight:
+                                                            FontWeight.bold)),
+                                                content: Text(
+                                                    "You'll need to enter your phone number or email and password to log in again.",
+                                                    style: TextStyle(
+                                                        color: Color.fromARGB(
+                                                            255, 88, 88, 88),
+                                                        fontSize: FontSize
+                                                            .contentSize)),
+                                                actions: [
+                                                  TextButton(
+                                                    child: Text('CANCEL',
+                                                        style: TextStyle(
+                                                            fontSize: FontSize
+                                                                .contentSize,
+                                                            color:
+                                                                Colors.black)),
+                                                    onPressed: () {
+                                                      Navigator.pop(
+                                                          context, 'Cancel');
+                                                    },
+                                                  ),
+                                                  TextButton(
+                                                    child: Text(
+                                                        'REMOVE ACCOUNT',
+                                                        style: TextStyle(
+                                                            fontSize: FontSize
+                                                                .contentSize,
+                                                            color:
+                                                                Color.fromARGB(
+                                                                    255,
+                                                                    10,
+                                                                    90,
+                                                                    156))),
+                                                    onPressed: () {
+                                                      Navigator.pop(
+                                                          context, 'Remove');
+                                                    },
+                                                  ),
+                                                ]));
+                                  }
+                                },
+                                itemBuilder: (BuildContext bc) {
+                                  return const [
+                                    PopupMenuItem(
+                                      value: 0,
+                                      height: 30,
+                                      textStyle: TextStyle(
+                                          fontSize: FontSize.contentSize),
+                                      child: Text("Remove account from device"),
+                                    ),
+                                    PopupMenuItem(
+                                      value: 1,
+                                      height: 30,
+                                      textStyle: TextStyle(
+                                          fontSize: FontSize.contentSize),
+                                      child: Text("Mute push notifications"),
+                                    ),
+                                  ];
+                                },
+                              )
+                            ],
+                          ))),
                 SizedBox(height: 20),
                 Container(
                   margin: const EdgeInsets.only(bottom: 10),

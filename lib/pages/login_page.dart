@@ -124,21 +124,23 @@ class LoginPageState extends State<LoginPage> {
                           showDialog(
                               context: context,
                               builder: (BuildContext context) => AlertDialog(
-                                insetPadding: EdgeInsets.symmetric(horizontal: 32),
+                                      insetPadding:
+                                          EdgeInsets.symmetric(horizontal: 32),
                                       title: Text(errorTitle,
                                           style: TextStyle(
                                               fontSize: FontSize.titleSize,
                                               fontWeight: FontWeight.bold)),
                                       content: Text(errorDetail,
                                           style: TextStyle(
-                                            fontSize: FontSize.contentSize,
+                                              fontSize: FontSize.contentSize,
                                               color: Color.fromARGB(
                                                   255, 88, 88, 88))),
                                       actions: [
                                         TextButton(
                                           child: Text('OK',
                                               style: TextStyle(
-                                                  fontSize: FontSize.contentSize,
+                                                  fontSize:
+                                                      FontSize.contentSize,
                                                   color: Colors.black)),
                                           onPressed: () {
                                             Navigator.pop(context, 'Cancel');
@@ -146,20 +148,29 @@ class LoginPageState extends State<LoginPage> {
                                         )
                                       ]));
                         } else {
-                           Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (BuildContext context) => HomePage()), (route) => false);
+                          Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (BuildContext context) =>
+                                      HomePage()),
+                              (route) => false);
                         }
                       }
                     },
-                    child: Text('LOG IN', style: TextStyle(fontSize: FontSize.contentSize),)),
+                    child: Text(
+                      'LOG IN',
+                      style: TextStyle(fontSize: FontSize.contentSize),
+                    )),
               ),
               SizedBox(height: 30),
               TextButton(
-                child: Text('Forgot password?', style: TextStyle(fontSize: FontSize.contentSize)),
+                child: Text('Forgot password?',
+                    style: TextStyle(fontSize: FontSize.contentSize)),
                 onPressed: () {
                   Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context)=> const FindAccountPage())
-                  );
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const FindAccountPage()));
                 },
               ),
               SizedBox(height: 90),

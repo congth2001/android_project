@@ -6,7 +6,6 @@ import 'package:fakebook/models/post.dart';
 import 'package:flutter/material.dart';
 
 class HomeTab extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -17,12 +16,13 @@ class HomeTab extends StatelessWidget {
           //OnlineWidget(),
           //SeparatorWidget(),
           StoriesWidget(),
-          for(Post post in posts) Column(
-            children: <Widget>[
-              SeparatorWidget(),
-              PostWidget(post: post),
-            ],
-          ),
+          for (Post post in posts)
+            Column(
+              children: <Widget>[
+                SeparatorWidget(),
+                PostWidget(post: post),
+              ],
+            ),
           SeparatorWidget(),
         ],
       ),

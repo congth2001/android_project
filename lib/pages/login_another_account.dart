@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 
 import 'find_account_page.dart';
 import 'home_page.dart';
+import 'package:fakebook/network/user_request.dart';
 
 class LoginAnotherAccount extends StatefulWidget {
   const LoginAnotherAccount({Key? key}) : super(key: key);
@@ -16,6 +17,15 @@ class LoginAnotherAccount extends StatefulWidget {
 
 class _LoginAnotherAccountState extends State<LoginAnotherAccount> {
   bool isVisible = true;
+  final passwordController = TextEditingController();
+  final phonenumberController = TextEditingController();
+
+  @override
+  void dispose() {
+    passwordController.dispose();
+    phonenumberController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,11 +47,15 @@ class _LoginAnotherAccountState extends State<LoginAnotherAccount> {
             SizedBox(
               height: 20,
             ),
-            Text('Tiếng việt * English * More.....', style: TextStyle(fontSize: 12),),
+            Text(
+              'Tiếng việt * English * More.....',
+              style: TextStyle(fontSize: 12),
+            ),
             SizedBox(height: 20),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: TextField(
+                controller: phonenumberController,
                 style: TextStyle(fontSize: FontSize.contentSize),
                 decoration: InputDecoration(
                   hintText: 'Phone or email',
@@ -51,6 +65,7 @@ class _LoginAnotherAccountState extends State<LoginAnotherAccount> {
             Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: TextField(
+                  controller: passwordController,
                   style: TextStyle(fontSize: FontSize.contentSize),
                   obscureText: isVisible,
                   decoration: InputDecoration(
@@ -75,16 +90,38 @@ class _LoginAnotherAccountState extends State<LoginAnotherAccount> {
               child: SizedBox(
                   width: double.infinity,
                   height: 30,
-                  child: ElevatedButton(onPressed: () {
-                    Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => HomePage()),
-                );
-                  }, child: Text('Log In', style: TextStyle(fontSize: FontSize.contentSize),))),
+                  child: ElevatedButton(
+                      onPressed: () {
+                        //     Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(builder: (context) => HomePage()),
+                        //
+                        // );
+                        var phoneNumber = phonenumberController.text + "";
+                        var password = passwordController.text + "";
+                        UserRequest.login(phoneNumber, password).then((result) {
+                          print(result);
+                          // Direct to next page
+                          if (result.statusCode == 200) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => HomePage()),
+                            );
+                          }
+                        });
+                      },
+                      child: Text(
+                        'Log In',
+                        style: TextStyle(fontSize: FontSize.contentSize),
+                      ))),
             ),
             SizedBox(height: 15),
             TextButton(
-              child: Text('Forgot password?', style: TextStyle(fontSize: FontSize.contentSize),),
+              child: Text(
+                'Forgot password?',
+                style: TextStyle(fontSize: FontSize.contentSize),
+              ),
               onPressed: () {
                 Navigator.push(
                   context,
@@ -103,13 +140,16 @@ class _LoginAnotherAccountState extends State<LoginAnotherAccount> {
                   child: ElevatedButton(
                       onPressed: () {
                         Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context)=>CreateNewAccount())
-                        );
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => CreateNewAccount()));
                       },
                       style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.green),
-                      child: Text('Create New Facebook Account', style: TextStyle(fontSize: FontSize.contentSize),))),
+                      child: Text(
+                        'Create New Facebook Account',
+                        style: TextStyle(fontSize: FontSize.contentSize),
+                      ))),
             ),
           ],
         ),
