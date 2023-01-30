@@ -2,6 +2,7 @@
 
 import 'package:fakebook/pages/create_account/create_account_password.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../shared/font_size.dart';
 import '../landing_page.dart';
 
@@ -13,7 +14,6 @@ class MobileNumberPage extends StatefulWidget {
 }
 
 class _MobileNumberPageState extends State<MobileNumberPage> {
-
   final mobileNumberController = TextEditingController();
 
   bool isValid = true;
@@ -28,14 +28,15 @@ class _MobileNumberPageState extends State<MobileNumberPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          toolbarHeight: 40,
+            toolbarHeight: 40,
             leading: IconButton(
                 icon: Icon(Icons.arrow_back, color: Colors.black, size: 20),
                 onPressed: () {
                   showDialog(
                       context: context,
                       builder: (BuildContext context) => AlertDialog(
-                        insetPadding: EdgeInsets.symmetric(horizontal: 16),
+                              insetPadding:
+                                  EdgeInsets.symmetric(horizontal: 16),
                               title: Text(
                                   'Do you want to stop creating your account?',
                                   style: TextStyle(
@@ -44,13 +45,14 @@ class _MobileNumberPageState extends State<MobileNumberPage> {
                               content: Text(
                                   "If you stop now, you'll lose any progress you've made.",
                                   style: TextStyle(
-                                    fontSize: FontSize.contentSize,
+                                      fontSize: FontSize.contentSize,
                                       color: Color.fromARGB(255, 88, 88, 88))),
                               actions: [
                                 TextButton(
                                   child: Text('Continue creating account',
                                       style: TextStyle(
-                                          fontSize: FontSize.contentSize, color: Colors.black)),
+                                          fontSize: FontSize.contentSize,
+                                          color: Colors.black)),
                                   onPressed: () {
                                     Navigator.pop(context, 'Cancel');
                                   },
@@ -73,7 +75,8 @@ class _MobileNumberPageState extends State<MobileNumberPage> {
                 }),
             backgroundColor: Colors.white,
             title: Text('Mobile number',
-                style: TextStyle(color: Colors.black, fontSize: FontSize.titleSize))),
+                style: TextStyle(
+                    color: Colors.black, fontSize: FontSize.titleSize))),
         body: SingleChildScrollView(
           child: Container(
             color: Colors.white,
@@ -81,16 +84,21 @@ class _MobileNumberPageState extends State<MobileNumberPage> {
               children: [
                 SizedBox(height: 80),
                 Text("Enter your mobile number",
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: FontSize.titleSize)),
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: FontSize.titleSize)),
                 SizedBox(height: 10),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Text(
-                      isValid
-                          ? 'Enter the mobile number where you can be reached. You can hide this from your profile later.'
-                          : 'Please enter a valid mobile number.',
-                      style: TextStyle(color: isValid ? Colors.black : Colors.red, fontSize: FontSize.contentSize),
-                      textAlign: TextAlign.center,),
+                    isValid
+                        ? 'Enter the mobile number where you can be reached. You can hide this from your profile later.'
+                        : 'Please enter a valid mobile number.',
+                    style: TextStyle(
+                        color: isValid ? Colors.black : Colors.red,
+                        fontSize: FontSize.contentSize),
+                    textAlign: TextAlign.center,
+                  ),
                 ),
                 SizedBox(height: 20),
                 Container(
@@ -100,9 +108,9 @@ class _MobileNumberPageState extends State<MobileNumberPage> {
                     keyboardType: TextInputType.number,
                     style: TextStyle(fontSize: FontSize.contentSize),
                     decoration: InputDecoration(
-                      suffixIcon: IconButton(
+                        suffixIcon: IconButton(
                           icon: Icon(Icons.clear, color: Colors.grey, size: 16),
-                          onPressed: (){
+                          onPressed: () {
                             mobileNumberController.clear();
                           },
                         ),
@@ -112,13 +120,11 @@ class _MobileNumberPageState extends State<MobileNumberPage> {
                         enabledBorder: UnderlineInputBorder(
                             borderSide: BorderSide(
                                 width: 2,
-                                color:
-                                    isValid ? Colors.blue : Colors.red)),
+                                color: isValid ? Colors.blue : Colors.red)),
                         focusedBorder: UnderlineInputBorder(
                             borderSide: BorderSide(
                                 width: 3,
-                                color:
-                                    isValid ? Colors.blue : Colors.red))),
+                                color: isValid ? Colors.blue : Colors.red))),
                   ),
                 ),
                 SizedBox(height: 50),
@@ -128,25 +134,34 @@ class _MobileNumberPageState extends State<MobileNumberPage> {
                     width: double.infinity,
                     height: 30,
                     child: ElevatedButton(
-                        onPressed: () {
+                        onPressed: () async {
                           if (mobileNumberController.text == '') {
                             setState(() {
                               isValid = false;
                             });
-                          }else{
+                          } else {
+                            // Obtain shared preferences.
+                            final prefs = await SharedPreferences.getInstance();
+                            // get username
+                            var phoneNumber = mobileNumberController.text;
+                            // Save an String value to 'username' key.
+                            await prefs.setString('phoneNumber', phoneNumber);
+                            // Direct other page
                             Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context)=> PasswordPage())
-                            );
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => PasswordPage()));
                           }
                         },
-                        child: Text('Next', style: TextStyle(fontSize: FontSize.contentSize),)),
+                        child: Text(
+                          'Next',
+                          style: TextStyle(fontSize: FontSize.contentSize),
+                        )),
                   ),
                 ),
               ],
             ),
           ),
-        )
-    );
+        ));
   }
 }

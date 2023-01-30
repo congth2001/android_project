@@ -2,6 +2,7 @@
 
 import 'package:fakebook/pages/create_account/terms_privacy.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../shared/font_size.dart';
 import '../landing_page.dart';
 
@@ -132,20 +133,26 @@ class _PasswordPageState extends State<PasswordPage> {
                     width: double.infinity,
                     height: 30,
                     child: ElevatedButton(
-                        onPressed: () {
-                          if (!RegExp(
-                                  r'^(?=.*?[A-Z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{6,}$')
-                              .hasMatch(passwordController.text) && !RegExp(
-                                  r'^(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{6,}$')
-                              .hasMatch(passwordController.text)) {
+                        onPressed: () async {
+                          if (!RegExp(r'^(?=.*?[A-Z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{6,}$')
+                                  .hasMatch(passwordController.text) &&
+                              !RegExp(r'^(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{6,}$')
+                                  .hasMatch(passwordController.text)) {
                             setState(() {
                               isValid = false;
                             });
                           } else {
+                            // Obtain shared preferences.
+                            final prefs = await SharedPreferences.getInstance();
+                            // get username
+                            var password = passwordController.text;
+                            // Save an String value to 'username' key.
+                            await prefs.setString('password', password);
                             Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context)=>TermsAndPrivacyPage())
-                            );
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        TermsAndPrivacyPage()));
                           }
                         },
                         child: Text(

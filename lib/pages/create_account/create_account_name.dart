@@ -4,6 +4,7 @@ import 'package:fakebook/pages/create_account/create_account_birthday.dart';
 import 'package:fakebook/pages/landing_page.dart';
 import 'package:fakebook/shared/font_size.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CreateAccountName extends StatefulWidget {
   const CreateAccountName({Key? key}) : super(key: key);
@@ -29,14 +30,15 @@ class _CreateAccountNameState extends State<CreateAccountName> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          toolbarHeight: 40,
+            toolbarHeight: 40,
             leading: IconButton(
                 icon: Icon(Icons.arrow_back, color: Colors.black, size: 20),
                 onPressed: () {
                   showDialog(
                       context: context,
                       builder: (BuildContext context) => AlertDialog(
-                        insetPadding: EdgeInsets.symmetric(horizontal: 16),
+                              insetPadding:
+                                  EdgeInsets.symmetric(horizontal: 16),
                               title: Text(
                                   'Do you want to stop creating your account?',
                                   style: TextStyle(
@@ -45,13 +47,14 @@ class _CreateAccountNameState extends State<CreateAccountName> {
                               content: Text(
                                   "If you stop now, you'll lose any progress you've made.",
                                   style: TextStyle(
-                                    fontSize: FontSize.contentSize,
+                                      fontSize: FontSize.contentSize,
                                       color: Color.fromARGB(255, 88, 88, 88))),
                               actions: [
                                 TextButton(
                                   child: Text('Continue creating account',
                                       style: TextStyle(
-                                          fontSize: FontSize.contentSize, color: Colors.black)),
+                                          fontSize: FontSize.contentSize,
+                                          color: Colors.black)),
                                   onPressed: () {
                                     Navigator.pop(context, 'Cancel');
                                   },
@@ -74,7 +77,8 @@ class _CreateAccountNameState extends State<CreateAccountName> {
                 }),
             backgroundColor: Colors.white,
             title: Text('Name',
-                style: TextStyle(color: Colors.black, fontSize: FontSize.titleSize))),
+                style: TextStyle(
+                    color: Colors.black, fontSize: FontSize.titleSize))),
         body: SingleChildScrollView(
           child: Container(
             color: Colors.white,
@@ -82,16 +86,21 @@ class _CreateAccountNameState extends State<CreateAccountName> {
               children: [
                 SizedBox(height: 80),
                 Text("What's your name?",
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: FontSize.titleSize)),
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: FontSize.titleSize)),
                 SizedBox(height: 10),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Text(
-                      isValid
-                          ? 'Enter the name you use in real life.'
-                          : 'Please enter your first and last name.',
-                      style: TextStyle(color: isValid ? Colors.black : Colors.red, fontSize: FontSize.contentSize),
-                      textAlign: TextAlign.center,),
+                    isValid
+                        ? 'Enter the name you use in real life.'
+                        : 'Please enter your first and last name.',
+                    style: TextStyle(
+                        color: isValid ? Colors.black : Colors.red,
+                        fontSize: FontSize.contentSize),
+                    textAlign: TextAlign.center,
+                  ),
                 ),
                 SizedBox(height: 20),
                 Container(
@@ -103,8 +112,8 @@ class _CreateAccountNameState extends State<CreateAccountName> {
                       Expanded(
                           flex: 1,
                           child: TextField(
-                            onChanged: (text){
-                              if(text.isNotEmpty){
+                            onChanged: (text) {
+                              if (text.isNotEmpty) {
                                 setState(() {
                                   isValid = true;
                                 });
@@ -113,9 +122,10 @@ class _CreateAccountNameState extends State<CreateAccountName> {
                             controller: firstNameController,
                             style: TextStyle(fontSize: FontSize.contentSize),
                             decoration: InputDecoration(
-                              suffixIcon: IconButton(
-                                  icon: Icon(Icons.clear, color: Colors.grey, size: 16),
-                                  onPressed: (){
+                                suffixIcon: IconButton(
+                                  icon: Icon(Icons.clear,
+                                      color: Colors.grey, size: 16),
+                                  onPressed: () {
                                     firstNameController.clear();
                                   },
                                 ),
@@ -125,20 +135,22 @@ class _CreateAccountNameState extends State<CreateAccountName> {
                                 enabledBorder: UnderlineInputBorder(
                                     borderSide: BorderSide(
                                         width: 2,
-                                        color:
-                                            isValid ? Colors.grey : Colors.red)),
+                                        color: isValid
+                                            ? Colors.grey
+                                            : Colors.red)),
                                 focusedBorder: UnderlineInputBorder(
                                     borderSide: BorderSide(
                                         width: 3,
-                                        color:
-                                            isValid ? Colors.blue : Colors.red))),
+                                        color: isValid
+                                            ? Colors.blue
+                                            : Colors.red))),
                           )),
                       SizedBox(width: 10),
                       Expanded(
                           flex: 1,
                           child: TextField(
-                            onChanged: (text){
-                              if(text.isNotEmpty){
+                            onChanged: (text) {
+                              if (text.isNotEmpty) {
                                 setState(() {
                                   isValid = true;
                                 });
@@ -148,8 +160,9 @@ class _CreateAccountNameState extends State<CreateAccountName> {
                             controller: lastNameController,
                             decoration: InputDecoration(
                                 suffixIcon: IconButton(
-                                  icon: Icon(Icons.clear, color: Colors.grey, size: 16),
-                                  onPressed: (){
+                                  icon: Icon(Icons.clear,
+                                      color: Colors.grey, size: 16),
+                                  onPressed: () {
                                     lastNameController.clear();
                                   },
                                 ),
@@ -159,13 +172,15 @@ class _CreateAccountNameState extends State<CreateAccountName> {
                                 enabledBorder: UnderlineInputBorder(
                                     borderSide: BorderSide(
                                         width: 2,
-                                        color:
-                                            isValid ? Colors.grey : Colors.red)),
+                                        color: isValid
+                                            ? Colors.grey
+                                            : Colors.red)),
                                 focusedBorder: UnderlineInputBorder(
                                     borderSide: BorderSide(
                                         width: 3,
-                                        color:
-                                            isValid ? Colors.blue : Colors.red))),
+                                        color: isValid
+                                            ? Colors.blue
+                                            : Colors.red))),
                           ))
                     ],
                   ),
@@ -177,20 +192,33 @@ class _CreateAccountNameState extends State<CreateAccountName> {
                     width: double.infinity,
                     height: 30,
                     child: ElevatedButton(
-                        onPressed: () {
+                        onPressed: () async {
                           if (firstNameController.text == '' ||
                               lastNameController.text == '') {
                             setState(() {
                               isValid = false;
                             });
-                          }else{
+                          } else {
+                            // Obtain shared preferences.
+                            final prefs = await SharedPreferences.getInstance();
+                            // get username
+                            var username = firstNameController.text +
+                                " " +
+                                lastNameController.text;
+                            // Save an String value to 'username' key.
+                            await prefs.setString('username', username);
+                            // Direct next page
                             Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context)=>CreateAccountBirthday())
-                            );
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        CreateAccountBirthday()));
                           }
                         },
-                        child: Text('Next', style: TextStyle(fontSize: FontSize.contentSize),)),
+                        child: Text(
+                          'Next',
+                          style: TextStyle(fontSize: FontSize.contentSize),
+                        )),
                   ),
                 ),
               ],

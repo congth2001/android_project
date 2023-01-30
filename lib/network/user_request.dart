@@ -53,6 +53,34 @@ class UserRequest {
   }
 
   /*
+   * @desc API đăng ký tài khoản người dùng
+   * @date 30/1/2023 
+   */
+  static Future register(
+      String username, String phoneNumber, String password) async {
+    try {
+      // get url
+      url = Uri.http('localhost:8000', 'api/v1/users/register');
+      // get response
+      final res = await http.post(url, body: {
+        "username": username,
+        "phonenumber": phoneNumber,
+        "password": password
+      });
+      // check and return
+      if (res.statusCode == 201) {
+        return res;
+      } else if (res.statusCode == 400) {
+        throw Exception('Bad request');
+      } else {
+        throw Exception('Can\'t create user');
+      }
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  /*
    * @desc API login
    * @date 30/1/2023 
    */
@@ -61,12 +89,11 @@ class UserRequest {
       // get url
       url = Uri.http('localhost:8000', 'api/v1/users/login');
       // get response
-      final res = await http.post(url, body: {phoneNumber, password});
-      // get return data
-      final data = jsonDecode(res.body);
+      final res = await http
+          .post(url, body: {"phonenumber": phoneNumber, "password": password});
       // check and return
       if (res.statusCode == 200) {
-        return compute(parseUserList, data['data'] as List<dynamic>);
+        return res;
       } else if (res.statusCode == 404) {
         throw Exception('Not Found');
       } else {

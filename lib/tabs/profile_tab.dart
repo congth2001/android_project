@@ -15,7 +15,6 @@ class _ProfileTabState extends State<ProfileTab> {
   var user = User();
   @override
   void initState() {
-    print('init...');
     super.initState();
     UserRequest.getUserByID('638b1ad746be731d08acbcab').then((result) {
       setState(() {
