@@ -17,7 +17,7 @@ class LandingPage extends StatefulWidget {
 }
 
 class _LandingPageState extends State<LandingPage> {
-  String? username;
+  String username = "";
   bool showAccount = true;
 
   @override
@@ -30,14 +30,18 @@ class _LandingPageState extends State<LandingPage> {
   getData() async {
     // Obtain shared preferences.
     final prefs = await SharedPreferences.getInstance();
-    if (username == "" || username == null) {
-      print("I'm here");
+    String? usernameTmp = prefs.getString('username');
+    // Set showAccount
+    if (usernameTmp == "" || usernameTmp == null) {
       setState(() {
-        username = prefs.getString('username');
         showAccount = false;
       });
+    } else {
+      // update username
+      setState(() {
+        username = usernameTmp.toString();
+      });
     }
-    print('landing $username, $showAccount');
   }
 
   @override
