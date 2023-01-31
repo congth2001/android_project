@@ -43,6 +43,7 @@ dependencies:
   scroll_date_picker: ^3.6.1
   flutter_inappwebview: ^5.7.2+3
   loading_animation_widget: ^1.2.0+4
+  image_picker: 
   
 dev_dependencies:
   flutter_test:

@@ -2,6 +2,9 @@ import 'package:fakebook/widgets/separator_widget.dart';
 import 'package:fakebook/widgets/what_on_your_.dart';
 import 'package:flutter/material.dart';
 
+import '../pages/create_post/create_post_main.dart';
+import '../pages/edit_profile_page.dart';
+
 class ProfileTab extends StatelessWidget {
 
   @override
@@ -53,15 +56,25 @@ class ProfileTab extends StatelessWidget {
                               height: 38.0,
                               width: MediaQuery.of(context).size.width/2 - 48,
                               decoration: BoxDecoration(
-                                color: Colors.blue[700],
-                                borderRadius: BorderRadius.circular(5.0)
+                                  color: Colors.blue[700],
+                                  borderRadius: BorderRadius.circular(5.0)
                               ),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: const [
-                                  Icon(Icons.post_add, color: Colors.white),
-                                  Text(' Create', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16.0)),
-                                ],
+                              child: MaterialButton(
+                                color: Colors.blue[700],
+                                elevation: 0,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: const [
+                                    Icon(Icons.post_add, color: Colors.white),
+                                    Text(' Create', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16.0)),
+                                  ],
+                                ),
+                                onPressed: () => {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => CreatePostMain()),
+                                  )
+                                },
                               ),
                             ),
                             const SizedBox(width: 10),
@@ -72,12 +85,22 @@ class ProfileTab extends StatelessWidget {
                                   color: Colors.grey[300],
                                   borderRadius: BorderRadius.circular(5.0)
                               ),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: const [
-                                  Icon(Icons.edit, color: Colors.black),
-                                  Text(' Edit profile', style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16.0)),
-                                ],
+                              child: MaterialButton(
+                                color: Colors.grey[300],
+                                elevation: 0,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: const [
+                                    Icon(Icons.edit, color: Colors.black),
+                                    Text(' Edit profile', style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16.0)),
+                                  ],
+                                ),
+                                onPressed: () => {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => EditProfilePage()),
+                                  )
+                                },
                               ),
                             ),
                             const SizedBox(width: 10),

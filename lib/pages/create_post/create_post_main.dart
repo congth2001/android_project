@@ -1,11 +1,13 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'dart:async';
+import 'dart:io';
 import 'package:fakebook/pages/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../shared/font_size.dart';
 import 'feelings_activities_main.dart';
@@ -24,6 +26,66 @@ class _CreatePostMainState extends State<CreatePostMain> {
   final contentController = TextEditingController();
   bool isDisabled = true;
   bool isFocus = false;
+
+  XFile? image;
+
+  final ImagePicker picker = ImagePicker();
+
+  //we can upload image from camera or from gallery based on parameter
+  Future getImage(ImageSource media) async {
+    var img = await picker.pickImage(source: media);
+
+    setState(() {
+      image = img;
+    });
+  }
+
+  //show popup dialog
+  void myAlert() {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+            title: Text('Please choose media to select'),
+            content: Container(
+              height: MediaQuery.of(context).size.height / 6,
+              child: Column(
+                children: [
+                  ElevatedButton(
+                    //if user click this button, user can upload image from gallery
+                    onPressed: () {
+                      Navigator.pop(context);
+                      getImage(ImageSource.gallery);
+                    },
+                    child: Row(
+                      children: [
+                        Icon(Icons.image),
+                        Text('From Gallery'),
+                      ],
+                    ),
+                  ),
+                  ElevatedButton(
+                    //if user click this button. user can upload image from camera
+                    onPressed: () {
+                      Navigator.pop(context);
+                      getImage(ImageSource.camera);
+                    },
+                    child: Row(
+                      children: [
+                        Icon(Icons.camera),
+                        Text('From Camera'),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
+  
+  }
 
   @override
   void dispose() {
@@ -174,30 +236,24 @@ class _CreatePostMainState extends State<CreatePostMain> {
                   }
                 }),
             backgroundColor: Colors.white,
+            elevation: 0.5,
+
             title: Row(
-              children: [
-                const Text('Create post',
-                    style: TextStyle(
-                        color: Colors.black, fontSize: FontSize.titleSize)),
-                Spacer(),
-                Container(
-                  decoration: BoxDecoration(
-                      color: Colors.blue,
-                      borderRadius: BorderRadius.all(Radius.circular(6))),
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor:
-                            isDisabled ? Colors.grey[200] : Colors.blue,
-                        shadowColor: Colors.white),
-                    onPressed: () {},
-                    child: Text('POST',
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children:[
+                Text('Create post', style: TextStyle(color: Colors.black, fontSize: 17, fontWeight: FontWeight.w400)),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(backgroundColor:
+                            isDisabled ? Colors.grey[200] : Colors.blue,),
+                  onPressed: () {},
+                  child: Text('POST',
                         style: TextStyle(
                             color:
                                 isDisabled ? Colors.grey[400] : Colors.white)),
-                  ),
                 )
-              ],
-            )),
+              ], 
+            ),
+          ),
         body: SingleChildScrollView(
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
@@ -283,7 +339,7 @@ class _CreatePostMainState extends State<CreatePostMain> {
                           }
                         
                       },
-                      maxLines: null,
+                      maxLines: 25,
                       style: TextStyle(fontSize: 20),
                       decoration: InputDecoration(
                           hintText: "What's on your mind?",
@@ -296,7 +352,7 @@ class _CreatePostMainState extends State<CreatePostMain> {
         ),
         bottomSheet: !isFocus
             ? Container(
-                height: 90,
+                height: 110,
                 decoration: BoxDecoration(
                     color: Colors.white,
                     border: Border(top: BorderSide(color: Colors.grey))),
@@ -304,7 +360,7 @@ class _CreatePostMainState extends State<CreatePostMain> {
                   children: [
                     Container(
                       width: double.infinity,
-                      height: 40,
+                      height: 50,
                       padding: const EdgeInsets.all(8),
                       decoration: BoxDecoration(
                           color: Colors.white,
@@ -312,7 +368,9 @@ class _CreatePostMainState extends State<CreatePostMain> {
                             bottom: BorderSide(color: Colors.grey),
                           )),
                       child: TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            myAlert();
+                          },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
@@ -324,10 +382,26 @@ class _CreatePostMainState extends State<CreatePostMain> {
                                       fontSize: FontSize.contentSize)),
                             ],
                           )),
+                      
                     ),
+                    image != null
+                    ? Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(8),
+                          child: Image.file(
+                            //to show image, you type like this.
+                            File(image!.path),
+                            fit: BoxFit.cover,
+                            width: MediaQuery.of(context).size.width,
+                            height: 300,
+                          ),
+                        ),
+                      )
+                    : Container(),
                     Container(
                       width: double.infinity,
-                      height: 40,
+                      height: 50,
                       padding: const EdgeInsets.all(8),
                       decoration: BoxDecoration(
                         color: Colors.white,
