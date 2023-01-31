@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class FriendListWidget extends StatelessWidget {
   @override
@@ -20,6 +21,149 @@ class FriendListWidget extends StatelessWidget {
                 Text('Adelle', style: TextStyle(
                     fontSize: 16.0, fontWeight: FontWeight.bold)),
                 SizedBox(height: 15.0),
+                Spacer(),
+                IconButton(
+                  onPressed: (){
+                    showModalBottomSheet(
+                          context: context,
+                          builder: (BuilderContext) {
+                            return SizedBox(
+                                height: 300,
+                                child: Container(
+                                    padding: const EdgeInsets.all(8),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        InkWell(
+                                          hoverColor: Colors.white,
+                                          onTap: () {},
+                                          child: Row(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              Icon(Icons.person,
+                                                  color: Colors.black),
+                                              SizedBox(width: 10),
+                                              Text("See Andrew's friends",
+                                                  style: TextStyle(
+                                                    fontSize: 14,
+                                                    color: Colors.black,
+                                                  )),
+                                            ],
+                                          ),
+                                        ),
+                                        SizedBox(height: 15),
+                                        InkWell(
+                                          hoverColor: Colors.white,
+                                          onTap: () {},
+                                          child: Row(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              Icon(FontAwesomeIcons.facebookMessenger,
+                                                  color: Colors.black),
+                                              SizedBox(width: 10),
+                                              Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                      'Message Andrew',
+                                                      style: TextStyle(
+                                                        fontSize: 14,
+                                                        color: Colors.black,
+                                                      )),
+                                                ],
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                        SizedBox(height: 15),
+                                        InkWell(
+                                          hoverColor: Colors.white,
+                                          onTap: () {},
+                                          child: Row(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              Icon(Icons.person,
+                                                  color: Colors.black),
+                                              SizedBox(width: 10),
+                                              Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                      "See Andrew's profile",
+                                                      style: TextStyle(
+                                                        fontSize: 14,
+                                                        color: Colors.black,
+                                                      )),
+                                                ],
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                        SizedBox(height: 15),
+                                        InkWell(
+                                          hoverColor: Colors.white,
+                                          onTap: () {},
+                                          child: Row(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              Icon(Icons.block,
+                                                  color: Colors.black),
+                                              SizedBox(width: 10),
+                                              Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                      'Block Andrew',
+                                                      style: TextStyle(
+                                                        fontSize: 14,
+                                                        color: Colors.black,
+                                                      )),
+                                                ],
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                        SizedBox(height: 15),
+                                        InkWell(
+                                          hoverColor: Colors.white,
+                                          onTap: () {},
+                                          child: Row(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              Icon(Icons.cancel,
+                                                  color: Colors.black),
+                                              SizedBox(width: 10),
+                                              Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                      'Unfriend Andrew',
+                                                      style: TextStyle(
+                                                        fontSize: 14,
+                                                        color: Colors.black,
+                                                      )),
+                                                ],
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                        SizedBox(height: 10)
+                                      ],
+                                    )));
+                          });
+                  },
+                  icon: Icon(Icons.more_horiz, color: Colors.black)
+                )
               ],
             ),
 
@@ -40,7 +184,8 @@ class FriendListWidget extends StatelessWidget {
                         fontSize: 16.0, fontWeight: FontWeight.bold)),
                     SizedBox(height: 15.0),
                   ],
-                )
+                ),
+                
               ],
             ),
 

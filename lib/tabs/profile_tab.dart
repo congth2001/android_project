@@ -1,11 +1,17 @@
+<<<<<<< HEAD
 import 'dart:convert';
 
 import 'package:fakebook/models/user.dart';
 import 'package:fakebook/network/user_request.dart';
+=======
+import 'dart:io';
+
+>>>>>>> 48b739df91fe48b1248cec1eb2772a22f63cdd3a
 import 'package:fakebook/widgets/separator_widget.dart';
 import 'package:fakebook/widgets/what_on_your_.dart';
 import 'package:flutter/material.dart';
 
+<<<<<<< HEAD
 class ProfileTab extends StatefulWidget {
   @override
   State<ProfileTab> createState() => _ProfileTabState();
@@ -22,7 +28,24 @@ class _ProfileTabState extends State<ProfileTab> {
       });
     });
   }
+=======
+import '../pages/edit_profile_page.dart';
+import '../pages/friend_list_page.dart';
+import '../pages/profile_setting_page.dart';
+import 'friends_tab.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+>>>>>>> 48b739df91fe48b1248cec1eb2772a22f63cdd3a
 
+class ProfileTab extends StatefulWidget {
+  @override
+  State<ProfileTab> createState() => _ProfileTabState();
+}
+
+class _ProfileTabState extends State<ProfileTab> {
+  bool isMe = true;
+  bool isFriend = false;
+  bool isRequestFriend = false;
+  bool isRequestedFriend = false;
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -33,6 +56,7 @@ class _ProfileTabState extends State<ProfileTab> {
           height: 380.0,
           child: Stack(
             children: <Widget>[
+<<<<<<< HEAD
               Container(
                 height: 220.0,
                 decoration: const BoxDecoration(
@@ -40,12 +64,103 @@ class _ProfileTabState extends State<ProfileTab> {
                       image: AssetImage('assets/cover.jpg'), fit: BoxFit.cover),
                 ),
               ),
+=======
+              Stack(alignment: Alignment.bottomRight, children: [
+                Container(
+                  height: 220.0,
+                  decoration: const BoxDecoration(
+                    image: DecorationImage(
+                        image: AssetImage('assets/cover.jpg'),
+                        fit: BoxFit.cover),
+                  ),
+                ),
+                if(isMe) Positioned(
+                  bottom: 5,
+                  right: 10,
+                  child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.grey,
+                        shape: BoxShape.circle,
+                        border: Border.all(color: Colors.white, width: 2),
+                      ),
+                      child: IconButton(
+                          onPressed: () {
+                            showModalBottomSheet(
+                                context: context,
+                                builder: (BuilderContext) {
+                                  return SizedBox(
+                                      height: 120,
+                                      child: Container(
+                                          padding: const EdgeInsets.only(
+                                              top: 15, left: 8, right: 8),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              InkWell(
+                                                hoverColor: Colors.white,
+                                                onTap: () {},
+                                                child: Row(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.center,
+                                                  children: [
+                                                    Icon(
+                                                        Icons
+                                                            .photo_size_select_actual,
+                                                        color: Colors.black),
+                                                    SizedBox(width: 10),
+                                                    Text('View profile cover',
+                                                        style: TextStyle(
+                                                          fontSize: 14,
+                                                          color: Colors.black,
+                                                        )),
+                                                  ],
+                                                ),
+                                              ),
+                                              SizedBox(height: 15),
+                                              InkWell(
+                                                hoverColor: Colors.white,
+                                                onTap: () {},
+                                                child: Row(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.center,
+                                                  children: [
+                                                    Icon(Icons.file_upload,
+                                                        color: Colors.black),
+                                                    SizedBox(width: 10),
+                                                    Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Text('Upload photo',
+                                                            style: TextStyle(
+                                                              fontSize: 14,
+                                                              color:
+                                                                  Colors.black,
+                                                            )),
+                                                      ],
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
+                                              SizedBox(height: 10)
+                                            ],
+                                          )));
+                                });
+                          },
+                          icon: Icon(Icons.photo_camera,
+                              color: Colors.black, size: 25))),
+                ),
+              ]),
+>>>>>>> 48b739df91fe48b1248cec1eb2772a22f63cdd3a
               Padding(
                 padding: const EdgeInsets.only(left: 10.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: <Widget>[
+<<<<<<< HEAD
                     Container(
                       decoration: BoxDecoration(
                         border: Border.all(color: Colors.white, width: 5),
@@ -88,11 +203,254 @@ class _ProfileTabState extends State<ProfileTab> {
                               ],
                             ),
                           ),
+=======
+                    Stack(alignment: Alignment.bottomRight, children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.white, width: 5),
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(100)),
+                        ),
+                        child: CircleAvatar(
+                          backgroundImage: AssetImage('assets/Mike Tyler.jpg'),
+                          radius: 80.0,
+                        ),
+                      ),
+                      if(isMe) Positioned(
+                        bottom: 5,
+                        right: 10,
+                        child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.grey,
+                              shape: BoxShape.circle,
+                              border: Border.all(color: Colors.white, width: 2),
+                            ),
+                            child: IconButton(
+                                onPressed: () {
+                                  showModalBottomSheet(
+                                      context: context,
+                                      builder: (BuilderContext) {
+                                        return SizedBox(
+                                            height: 120,
+                                            child: Container(
+                                                padding: const EdgeInsets.only(
+                                                    top: 15, left: 8, right: 8),
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    InkWell(
+                                                      hoverColor: Colors.white,
+                                                      onTap: () {},
+                                                      child: Row(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          Icon(
+                                                              Icons
+                                                                  .photo_library,
+                                                              color:
+                                                                  Colors.black),
+                                                          SizedBox(width: 10),
+                                                          Text(
+                                                              'Select profile picture',
+                                                              style: TextStyle(
+                                                                fontSize: 14,
+                                                                color: Colors
+                                                                    .black,
+                                                              )),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ],
+                                                )));
+                                      });
+                                },
+                                icon: Icon(Icons.photo_camera,
+                                    color: Colors.black, size: 25))),
+                      ),
+                    ]),
+                    const SizedBox(height: 10.0),
+                    const Padding(
+                      padding: EdgeInsets.only(left: 5),
+                      child: Text('Mike Tyler',
+                          style: TextStyle(
+                              fontSize: 22.0, fontWeight: FontWeight.bold)),
+                    ),
+                    const SizedBox(height: 20.0),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 5),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: <Widget>[
+                          Container(
+                            height: 38.0,
+                            width: MediaQuery.of(context).size.width / 2 - 48,
+                            decoration: BoxDecoration(
+                                color: Colors.blue[700],
+                                borderRadius: BorderRadius.circular(5.0)),
+                            child: isMe
+                              ? InkWell(
+                                onTap: (){},
+                                child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(Icons.post_add, color: Colors.white),
+                                Text(' Create',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16.0)),
+                              ],
+                            ))
+                            : (isFriend 
+                            ? InkWell(
+                              onTap: (){},
+                              child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(Icons.person, color: Colors.white),
+                                Text(' Friends',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16.0)),
+                              ],
+                            ))
+                            : isRequestedFriend 
+                            ? InkWell(
+                              onTap: (){
+                                showModalBottomSheet(
+                                      context: context,
+                                      builder: (BuilderContext) {
+                                        return SizedBox(
+                                            height: 120,
+                                            child: Container(
+                                                padding: const EdgeInsets.only(
+                                                    top: 15, left: 8, right: 8),
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    InkWell(
+                                                      hoverColor: Colors.white,
+                                                      onTap: () {
+                                                        setState((){
+                                                          isFriend = true;
+                                                        });
+                                                        Navigator.pop(context);
+                                                      },
+                                                      child: Row(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          Icon(
+                                                              Icons
+                                                                  .person,
+                                                              color:
+                                                                  Colors.black),
+                                                          SizedBox(width: 10),
+                                                          Text(
+                                                              'Confirm',
+                                                              style: TextStyle(
+                                                                fontSize: 14,
+                                                                color: Colors
+                                                                    .black,
+                                                              )),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    SizedBox(height: 10),
+                                                    InkWell(
+                                                      hoverColor: Colors.white,
+                                                      onTap: () {
+                                                        setState((){
+                                                          isRequestedFriend = false;
+                                                        });
+                                                        Navigator.pop(context);
+                                                      },
+                                                      child: Row(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          Icon(
+                                                              Icons
+                                                                  .clear,
+                                                              color:
+                                                                  Colors.black),
+                                                          SizedBox(width: 10),
+                                                          Text(
+                                                              'Delete request',
+                                                              style: TextStyle(
+                                                                fontSize: 14,
+                                                                color: Colors
+                                                                    .black,
+                                                              )),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ],
+                                                )));
+                                      });
+                              },
+                              child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(Icons.person, color: Colors.white),
+                                Text(' Respond',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16.0)),
+                              ],
+                            ))
+                            : isRequestFriend
+                            ? InkWell(
+                              onTap: (){
+                                setState((){
+                                  isRequestFriend = false;
+                                });
+                              },
+                              child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(Icons.person, color: Colors.white),
+                                Text(' Requested',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16.0)),
+                              ],
+                            )) 
+                            : InkWell(
+                              onTap: (){
+                                setState((){
+                                  isRequestFriend = true;
+                                });
+                              },
+                              child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(Icons.person_add, color: Colors.white),
+                                Text(' Add Friend',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16.0)),
+                              ],
+                            )))
+                            )
+                          ,
+>>>>>>> 48b739df91fe48b1248cec1eb2772a22f63cdd3a
                           const SizedBox(width: 10),
                           Container(
                             height: 38.0,
                             width: MediaQuery.of(context).size.width / 2 - 48,
                             decoration: BoxDecoration(
+<<<<<<< HEAD
                                 color: Colors.grey[300],
                                 borderRadius: BorderRadius.circular(5.0)),
                             child: Row(
@@ -115,6 +473,69 @@ class _ProfileTabState extends State<ProfileTab> {
                                 color: Colors.grey[300],
                                 borderRadius: BorderRadius.circular(5.0)),
                             child: Icon(Icons.more_horiz),
+=======
+                                color: Colors.grey[300],
+                                borderRadius: BorderRadius.circular(5.0)),
+                            child: isMe
+                            ? InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            EditProfilePage(
+                                              
+                                            )));
+                              },
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: const [
+                                  Icon(Icons.edit, color: Colors.black),
+                                  Text(' Edit profile',
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16.0)),
+                                ],
+                              ),
+                            )
+                            : InkWell(
+                              onTap: () {
+                                
+                              },
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: const [
+                                  Icon(FontAwesomeIcons.facebookMessenger, color: Colors.black),
+                                  Text(' Message',
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16.0)),
+                                ],
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 10),
+                          Container(
+                            height: 38.0,
+                            width: 46.0,
+                            decoration: BoxDecoration(
+                                color: Colors.grey[300],
+                                borderRadius: BorderRadius.circular(5.0)),
+                            child: IconButton(
+                              icon: Icon(Icons.more_horiz),
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            ProfileSettingPage(
+                                              isMe: isMe
+                                            )));
+                              },
+                            ),
+>>>>>>> 48b739df91fe48b1248cec1eb2772a22f63cdd3a
                           )
                         ],
                       ),
@@ -186,6 +607,7 @@ class _ProfileTabState extends State<ProfileTab> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
+<<<<<<< HEAD
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -212,6 +634,50 @@ class _ProfileTabState extends State<ProfileTab> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
+=======
+                  InkWell(
+                    onTap: (){
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context)=>FriendListPage())
+                      );
+                    },
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text('Friends',
+                            style: TextStyle(
+                                fontSize: 20.0, fontWeight: FontWeight.bold)),
+                        SizedBox(height: 6.0),
+                        Text('536 friends',
+                            style: TextStyle(
+                                fontSize: 16.0, color: Colors.grey[600])),
+                      ],
+                    ),
+                  ),
+                  TextButton(
+                    onPressed: (){
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context)=>FriendsTab())
+                      );
+                    },
+                    child: Text('Find Friends',
+                        style:
+                            TextStyle(fontSize: 16.0, color: Colors.blue[700])),
+                  ),
+                ],
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 15.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+>>>>>>> 48b739df91fe48b1248cec1eb2772a22f63cdd3a
                         Container(
                           height: MediaQuery.of(context).size.width / 3 - 20,
                           width: MediaQuery.of(context).size.width / 3 - 20,
