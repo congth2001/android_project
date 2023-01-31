@@ -8,6 +8,9 @@ import 'find_account_page.dart';
 import 'home_page.dart';
 import 'package:fakebook/network/user_request.dart';
 
+import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:convert';
+
 class LoginAnotherAccount extends StatefulWidget {
   const LoginAnotherAccount({Key? key}) : super(key: key);
 
@@ -94,10 +97,15 @@ class _LoginAnotherAccountState extends State<LoginAnotherAccount> {
                       onPressed: () {
                         var phoneNumber = phonenumberController.text + "";
                         var password = passwordController.text + "";
-                        UserRequest.login(phoneNumber, password).then((result) {
+                        UserRequest.login(phoneNumber, password).then((result) async {
                           print(result);
                           // Direct to next page
                           if (result.statusCode == 200) {
+                            final user = jsonDecode(result.body);
+                            // Obtain shared preferences.
+                            final prefs = await SharedPreferences.getInstance();
+                            // Save an String value to 'username' key.
+                            await prefs.setString('userID', user['data']['id']);
                             Navigator.push(
                               context,
                               MaterialPageRoute(
