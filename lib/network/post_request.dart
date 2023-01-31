@@ -40,7 +40,7 @@ class PostRequest {
   }
 
   /*
-   * @desc API get info all of Posts
+   * @desc API lấy tất cả bài viết
    * @date 30/1/2023 
    */
   static Future<List<Post>> getAllPost() async {
