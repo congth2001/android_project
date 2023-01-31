@@ -129,11 +129,7 @@ packages:
     source: hosted
     version: "10.3.0"
   http:
-<<<<<<< HEAD
     dependency: "direct main"
-=======
-    dependency: transitive
->>>>>>> 48b739df91fe48b1248cec1eb2772a22f63cdd3a
     description:
       name: http
       url: "https://pub.dartlang.org"
@@ -146,8 +142,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.0.2"
-<<<<<<< HEAD
-=======
   image_picker:
     dependency: "direct main"
     description:
@@ -183,7 +177,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.6.2"
->>>>>>> 48b739df91fe48b1248cec1eb2772a22f63cdd3a
   js:
     dependency: transitive
     description:
