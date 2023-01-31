@@ -162,9 +162,9 @@ class _ProfileSettingPageState extends State<ProfileSettingPage> {
                 padding: const EdgeInsets.all(10),
                 child: Column(
                   children: [
-                    Align(alignment: Alignment.centerLeft, child: Text((widget.isMe != null && widget.isMe == true) ? 'Your': "Andrew's" +  ' profile link', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),)),
+                    Align(alignment: Alignment.centerLeft, child: Text(((widget.isMe != null && widget.isMe == true) ? 'Your': "Andrew's") +  ' profile link', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),)),
                     SizedBox(height: 5),
-                    Align(alignment: Alignment.centerLeft, child: Text((widget.isMe != null && widget.isMe == true) ? 'Your' : "Andrew's" + " personalized link on Facebook.", style: TextStyle(color: Colors.grey[500], fontSize: 16))),
+                    Align(alignment: Alignment.centerLeft, child: Text(((widget.isMe != null && widget.isMe == true) ? 'Your' : "Andrew's") + " personalized link on Facebook.", style: TextStyle(color: Colors.grey[500], fontSize: 16))),
                     Divider(color: Colors.grey,),
                     SizedBox(height: 10),
                     Align(alignment: Alignment.centerLeft, child: Text(link, maxLines: 5, overflow: TextOverflow.ellipsis ,style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold))),
