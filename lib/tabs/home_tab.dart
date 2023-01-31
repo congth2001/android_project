@@ -5,7 +5,26 @@ import 'package:fakebook/widgets/stories_widget.dart';
 import 'package:fakebook/models/post.dart';
 import 'package:flutter/material.dart';
 
-class HomeTab extends StatelessWidget {
+import '../network/post_request.dart';
+
+class HomeTab extends StatefulWidget {
+  @override
+  State<HomeTab> createState() => _HomeTabState();
+}
+
+class _HomeTabState extends State<HomeTab> {
+  List<Post> posts = List<Post>.empty();
+
+  @override
+  void initState() {
+    super.initState();
+    PostRequest.getAllPost().then((postList) {
+      setState(() {
+        posts = postList;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(

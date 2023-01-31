@@ -1,3 +1,4 @@
+import 'package:fakebook/models/user.dart';
 import 'package:flutter/material.dart';
 import 'package:fakebook/models/post.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -5,13 +6,38 @@ import 'package:like_button/like_button.dart';
 
 import '../shared/font_size.dart';
 import 'comment_widget.dart';
+import '../network/user_request.dart';
 
-class PostWidget extends StatelessWidget {
+class PostWidget extends StatefulWidget {
   Post post;
-
   PostWidget({required this.post});
 
   @override
+  State<PostWidget> createState() => _PostWidgetState();
+}
+
+class _PostWidgetState extends State<PostWidget> {
+  User users = User();
+  int numberOfLike = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    List<String> likes = widget.post.like as List<String>;
+
+    setState(() {
+      numberOfLike = likes.length;
+    });
+
+    UserRequest.getUserByID(widget.post.author.toString()).then((result) {
+      setState(() {
+        users = result;
+      });
+    });
+  }
+
+  final now = DateTime.now();
+
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.only(left: 15, right: 15, top: 15),
@@ -21,7 +47,7 @@ class PostWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               CircleAvatar(
-                backgroundImage: AssetImage(post.profileavatar),
+                backgroundImage: AssetImage(widget.post.images.toString()),
                 radius: 20.0,
               ),
               SizedBox(width: 7.0),
@@ -29,17 +55,18 @@ class PostWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(post.username,
+                  Text(users.username.toString(),
                       style: TextStyle(
                           fontWeight: FontWeight.bold, fontSize: 17.0)),
                   SizedBox(height: 5.0),
-                  Text(post.time)
+                  Text(DateTime.parse(widget.post.createdAt.toString())
+                      .toString())
                 ],
               ),
               Spacer(),
               IconButton(
                   onPressed: () {
-                    if (post.username == 'Sam Wilson') {
+                    if (widget.post.author == 'Sam Wilson') {
                       showModalBottomSheet(
                           context: context,
                           builder: (BuilderContext) {
@@ -251,7 +278,8 @@ class PostWidget extends StatelessWidget {
             ],
           ),
           SizedBox(height: 20.0),
-          Text(post.content, style: TextStyle(fontSize: 15.0)),
+          Text(widget.post.described.toString(),
+              style: TextStyle(fontSize: 15.0)),
           SizedBox(height: 10.0),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -272,12 +300,12 @@ class PostWidget extends StatelessWidget {
                               Shadow(color: Colors.black, blurRadius: 4.0)
                             ])),
                   ]),
-                  Text(' ${post.likes}'),
+                  Text(' ${numberOfLike}'),
                 ],
               ),
               Row(
                 children: [
-                  Text('${post.comments} comments'),
+                  Text('${widget.post.countComments} comments'),
                 ],
               ),
             ],
@@ -300,7 +328,8 @@ class PostWidget extends StatelessWidget {
                     dotSecondaryColor: Color(0xff0099cc),
                   ),
                   likeBuilder: (isLiked) {
-                    post.likes = isLiked ? post.likes + 1 : post.likes - 1;
+                    numberOfLike =
+                        isLiked ? numberOfLike + 1 : numberOfLike - 1;
                     return isLiked
                         ? Row(
                             children: [
