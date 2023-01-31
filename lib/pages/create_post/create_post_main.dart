@@ -1,11 +1,13 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'dart:async';
+import 'package:fakebook/network/post_request.dart';
 import 'package:fakebook/pages/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../shared/font_size.dart';
 import 'feelings_activities_main.dart';
@@ -212,7 +214,20 @@ class _CreatePostMainState extends State<CreatePostMain> {
                         backgroundColor:
                             isDisabled ? Colors.grey[200] : Colors.blue,
                         shadowColor: Colors.white),
-                    onPressed: () {},
+                    onPressed: () async {
+                      if (contentController.text != "") {
+                        // Get description
+                        String described = contentController.text;
+                        // get userID
+                        final prefs = await SharedPreferences.getInstance();
+                        // get username
+                        String userID = prefs.getString('userID').toString();
+                        // Call API
+                        print(described + userID);
+                        PostRequest.create(described, userID)
+                            .then((res) => {print(res)});
+                      }
+                    },
                     child: Text('POST',
                         style: TextStyle(
                             color:

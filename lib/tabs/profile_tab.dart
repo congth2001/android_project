@@ -26,7 +26,6 @@ class _ProfileTabState extends State<ProfileTab> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-<<<<<<< HEAD
         child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -52,38 +51,6 @@ class _ProfileTabState extends State<ProfileTab> {
                         border: Border.all(color: Colors.white, width: 5),
                         borderRadius:
                             const BorderRadius.all(Radius.circular(100)),
-=======
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Container(
-            height: 380.0,
-            child: Stack(
-              children: <Widget>[
-                Container(
-                  height: 220.0,
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(image: NetworkImage('https://firebasestorage.googleapis.com/v0/b/social-network-app-19cd7.appspot.com/o/images%2Frn_image_picker_lib_temp_19d714d4-09ee-45a2-a1b0-c44329bcd180.jpg?alt=media&token=2ed540ab-1944-4061-b5d6-4f3ee8b598f8&fbclid=IwAR0PCicGfnvSYpF0E-dVR6bRJ40SS-NYlipPh8VQsvWHQPM7_hsh6E9aAP8'), fit: BoxFit.cover),
-                  ),
-                ),
-
-                Padding(
-                  padding: const EdgeInsets.only(left: 10.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: <Widget>[
-                      Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.white, width: 5),
-                          borderRadius: const BorderRadius.all(Radius.circular(100)),
-                        ),
-                        child: const CircleAvatar(
-                          // backgroundImage: AssetImage('assets/Mike Tyler.jpg'),
-                          backgroundImage: NetworkImage('https://firebasestorage.googleapis.com/v0/b/social-network-app-19cd7.appspot.com/o/images%2Frn_image_picker_lib_temp_19d714d4-09ee-45a2-a1b0-c44329bcd180.jpg?alt=media&token=2ed540ab-1944-4061-b5d6-4f3ee8b598f8&fbclid=IwAR0PCicGfnvSYpF0E-dVR6bRJ40SS-NYlipPh8VQsvWHQPM7_hsh6E9aAP8'),
-                          radius: 80.0,
-                        ),
->>>>>>> 87df641895e3d6af494790ef7551f8cdfcc98c5e
                       ),
                       child: const CircleAvatar(
                         backgroundImage: AssetImage('andrew.jpg'),
