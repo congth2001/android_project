@@ -1,7 +1,6 @@
 import 'package:fakebook/pages/create_post/create_post_main.dart';
 import 'package:flutter/material.dart';
 
-import '../pages/create_post_page.dart';
 import '../pages/profile_page.dart';
 
 import 'package:fakebook/models/user.dart';
@@ -77,28 +76,25 @@ class _WriteSomethingWidgetState extends State<WriteSomethingWidget> {
                       side: BorderSide(color: Colors.grey.shade400),
                       shape: const StadiumBorder(),
                     ),
-                    child: InkWell(
-                      hoverColor: Colors.white,
-                      onTap: (){
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context)=> CreatePostMain())
-                          );
-                      },
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text(" What's on your mind?", style: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w400)),
-                        ],
-                      ),
-                    ),
-                    onPressed: () => {
+                    onPressed: (){
                       Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => CreatePostPage()),
-                    )
+                          context,
+                          MaterialPageRoute(builder: (context)=> CreatePostMain())
+                        );
                     },
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(" What's on your mind?", style: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w400)),
+                      ],
+                    ),
                   ),
+                    // onPressed: () => {
+                    //   Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(builder: (context) => CreatePostPage()),
+                    // )
+                    // },
                 ),
 
                 MaterialButton(

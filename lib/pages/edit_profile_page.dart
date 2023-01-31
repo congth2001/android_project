@@ -86,7 +86,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     ),
                   ),
                 ])),
-                Container(
+            Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
                     color: Colors.white,
@@ -109,11 +109,14 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   ),
                   SizedBox(height: 10),
                   TextButton(
-                    onPressed: (){},
-                    child: Text('Describe yourself...', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.grey))
-                  )
+                      onPressed: () {},
+                      child: Text('Describe yourself...',
+                          style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.grey)))
                 ])),
-                Container(
+            Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
                     color: Colors.white,
@@ -135,9 +138,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     ],
                   ),
                   SizedBox(height: 10),
-                  
                 ])),
-                Container(
+            Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
                     color: Colors.white,
@@ -159,32 +161,30 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     ],
                   )
                 ])),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    width: double.infinity,
-                    height: 35,
-                    child: TextButton(
-                        style: TextButton.styleFrom(
-                            backgroundColor: Color.fromARGB(255, 212, 229, 245),
-                            textStyle: TextStyle()),
-                        onPressed: () {
-                          
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Icon(Icons.person_outline, color: Colors.blue),
-                            SizedBox(width: 5),
-                            Text('Edit Your About Info',
-                                style: TextStyle(
-                                    color: Colors.blue,
-                                    fontSize: FontSize.contentSize)),
-                          ],
-                        )),
-                  ),
-                )
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                width: double.infinity,
+                height: 35,
+                child: TextButton(
+                    style: TextButton.styleFrom(
+                        backgroundColor: Color.fromARGB(255, 212, 229, 245),
+                        textStyle: TextStyle()),
+                    onPressed: () {},
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Icon(Icons.person_outline, color: Colors.blue),
+                        SizedBox(width: 5),
+                        Text('Edit Your About Info',
+                            style: TextStyle(
+                                color: Colors.blue,
+                                fontSize: FontSize.contentSize)),
+                      ],
+                    )),
+              ),
+            )
           ],
         )));
   }

@@ -328,8 +328,6 @@ class _PostWidgetState extends State<PostWidget> {
                     dotSecondaryColor: Color(0xff0099cc),
                   ),
                   likeBuilder: (isLiked) {
-                    numberOfLike =
-                        isLiked ? numberOfLike + 1 : numberOfLike - 1;
                     return isLiked
                         ? Row(
                             children: [

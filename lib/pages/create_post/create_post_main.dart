@@ -1,11 +1,15 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'dart:async';
+import 'dart:io';
+import 'package:fakebook/network/post_request.dart';
 import 'package:fakebook/pages/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../shared/font_size.dart';
 import 'feelings_activities_main.dart';
@@ -29,6 +33,65 @@ class _CreatePostMainState extends State<CreatePostMain> {
   final contentController = TextEditingController();
   bool isDisabled = true;
   bool isFocus = false;
+
+  XFile? image;
+
+  final ImagePicker picker = ImagePicker();
+
+  //we can upload image from camera or from gallery based on parameter
+  Future getImage(ImageSource media) async {
+    var img = await picker.pickImage(source: media);
+
+    setState(() {
+      image = img;
+    });
+  }
+
+  //show popup dialog
+  void myAlert() {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+            title: Text('Please choose media to select'),
+            content: Container(
+              height: MediaQuery.of(context).size.height / 6,
+              child: Column(
+                children: [
+                  ElevatedButton(
+                    //if user click this button, user can upload image from gallery
+                    onPressed: () {
+                      Navigator.pop(context);
+                      getImage(ImageSource.gallery);
+                    },
+                    child: Row(
+                      children: [
+                        Icon(Icons.image),
+                        Text('From Gallery'),
+                      ],
+                    ),
+                  ),
+                  ElevatedButton(
+                    //if user click this button. user can upload image from camera
+                    onPressed: () {
+                      Navigator.pop(context);
+                      getImage(ImageSource.camera);
+                    },
+                    child: Row(
+                      children: [
+                        Icon(Icons.camera),
+                        Text('From Camera'),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
+  }
 
   @override
   void dispose() {
@@ -54,156 +117,154 @@ class _CreatePostMainState extends State<CreatePostMain> {
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-            toolbarHeight: 40,
-            leading: IconButton(
-                icon:
-                    const Icon(Icons.arrow_back, color: Colors.black, size: 20),
-                onPressed: () {
-                  if (isDisabled)
-                    Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(
-                            builder: (BuildContext context) => HomePage()),
-                        (route) => false);
-                  else {
-                    showModalBottomSheet(
-                        context: context,
-                        builder: (BuilderContext) {
-                          return SizedBox(
-                              height: 200,
-                              child: Container(
-                                  padding: const EdgeInsets.all(8),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        'Want to finish your post later?',
-                                        style: TextStyle(
-                                            fontSize: 12, color: Colors.black),
+          toolbarHeight: 40,
+          leading: IconButton(
+              icon: const Icon(Icons.arrow_back, color: Colors.black, size: 20),
+              onPressed: () {
+                if (isDisabled)
+                  Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                          builder: (BuildContext context) => HomePage()),
+                      (route) => false);
+                else {
+                  showModalBottomSheet(
+                      context: context,
+                      builder: (BuilderContext) {
+                        return SizedBox(
+                            height: 200,
+                            child: Container(
+                                padding: const EdgeInsets.all(8),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Want to finish your post later?',
+                                      style: TextStyle(
+                                          fontSize: 12, color: Colors.black),
+                                    ),
+                                    SizedBox(height: 5),
+                                    Text(
+                                      'Save it as a draft or you can continue editing it.',
+                                      style: TextStyle(
+                                          fontSize: 11,
+                                          color: Colors.grey[500]),
+                                    ),
+                                    SizedBox(height: 15),
+                                    InkWell(
+                                      hoverColor: Colors.white,
+                                      onTap: () {
+                                        Navigator.pushAndRemoveUntil(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder:
+                                                    (BuildContext context) =>
+                                                        HomePage()),
+                                            (route) => false);
+                                      },
+                                      child: Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Icon(Icons.bookmark_border,
+                                              color: Colors.grey),
+                                          SizedBox(width: 10),
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text('Save as draft',
+                                                  style: TextStyle(
+                                                      fontSize: 14,
+                                                      color: Colors.black,
+                                                      fontWeight:
+                                                          FontWeight.bold)),
+                                              Text(
+                                                  "You'll receive a notification with your draft.",
+                                                  style: TextStyle(
+                                                      color: Colors.grey[500],
+                                                      fontSize: 10))
+                                            ],
+                                          )
+                                        ],
                                       ),
-                                      SizedBox(height: 5),
-                                      Text(
-                                        'Save it as a draft or you can continue editing it.',
-                                        style: TextStyle(
-                                            fontSize: 11,
-                                            color: Colors.grey[500]),
+                                    ),
+                                    SizedBox(height: 15),
+                                    InkWell(
+                                      hoverColor: Colors.white,
+                                      onTap: () {
+                                        Navigator.pushAndRemoveUntil(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder:
+                                                    (BuildContext context) =>
+                                                        HomePage()),
+                                            (route) => false);
+                                      },
+                                      child: Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Icon(Icons.delete,
+                                              color: Colors.grey),
+                                          SizedBox(width: 10),
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text('Discard post',
+                                                  style: TextStyle(
+                                                      fontSize: 14,
+                                                      color: Colors.black,
+                                                      fontWeight:
+                                                          FontWeight.bold)),
+                                            ],
+                                          )
+                                        ],
                                       ),
-                                      SizedBox(height: 15),
-                                      InkWell(
-                                        hoverColor: Colors.white,
-                                        onTap: () {
-                                          Navigator.pushAndRemoveUntil(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder:
-                                                      (BuildContext context) =>
-                                                          HomePage()),
-                                              (route) => false);
-                                        },
-                                        child: Row(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            Icon(Icons.bookmark_border,
-                                                color: Colors.grey),
-                                            SizedBox(width: 10),
-                                            Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text('Save as draft',
-                                                    style: TextStyle(
-                                                        fontSize: 14,
-                                                        color: Colors.black,
-                                                        fontWeight:
-                                                            FontWeight.bold)),
-                                                Text(
-                                                    "You'll receive a notification with your draft.",
-                                                    style: TextStyle(
-                                                        color: Colors.grey[500],
-                                                        fontSize: 10))
-                                              ],
-                                            )
-                                          ],
-                                        ),
+                                    ),
+                                    SizedBox(height: 15),
+                                    InkWell(
+                                      hoverColor: Colors.white,
+                                      onTap: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Icon(Icons.check, color: Colors.blue),
+                                          SizedBox(width: 10),
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text('Continue editing',
+                                                  style: TextStyle(
+                                                      fontSize: 14,
+                                                      color: Colors.blue,
+                                                      fontWeight:
+                                                          FontWeight.bold)),
+                                            ],
+                                          )
+                                        ],
                                       ),
-                                      SizedBox(height: 15),
-                                      InkWell(
-                                        hoverColor: Colors.white,
-                                        onTap: () {
-                                          Navigator.pushAndRemoveUntil(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder:
-                                                      (BuildContext context) =>
-                                                          HomePage()),
-                                              (route) => false);
-                                        },
-                                        child: Row(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            Icon(Icons.delete,
-                                                color: Colors.grey),
-                                            SizedBox(width: 10),
-                                            Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text('Discard post',
-                                                    style: TextStyle(
-                                                        fontSize: 14,
-                                                        color: Colors.black,
-                                                        fontWeight:
-                                                            FontWeight.bold)),
-                                              ],
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                      SizedBox(height: 15),
-                                      InkWell(
-                                        hoverColor: Colors.white,
-                                        onTap: () {
-                                          Navigator.pop(context);
-                                        },
-                                        child: Row(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            Icon(Icons.check,
-                                                color: Colors.blue),
-                                            SizedBox(width: 10),
-                                            Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text('Continue editing',
-                                                    style: TextStyle(
-                                                        fontSize: 14,
-                                                        color: Colors.blue,
-                                                        fontWeight:
-                                                            FontWeight.bold)),
-                                              ],
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                      SizedBox(height: 15)
-                                    ],
-                                  )));
-                        });
-                  }
-                }),
-            backgroundColor: Colors.white,
-            title: Row(
-              children: [
-                const Text('Create post',
-                    style: TextStyle(
-                        color: Colors.black, fontSize: FontSize.titleSize)),
-                Spacer(),
-                Container(
+                                    ),
+                                    SizedBox(height: 15)
+                                  ],
+                                )));
+                      });
+                }
+              }),
+          backgroundColor: Colors.white,
+          elevation: 0.5,
+          title: Row(
+            children: [
+              const Text('Create post',
+                  style: TextStyle(
+                      color: Colors.black, fontSize: FontSize.titleSize)),
+              Spacer(),
+              Container(
                   decoration: BoxDecoration(
                       color: Colors.blue,
                       borderRadius: BorderRadius.all(Radius.circular(6))),
@@ -212,15 +273,29 @@ class _CreatePostMainState extends State<CreatePostMain> {
                         backgroundColor:
                             isDisabled ? Colors.grey[200] : Colors.blue,
                         shadowColor: Colors.white),
-                    onPressed: () {},
+                    onPressed: () async {
+                      if (contentController.text != "") {
+                        // Get description
+                        String described = contentController.text;
+                        // Call API
+                        print(described);
+                        PostRequest.create(described)
+                            .then((res) => {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context)=>HomePage())
+                              )
+                        });
+                      }
+                    },
                     child: Text('POST',
                         style: TextStyle(
                             color:
                                 isDisabled ? Colors.grey[400] : Colors.white)),
-                  ),
-                )
-              ],
-            )),
+                  ))
+            ],
+          ),
+        ),
         body: SingleChildScrollView(
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
@@ -324,7 +399,7 @@ class _CreatePostMainState extends State<CreatePostMain> {
                           }
                         }
                       },
-                      maxLines: null,
+                      maxLines: 25,
                       style: TextStyle(fontSize: 20),
                       decoration: InputDecoration(
                           hintText: "What's on your mind?",
@@ -337,7 +412,7 @@ class _CreatePostMainState extends State<CreatePostMain> {
         ),
         bottomSheet: !isFocus
             ? Container(
-                height: 90,
+                height: 110,
                 decoration: BoxDecoration(
                     color: Colors.white,
                     border: Border(top: BorderSide(color: Colors.grey))),
@@ -345,7 +420,7 @@ class _CreatePostMainState extends State<CreatePostMain> {
                   children: [
                     Container(
                       width: double.infinity,
-                      height: 40,
+                      height: 50,
                       padding: const EdgeInsets.all(8),
                       decoration: BoxDecoration(
                           color: Colors.white,
@@ -353,7 +428,9 @@ class _CreatePostMainState extends State<CreatePostMain> {
                             bottom: BorderSide(color: Colors.grey),
                           )),
                       child: TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            myAlert();
+                          },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
@@ -366,9 +443,24 @@ class _CreatePostMainState extends State<CreatePostMain> {
                             ],
                           )),
                     ),
+                    image != null
+                        ? Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(8),
+                              child: Image.file(
+                                //to show image, you type like this.
+                                File(image!.path),
+                                fit: BoxFit.cover,
+                                width: MediaQuery.of(context).size.width,
+                                height: 300,
+                              ),
+                            ),
+                          )
+                        : Container(),
                     Container(
                       width: double.infinity,
-                      height: 40,
+                      height: 50,
                       padding: const EdgeInsets.all(8),
                       decoration: BoxDecoration(
                         color: Colors.white,

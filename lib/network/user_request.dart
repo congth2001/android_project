@@ -3,11 +3,21 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/user.dart';
 
 class UserRequest {
+  // url of api
   static var url = Uri();
+  // default token
+  static String defaultToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImRhdCIsImlkIjoiNjNhMzMyN2E5OGJkMDEzMmZjZWFiMDZlIiwiaWF0IjoxNjczMDgxMzMxfQ.wd_pxa0sdMNh__XvFmQPGZR4W6IDFNXOJTYDDK6eOUc";
+
+  // get token
+  static Future<String> getToken() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString("token").toString();
+  }
 
   // get records list
   static List<User> parseUserList(List<dynamic> data) {
@@ -113,12 +123,16 @@ class UserRequest {
     try {
       // get url
       url = Uri.http('localhost:8000', 'api/v1/users/show/$id');
+      // get token
+      String token = await getToken();
+      if (token == "") {
+        token = defaultToken;
+      }
       // get response
       final res = await http.get(
         url,
         headers: {
-          HttpHeaders.authorizationHeader:
-              'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImRhdCIsImlkIjoiNjNhMzMyN2E5OGJkMDEzMmZjZWFiMDZlIiwiaWF0IjoxNjczMDgxMzMxfQ.wd_pxa0sdMNh__XvFmQPGZR4W6IDFNXOJTYDDK6eOUc',
+          HttpHeaders.authorizationHeader: 'Bearer $token',
         },
       );
       // get return data

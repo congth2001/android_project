@@ -3,11 +3,22 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/post.dart';
 
 class PostRequest {
+  // url of api
   static var url = Uri();
+  // default token
+  static String defaultToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImRhdCIsImlkIjoiNjNhMzMyN2E5OGJkMDEzMmZjZWFiMDZlIiwiaWF0IjoxNjczMDgxMzMxfQ.wd_pxa0sdMNh__XvFmQPGZR4W6IDFNXOJTYDDK6eOUc";
+
+
+  // get token
+  static Future<String> getToken() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString("token").toString();
+  }
 
   // get records list
   static List<Post> parsePostList(List<dynamic> data) {
@@ -66,12 +77,16 @@ class PostRequest {
     try {
       // get url
       url = Uri.http('localhost:8000', 'api/v1/Posts/show/$id');
+      // get token
+      String token = await getToken();
+      if (token == "") {
+        token = defaultToken;
+      }
       // get response
       final res = await http.get(
         url,
         headers: {
-          HttpHeaders.authorizationHeader:
-              'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImRhdCIsImlkIjoiNjNhMzMyN2E5OGJkMDEzMmZjZWFiMDZlIiwiaWF0IjoxNjczMDgxMzMxfQ.wd_pxa0sdMNh__XvFmQPGZR4W6IDFNXOJTYDDK6eOUc',
+          HttpHeaders.authorizationHeader: 'Bearer $token',
         },
       );
       // get return data
@@ -93,22 +108,33 @@ class PostRequest {
    * @desc API đăng bài viết
    * @date 30/1/2023 
    */
-  static Future create(String description, String userID) async {
+  static Future create(String described) async {
     try {
       // get url
       url = Uri.http('localhost:8000', 'api/v1/posts/create');
+      // get token
+      String token = await getToken();
+      if (token == "") {
+        token = defaultToken;
+      }
+      print(token);
       // get response
-      final res = await http.post(url, body: {
-        "userID": userID,
-        "description": description,
-      });
+      final res = await http.post(
+        url,
+        body: {
+          "described": described,
+        },
+        headers: {
+          HttpHeaders.authorizationHeader: 'Bearer $token',
+        },
+      );
       // check and return
       if (res.statusCode == 200) {
         return res;
       } else if (res.statusCode == 400) {
         throw Exception('Bad request');
       } else {
-        throw Exception('Can\'t create user');
+        throw Exception('Can\'t create post');
       }
     } catch (e) {
       print(e.toString());

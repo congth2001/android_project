@@ -120,6 +120,7 @@ class _TermsAndPrivacyPageState extends State<TermsAndPrivacyPage> {
                 // Save an String value to 'username' key.
                 await prefs.setString('userID', user['data']['id']);
                 await prefs.setString('avatar', user['data']['avatar']);
+                await prefs.setString('token', user['token']);
                 // Direct to next page
                 Navigator.push(
                     context,
