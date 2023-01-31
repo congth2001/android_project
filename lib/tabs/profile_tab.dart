@@ -8,6 +8,7 @@ import '../pages/edit_profile_page.dart';
 import '../pages/friend_list_page.dart';
 import '../pages/profile_setting_page.dart';
 import 'friends_tab.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ProfileTab extends StatefulWidget {
   @override
@@ -15,6 +16,10 @@ class ProfileTab extends StatefulWidget {
 }
 
 class _ProfileTabState extends State<ProfileTab> {
+  bool isMe = true;
+  bool isFriend = false;
+  bool isRequestFriend = false;
+  bool isRequestedFriend = false;
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -34,7 +39,7 @@ class _ProfileTabState extends State<ProfileTab> {
                         fit: BoxFit.cover),
                   ),
                 ),
-                Positioned(
+                if(isMe) Positioned(
                   bottom: 5,
                   right: 10,
                   child: Container(
@@ -131,7 +136,7 @@ class _ProfileTabState extends State<ProfileTab> {
                           radius: 80.0,
                         ),
                       ),
-                      Positioned(
+                      if(isMe) Positioned(
                         bottom: 5,
                         right: 10,
                         child: Container(
@@ -205,9 +210,12 @@ class _ProfileTabState extends State<ProfileTab> {
                             decoration: BoxDecoration(
                                 color: Colors.blue[700],
                                 borderRadius: BorderRadius.circular(5.0)),
-                            child: Row(
+                            child: isMe
+                              ? InkWell(
+                                onTap: (){},
+                                child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
-                              children: const [
+                              children: [
                                 Icon(Icons.post_add, color: Colors.white),
                                 Text(' Create',
                                     style: TextStyle(
@@ -215,8 +223,147 @@ class _ProfileTabState extends State<ProfileTab> {
                                         fontWeight: FontWeight.bold,
                                         fontSize: 16.0)),
                               ],
-                            ),
-                          ),
+                            ))
+                            : (isFriend 
+                            ? InkWell(
+                              onTap: (){},
+                              child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(Icons.person, color: Colors.white),
+                                Text(' Friends',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16.0)),
+                              ],
+                            ))
+                            : isRequestedFriend 
+                            ? InkWell(
+                              onTap: (){
+                                showModalBottomSheet(
+                                      context: context,
+                                      builder: (BuilderContext) {
+                                        return SizedBox(
+                                            height: 120,
+                                            child: Container(
+                                                padding: const EdgeInsets.only(
+                                                    top: 15, left: 8, right: 8),
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    InkWell(
+                                                      hoverColor: Colors.white,
+                                                      onTap: () {
+                                                        setState((){
+                                                          isFriend = true;
+                                                        });
+                                                        Navigator.pop(context);
+                                                      },
+                                                      child: Row(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          Icon(
+                                                              Icons
+                                                                  .person,
+                                                              color:
+                                                                  Colors.black),
+                                                          SizedBox(width: 10),
+                                                          Text(
+                                                              'Confirm',
+                                                              style: TextStyle(
+                                                                fontSize: 14,
+                                                                color: Colors
+                                                                    .black,
+                                                              )),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    SizedBox(height: 10),
+                                                    InkWell(
+                                                      hoverColor: Colors.white,
+                                                      onTap: () {
+                                                        setState((){
+                                                          isRequestedFriend = false;
+                                                        });
+                                                        Navigator.pop(context);
+                                                      },
+                                                      child: Row(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          Icon(
+                                                              Icons
+                                                                  .clear,
+                                                              color:
+                                                                  Colors.black),
+                                                          SizedBox(width: 10),
+                                                          Text(
+                                                              'Delete request',
+                                                              style: TextStyle(
+                                                                fontSize: 14,
+                                                                color: Colors
+                                                                    .black,
+                                                              )),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ],
+                                                )));
+                                      });
+                              },
+                              child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(Icons.person, color: Colors.white),
+                                Text(' Respond',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16.0)),
+                              ],
+                            ))
+                            : isRequestFriend
+                            ? InkWell(
+                              onTap: (){
+                                setState((){
+                                  isRequestFriend = false;
+                                });
+                              },
+                              child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(Icons.person, color: Colors.white),
+                                Text(' Requested',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16.0)),
+                              ],
+                            )) 
+                            : InkWell(
+                              onTap: (){
+                                setState((){
+                                  isRequestFriend = true;
+                                });
+                              },
+                              child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(Icons.person_add, color: Colors.white),
+                                Text(' Add Friend',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16.0)),
+                              ],
+                            )))
+                            )
+                          ,
                           const SizedBox(width: 10),
                           Container(
                             height: 38.0,
@@ -224,19 +371,38 @@ class _ProfileTabState extends State<ProfileTab> {
                             decoration: BoxDecoration(
                                 color: Colors.grey[300],
                                 borderRadius: BorderRadius.circular(5.0)),
-                            child: InkWell(
+                            child: isMe
+                            ? InkWell(
                               onTap: () {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            EditProfilePage()));
+                                            EditProfilePage(
+                                              
+                                            )));
                               },
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: const [
                                   Icon(Icons.edit, color: Colors.black),
                                   Text(' Edit profile',
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16.0)),
+                                ],
+                              ),
+                            )
+                            : InkWell(
+                              onTap: () {
+                                
+                              },
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: const [
+                                  Icon(FontAwesomeIcons.facebookMessenger, color: Colors.black),
+                                  Text(' Message',
                                       style: TextStyle(
                                           color: Colors.black,
                                           fontWeight: FontWeight.bold,
@@ -259,7 +425,9 @@ class _ProfileTabState extends State<ProfileTab> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            ProfileSettingPage()));
+                                            ProfileSettingPage(
+                                              isMe: isMe
+                                            )));
                               },
                             ),
                           )
