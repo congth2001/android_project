@@ -14,6 +14,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../shared/font_size.dart';
 import 'feelings_activities_main.dart';
 
+import 'package:fakebook/network/user_request.dart';
+import 'package:fakebook/models/user.dart';
+
 class CreatePostMain extends StatefulWidget {
   final String? emoijOrActivityImage;
   final String? emoijOrActivityName;
@@ -108,6 +111,21 @@ class _CreatePostMainState extends State<CreatePostMain> {
         isDisabled = false;
       });
     }
+    getData();
+  }
+
+  var user = User();
+  getData() async {
+    // Obtain shared preferences.
+    final prefs = await SharedPreferences.getInstance();
+    String userID = prefs.getString('userID').toString();
+    UserRequest.getUserByID(userID).then((result) {
+      print(result.username);
+      print(userID);
+      setState(() {
+        user = result;
+      });
+    });
   }
 
   @override
@@ -311,7 +329,7 @@ class _CreatePostMainState extends State<CreatePostMain> {
                         shape: BoxShape.circle,
                         image: DecorationImage(
                             fit: BoxFit.cover,
-                            image: AssetImage("assets/andrew.jpg"))),
+                            image: NetworkImage(user.avatar.toString()))),
                   ),
                   SizedBox(width: 5),
                   Column(
@@ -320,7 +338,7 @@ class _CreatePostMainState extends State<CreatePostMain> {
                         Row(
                           // ignore: prefer_const_literals_to_create_immutables
                           children: [
-                            Text('Andrew',
+                            Text(user.username.toString(),
                                 style: TextStyle(
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold,
