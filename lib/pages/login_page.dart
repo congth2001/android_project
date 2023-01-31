@@ -6,6 +6,7 @@ import 'find_account_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:fakebook/network/user_request.dart';
 import 'dart:convert';
+import 'package:fakebook/models/user.dart';
 
 import 'package:flutter/services.dart';
 
@@ -35,10 +36,21 @@ class LoginPageState extends State<LoginPage> {
     getData();
   }
 
+  var user = User();
+
+
   getData() async {
     // Obtain shared preferences.
     final prefs = await SharedPreferences.getInstance();
     phoneNumber = prefs.getString('phoneNumber').toString();
+    String userID = prefs.getString('userID').toString();
+    UserRequest.getUserByID(userID).then((result) {
+      print(result.username);
+      print(userID);
+      setState(() {
+        user = result;
+      });
+    });
   }
 
   @override
@@ -55,13 +67,13 @@ class LoginPageState extends State<LoginPage> {
                 children: [
                   Center(
                     child: CircleAvatar(
-                      backgroundImage: AssetImage("assets/andrew.jpg"),
+                      backgroundImage: NetworkImage(user.avatar.toString()),
                       radius: 35,
                     ),
                   ),
                   SizedBox(height: 15),
                   Text(
-                    'Andrew',
+                    user.username.toString(),
                     style: TextStyle(fontSize: FontSize.titleSize),
                   ),
                   SizedBox(height: 20),
