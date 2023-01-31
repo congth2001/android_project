@@ -10,8 +10,6 @@ import '../models/user.dart';
 class UserRequest {
   // url of api
   static var url = Uri();
-  // default token
-  static String defaultToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImRhdCIsImlkIjoiNjNhMzMyN2E5OGJkMDEzMmZjZWFiMDZlIiwiaWF0IjoxNjczMDgxMzMxfQ.wd_pxa0sdMNh__XvFmQPGZR4W6IDFNXOJTYDDK6eOUc";
 
   // get token
   static Future<String> getToken() async {
@@ -42,7 +40,7 @@ class UserRequest {
   }
 
   /*
-   * @desc API get info all of users
+   * @desc API Lấy danh sách tất cả người dùng
    * @date 30/1/2023 
    */
   static Future<List<User>> getAllUser() async {
@@ -91,31 +89,6 @@ class UserRequest {
   }
 
   /*
-   * @desc API login
-   * @date 30/1/2023 
-   */
-  static Future login(String phoneNumber, String password) async {
-    try {
-      // get url
-      url = Uri.http('localhost:8000', 'api/v1/users/login');
-      // get response
-      final res = await http
-          .post(url, body: {"phonenumber": phoneNumber, "password": password});
-      // check and return
-      // if (res.statusCode == 200) {
-      //   return res;
-      // } else if (res.statusCode == 404) {
-      //   throw Exception('Not Found');
-      // } else {
-      //   throw Exception('Can\'t get users');
-      // }
-      return res;
-    } catch (e) {
-      print(e.toString());
-    }
-  }
-
-  /*
    * @desc API lấy thông tin theo ID
    * @date 30/1/2023 
    */
@@ -125,9 +98,6 @@ class UserRequest {
       url = Uri.http('localhost:8000', 'api/v1/users/show/$id');
       // get token
       String token = await getToken();
-      if (token == "") {
-        token = defaultToken;
-      }
       // get response
       final res = await http.get(
         url,
@@ -145,6 +115,51 @@ class UserRequest {
       } else {
         throw Exception('Can\'t get users');
       }
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  /*
+   * @desc API Lấy danh sách tất cả bạn bè
+   * @date 30/1/2023 
+   */
+  static Future<List<User>> getAllFriends() async {
+    // get url
+    url = Uri.http('localhost:8000', 'api/v1/friends/list');
+    // get token
+    String token = await getToken();
+    // get response
+    final res = await http.post(
+      url,
+      headers: {
+        HttpHeaders.authorizationHeader: 'Bearer $token',
+      },
+    );
+    // get return data
+    final data = jsonDecode(res.body);
+    // check and return
+    if (res.statusCode == 200) {
+      return compute(parseUserList, data['data'] as List<dynamic>);
+    } else if (res.statusCode == 404) {
+      throw Exception('Not Found');
+    } else {
+      throw Exception('Can\'t get users');
+    }
+  }
+
+  /*
+   * @desc API login
+   * @date 30/1/2023 
+   */
+  static Future login(String phoneNumber, String password) async {
+    try {
+      // get url
+      url = Uri.http('localhost:8000', 'api/v1/users/login');
+      // get response
+      final res = await http
+          .post(url, body: {"phonenumber": phoneNumber, "password": password});
+      return res;
     } catch (e) {
       print(e.toString());
     }

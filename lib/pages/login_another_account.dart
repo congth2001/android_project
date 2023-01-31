@@ -97,7 +97,8 @@ class _LoginAnotherAccountState extends State<LoginAnotherAccount> {
                       onPressed: () {
                         var phoneNumber = phonenumberController.text + "";
                         var password = passwordController.text + "";
-                        UserRequest.login(phoneNumber, password).then((result) async {
+                        UserRequest.login(phoneNumber, password)
+                            .then((result) async {
                           print(result);
                           // Direct to next page
                           if (result.statusCode == 200) {
@@ -106,12 +107,13 @@ class _LoginAnotherAccountState extends State<LoginAnotherAccount> {
                             final prefs = await SharedPreferences.getInstance();
                             // Save an String value to 'username' key.
                             await prefs.setString('userID', user['data']['id']);
+                            await prefs.setString('token', user['token']);
                             Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (context) => HomePage()),
                             );
-                          }else{
+                          } else {
                             print(result.statusCode);
                             String errorTitle = 'Incorrect Password';
                             String errorDetail =
@@ -119,27 +121,29 @@ class _LoginAnotherAccountState extends State<LoginAnotherAccount> {
                             showDialog(
                                 context: context,
                                 builder: (BuildContext context) => AlertDialog(
-                                    insetPadding: EdgeInsets.symmetric(horizontal: 32),
-                                    title: Text(errorTitle,
-                                        style: TextStyle(
-                                            fontSize: FontSize.titleSize,
-                                            fontWeight: FontWeight.bold)),
-                                    content: Text(errorDetail,
-                                        style: TextStyle(
-                                            fontSize: FontSize.contentSize,
-                                            color: Color.fromARGB(
-                                                255, 88, 88, 88))),
-                                    actions: [
-                                      TextButton(
-                                        child: Text('OK',
+                                        insetPadding: EdgeInsets.symmetric(
+                                            horizontal: 32),
+                                        title: Text(errorTitle,
+                                            style: TextStyle(
+                                                fontSize: FontSize.titleSize,
+                                                fontWeight: FontWeight.bold)),
+                                        content: Text(errorDetail,
                                             style: TextStyle(
                                                 fontSize: FontSize.contentSize,
-                                                color: Colors.black)),
-                                        onPressed: () {
-                                          Navigator.pop(context, 'Cancel');
-                                        },
-                                      )
-                                    ]));
+                                                color: Color.fromARGB(
+                                                    255, 88, 88, 88))),
+                                        actions: [
+                                          TextButton(
+                                            child: Text('OK',
+                                                style: TextStyle(
+                                                    fontSize:
+                                                        FontSize.contentSize,
+                                                    color: Colors.black)),
+                                            onPressed: () {
+                                              Navigator.pop(context, 'Cancel');
+                                            },
+                                          )
+                                        ]));
                           }
                         });
                       },
