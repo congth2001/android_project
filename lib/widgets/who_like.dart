@@ -18,6 +18,7 @@ class _WhoLikePageState extends State<WhoLikePage> {
     return Scaffold(
       backgroundColor: Colors.white,
         appBar: AppBar(
+            elevation: 0.5,
             toolbarHeight: 40,
             leading: IconButton(
                 icon: Icon(Icons.arrow_back, color: Colors.black, size: 20),
