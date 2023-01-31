@@ -10,8 +10,6 @@ import '../models/user.dart';
 class UserRequest {
   // url of api
   static var url = Uri();
-  // default token
-  static String defaultToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImRhdCIsImlkIjoiNjNhMzMyN2E5OGJkMDEzMmZjZWFiMDZlIiwiaWF0IjoxNjczMDgxMzMxfQ.wd_pxa0sdMNh__XvFmQPGZR4W6IDFNXOJTYDDK6eOUc";
 
   // get token
   static Future<String> getToken() async {
@@ -125,9 +123,6 @@ class UserRequest {
       url = Uri.http('localhost:8000', 'api/v1/users/show/$id');
       // get token
       String token = await getToken();
-      if (token == "") {
-        token = defaultToken;
-      }
       // get response
       final res = await http.get(
         url,

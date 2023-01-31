@@ -10,9 +10,6 @@ import '../models/post.dart';
 class PostRequest {
   // url of api
   static var url = Uri();
-  // default token
-  static String defaultToken =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImRhdCIsImlkIjoiNjNhMzMyN2E5OGJkMDEzMmZjZWFiMDZlIiwiaWF0IjoxNjczMDgxMzMxfQ.wd_pxa0sdMNh__XvFmQPGZR4W6IDFNXOJTYDDK6eOUc";
 
   // get token
   static Future<String> getToken() async {
@@ -79,9 +76,6 @@ class PostRequest {
       url = Uri.http('localhost:8000', 'api/v1/Posts/show/$id');
       // get token
       String token = await getToken();
-      if (token == "") {
-        token = defaultToken;
-      }
       // get response
       final res = await http.get(
         url,
@@ -114,9 +108,6 @@ class PostRequest {
       url = Uri.http('localhost:8000', 'api/v1/posts/create');
       // get token
       String token = await getToken();
-      if (token == "") {
-        token = defaultToken;
-      }
       print(token);
       // get response
       final res = await http.post(
@@ -151,9 +142,6 @@ class PostRequest {
       url = Uri.http('localhost:8000', 'api/v1/postLike/action/$postID');
       // get token
       String token = await getToken();
-      if (token == "") {
-        token = defaultToken;
-      }
       print(token);
       // get response
       final res = await http.post(
