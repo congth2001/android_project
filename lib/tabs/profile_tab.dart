@@ -72,8 +72,8 @@ class _ProfileTabState extends State<ProfileTab> {
                             borderRadius:
                             const BorderRadius.all(Radius.circular(100)),
                           ),
-                          child: const CircleAvatar(
-                            backgroundImage: AssetImage('andrew.jpg'),
+                          child: CircleAvatar(
+                            backgroundImage: NetworkImage(user.avatar.toString()),
                             radius: 80.0,
                           ),
                         ),

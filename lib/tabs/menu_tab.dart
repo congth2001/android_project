@@ -5,7 +5,38 @@ import '../pages/friend_page.dart';
 import '../pages/profile_page.dart';
 import '../pages/search_page.dart';
 
-class MenuTab extends StatelessWidget {
+import 'package:fakebook/models/user.dart';
+import 'package:fakebook/network/user_request.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+class MenuTab extends StatefulWidget {
+  @override
+  State<MenuTab> createState() => _MenuTabState();
+}
+
+class _MenuTabState extends State<MenuTab> {
+  var user = User();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getData();
+  }
+
+  getData() async {
+    // Obtain shared preferences.
+    final prefs = await SharedPreferences.getInstance();
+    String userID = prefs.getString('userID').toString();
+    UserRequest.getUserByID(userID).then((result) {
+      // print(result.username);
+      // print(userID);
+      setState(() {
+        user = result;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -58,16 +89,16 @@ class MenuTab extends StatelessWidget {
               child: Row(
                 children: [
                   const SizedBox(width: 15.0),
-                  const CircleAvatar(
+                   CircleAvatar(
                     radius: 25.0,
-                    backgroundImage: AssetImage('assets/Mike Tyler.jpg'),
+                    backgroundImage: NetworkImage(user.avatar.toString()),
                   ),
                   const SizedBox(width: 20.0),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
-                      Text('Mike Tyler',
+                    children: [
+                      Text(user.username.toString(),
                           style: TextStyle(
                               color: Colors.black,
                               fontWeight: FontWeight.bold,
