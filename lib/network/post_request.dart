@@ -11,8 +11,8 @@ class PostRequest {
   // url of api
   static var url = Uri();
   // default token
-  static String defaultToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImRhdCIsImlkIjoiNjNhMzMyN2E5OGJkMDEzMmZjZWFiMDZlIiwiaWF0IjoxNjczMDgxMzMxfQ.wd_pxa0sdMNh__XvFmQPGZR4W6IDFNXOJTYDDK6eOUc";
-
+  static String defaultToken =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImRhdCIsImlkIjoiNjNhMzMyN2E5OGJkMDEzMmZjZWFiMDZlIiwiaWF0IjoxNjczMDgxMzMxfQ.wd_pxa0sdMNh__XvFmQPGZR4W6IDFNXOJTYDDK6eOUc";
 
   // get token
   static Future<String> getToken() async {
@@ -124,6 +124,40 @@ class PostRequest {
         body: {
           "described": described,
         },
+        headers: {
+          HttpHeaders.authorizationHeader: 'Bearer $token',
+        },
+      );
+      // check and return
+      if (res.statusCode == 200) {
+        return res;
+      } else if (res.statusCode == 400) {
+        throw Exception('Bad request');
+      } else {
+        throw Exception('Can\'t create post');
+      }
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  /*
+   * @desc API thích và bỏ thích bài viết
+   * @date 31/1/2023 
+   */
+  static Future likeOrUnlike(String postID) async {
+    try {
+      // get url
+      url = Uri.http('localhost:8000', 'api/v1/postLike/action/$postID');
+      // get token
+      String token = await getToken();
+      if (token == "") {
+        token = defaultToken;
+      }
+      print(token);
+      // get response
+      final res = await http.post(
+        url,
         headers: {
           HttpHeaders.authorizationHeader: 'Bearer $token',
         },
