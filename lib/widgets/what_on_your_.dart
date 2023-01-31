@@ -26,7 +26,7 @@ class WriteSomethingWidget extends StatelessWidget {
                   ),
                   child: CircleAvatar(
                     radius: 24.0,
-                    backgroundImage: AssetImage('assets/Mike Tyler.jpg'),
+                    backgroundImage: NetworkImage('https://firebasestorage.googleapis.com/v0/b/social-network-app-19cd7.appspot.com/o/images%2Frn_image_picker_lib_temp_19d714d4-09ee-45a2-a1b0-c44329bcd180.jpg?alt=media&token=2ed540ab-1944-4061-b5d6-4f3ee8b598f8&fbclid=IwAR0PCicGfnvSYpF0E-dVR6bRJ40SS-NYlipPh8VQsvWHQPM7_hsh6E9aAP8'),
                   ),
                   onPressed: () => {
                     Navigator.push(
