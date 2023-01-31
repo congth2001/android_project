@@ -17,7 +17,7 @@ class ProfileTab extends StatelessWidget {
                 Container(
                   height: 220.0,
                   decoration: const BoxDecoration(
-                    image: DecorationImage(image: AssetImage('assets/cover.jpg'), fit: BoxFit.cover),
+                    image: DecorationImage(image: NetworkImage('https://firebasestorage.googleapis.com/v0/b/social-network-app-19cd7.appspot.com/o/images%2Frn_image_picker_lib_temp_19d714d4-09ee-45a2-a1b0-c44329bcd180.jpg?alt=media&token=2ed540ab-1944-4061-b5d6-4f3ee8b598f8&fbclid=IwAR0PCicGfnvSYpF0E-dVR6bRJ40SS-NYlipPh8VQsvWHQPM7_hsh6E9aAP8'), fit: BoxFit.cover),
                   ),
                 ),
 
@@ -33,7 +33,8 @@ class ProfileTab extends StatelessWidget {
                           borderRadius: const BorderRadius.all(Radius.circular(100)),
                         ),
                         child: const CircleAvatar(
-                          backgroundImage: AssetImage('assets/Mike Tyler.jpg'),
+                          // backgroundImage: AssetImage('assets/Mike Tyler.jpg'),
+                          backgroundImage: NetworkImage('https://firebasestorage.googleapis.com/v0/b/social-network-app-19cd7.appspot.com/o/images%2Frn_image_picker_lib_temp_19d714d4-09ee-45a2-a1b0-c44329bcd180.jpg?alt=media&token=2ed540ab-1944-4061-b5d6-4f3ee8b598f8&fbclid=IwAR0PCicGfnvSYpF0E-dVR6bRJ40SS-NYlipPh8VQsvWHQPM7_hsh6E9aAP8'),
                           radius: 80.0,
                         ),
                       ),
