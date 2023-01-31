@@ -5,6 +5,9 @@ import 'find_account_page.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:fakebook/network/user_request.dart';
+import 'dart:convert';
+
+import 'package:flutter/services.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -129,10 +132,16 @@ class LoginPageState extends State<LoginPage> {
                     child: ElevatedButton(
                         onPressed: () {
                           var password = passwordController.text + "";
-                          UserRequest.login(phoneNumber, password).then((result) {
+                          UserRequest.login(phoneNumber, password).then((result) async{
                             print(result.statusCode);
                             // Direct to next page
                             if (result.statusCode == 200) {
+                              final user = jsonDecode(result.body);
+                              // Obtain shared preferences.
+                              final prefs = await SharedPreferences.getInstance();
+                              // Save an String value to 'username' key.
+                              await prefs.setString('userID', user['data']['id']);
+
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
