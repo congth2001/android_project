@@ -109,54 +109,56 @@ class _LoginAnotherAccountState extends State<LoginAnotherAccount> {
                           print(result);
                           // Direct to next page
 
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => HomePage()),
-                          );
-                          // if (result.statusCode == 200) {
-                          //   final user = jsonDecode(result.body);
-                          //   // Obtain shared preferences.
-                          //   final prefs = await SharedPreferences.getInstance();
-                          //   // Save an String value to 'username' key.
-                          //   await prefs.setString('userID', user['data']['id']);
-                          //   await prefs.setString('token', user['token']);
-                          //   Navigator.push(
-                          //     context,
-                          //     MaterialPageRoute(
-                          //         builder: (context) => HomePage()),
-                          //   );
-                          // } else {
-                          //   print(result.statusCode);
-                          //   String errorTitle = 'Incorrect Password';
-                          //   String errorDetail =
-                          //       'The password you entered is incorrect. Please try again.';
-                          //   showDialog(
-                          //       context: context,
-                          //       builder: (BuildContext context) => AlertDialog(
-                          //               insetPadding: EdgeInsets.symmetric(
-                          //                   horizontal: 32),
-                          //               title: Text(errorTitle,
-                          //                   style: TextStyle(
-                          //                       fontSize: FontSize.titleSize,
-                          //                       fontWeight: FontWeight.bold)),
-                          //               content: Text(errorDetail,
-                          //                   style: TextStyle(
-                          //                       fontSize: FontSize.contentSize,
-                          //                       color: Color.fromARGB(
-                          //                           255, 88, 88, 88))),
-                          //               actions: [
-                          //                 TextButton(
-                          //                   child: Text('OK',
-                          //                       style: TextStyle(
-                          //                           fontSize:
-                          //                               FontSize.contentSize,
-                          //                           color: Colors.black)),
-                          //                   onPressed: () {
-                          //                     Navigator.pop(context, 'Cancel');
-                          //                   },
-                          //                 )
-                          //               ]));
-                          // }
+                          // Navigator.push(
+                          //   context,
+                          //   MaterialPageRoute(builder: (context) => HomePage()),
+                          // );
+                          if (result.statusCode == 200) {
+                            final user = jsonDecode(result.body);
+                            print(user);
+                            // Obtain shared preferences.
+                            final prefs = await SharedPreferences.getInstance();
+                            // Save an String value to 'username' key.
+                            await prefs.setString('userID', user['data']['id']);
+                            await prefs.setString(
+                                'token', user['data']['token']);
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => HomePage()),
+                            );
+                          } else {
+                            print(result.statusCode);
+                            String errorTitle = 'Incorrect Password';
+                            String errorDetail =
+                                'The password you entered is incorrect. Please try again.';
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) => AlertDialog(
+                                        insetPadding: EdgeInsets.symmetric(
+                                            horizontal: 32),
+                                        title: Text(errorTitle,
+                                            style: TextStyle(
+                                                fontSize: FontSize.titleSize,
+                                                fontWeight: FontWeight.bold)),
+                                        content: Text(errorDetail,
+                                            style: TextStyle(
+                                                fontSize: FontSize.contentSize,
+                                                color: Color.fromARGB(
+                                                    255, 88, 88, 88))),
+                                        actions: [
+                                          TextButton(
+                                            child: Text('OK',
+                                                style: TextStyle(
+                                                    fontSize:
+                                                        FontSize.contentSize,
+                                                    color: Colors.black)),
+                                            onPressed: () {
+                                              Navigator.pop(context, 'Cancel');
+                                            },
+                                          )
+                                        ]));
+                          }
                         });
                       },
                       child: Text(

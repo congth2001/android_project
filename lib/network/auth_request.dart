@@ -8,7 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../models/user.dart';
 
 class AuthRequest {
-  static const String subdomain = 'localhost:5000';
+  static const String subdomain = 'facebookhust.onrender.com';
   static const String subdirectoryHead = "/it4788/auth";
   // url of api
   static var url = Uri();
@@ -75,7 +75,7 @@ class AuthRequest {
       };
       // ini
       // init urls
-      url = Uri.http(subdomain, '$subdirectoryHead/signup', queryParameters);
+      url = Uri.https(subdomain, '$subdirectoryHead/signup', queryParameters);
       print(url);
       // get response
       final res = await http.post(url);
@@ -196,7 +196,7 @@ class AuthRequest {
         'password': password,
       };
       // get url
-      url = Uri.http(subdomain, '$subdirectoryHead/login', queryParameters);
+      url = Uri.https(subdomain, '$subdirectoryHead/login', queryParameters);
       // get response
       final res = await http.post(url);
       return res;
