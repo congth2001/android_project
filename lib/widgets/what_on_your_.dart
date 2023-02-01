@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import '../pages/profile_page.dart';
 
 import 'package:photo_picker_initial/models/user.dart';
-import 'package:photo_picker_initial/network/user_request.dart';
+import 'package:photo_picker_initial/network/auth_request.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class WriteSomethingWidget extends StatefulWidget {
@@ -26,7 +26,7 @@ class _WriteSomethingWidgetState extends State<WriteSomethingWidget> {
     // Obtain shared preferences.
     final prefs = await SharedPreferences.getInstance();
     String userID = prefs.getString('userID').toString();
-    UserRequest.getUserByID(userID).then((result) {
+    AuthRequest.getUserByID(userID).then((result) {
       // print(result.username);
       // print(userID);
       setState(() {

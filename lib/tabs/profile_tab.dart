@@ -7,19 +7,7 @@ import 'package:photo_picker_initial/widgets/what_on_your_.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'dart:io';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:image_cropper/image_cropper.dart';
-import 'package:image_picker/image_picker.dart';
-import '../widgets/common_buttons.dart';
-import '../constants.dart';
-import 'select_photo_options_screen.dart';
-
 class ProfileTab extends StatefulWidget {
-  // const ProfileTab({super.key});
-  static const id = 'set_photo_screen';
-
   @override
   State<ProfileTab> createState() => _ProfileTabState();
 }
@@ -45,65 +33,15 @@ class _ProfileTabState extends State<ProfileTab> {
       });
     });
   }
-
   // @override
   // void initState() {
   //   super.initState();
-  //   UserRequest.getUserByID(userID).then((result) {
+  //   AuthRequest.getUserByID(userID).then((result) {
   //     setState(() {
   //       user = result;
   //     });
   //   });
   // }
-  File? _image;
-
-  Future _pickImage(ImageSource source) async {
-    try {
-      final image = await ImagePicker().pickImage(source: source);
-      if (image == null) return;
-      File? img = File(image.path);
-      img = await _cropImage(imageFile: img);
-      setState(() {
-        _image = img;
-        Navigator.of(context).pop();
-      });
-    } on PlatformException catch (e) {
-      print(e);
-      Navigator.of(context).pop();
-    }
-  }
-
-  Future<File?> _cropImage({required File imageFile}) async {
-    CroppedFile? croppedImage =
-        await ImageCropper().cropImage(sourcePath: imageFile.path);
-    if (croppedImage == null) return null;
-    return File(croppedImage.path);
-  }
-
-  void _showSelectPhotoOptions(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(
-          top: Radius.circular(25.0),
-        ),
-      ),
-      builder: (context) => DraggableScrollableSheet(
-          initialChildSize: 0.28,
-          maxChildSize: 0.4,
-          minChildSize: 0.28,
-          expand: false,
-          builder: (context, scrollController) {
-            return SingleChildScrollView(
-              controller: scrollController,
-              child: SelectPhotoOptionsScreen(
-                onTap: _pickImage,
-              ),
-            );
-          }),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -129,26 +67,15 @@ class _ProfileTabState extends State<ProfileTab> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: <Widget>[
-                    GestureDetector(
-                      behavior: HitTestBehavior.translucent,
-                      onTap: () {
-                        _showSelectPhotoOptions(context);
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.white, width: 5),
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(100)),
-                        ),
-                        child: _image == null
-                            ? const Text(
-                                'No image selected',
-                                style: TextStyle(fontSize: 20),
-                              )
-                            : CircleAvatar(
-                                backgroundImage: FileImage(_image!),
-                                radius: 80.0,
-                              ),
+                    Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.white, width: 5),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(100)),
+                      ),
+                      child: CircleAvatar(
+                        backgroundImage: NetworkImage(user.avatar.toString()),
+                        radius: 80.0,
                       ),
                     ),
                     const SizedBox(height: 10.0),

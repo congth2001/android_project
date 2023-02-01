@@ -7,7 +7,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/user.dart';
 
-class UserRequest {
+class AuthRequest {
+  static const String subdomain = 'localhost:5000';
+  static const String subdirectoryHead = "/it4788/auth";
   // url of api
   static var url = Uri();
 
@@ -64,24 +66,58 @@ class UserRequest {
    * @desc API đăng ký tài khoản người dùng
    * @date 30/1/2023 
    */
-  static Future register(
-      String username, String phoneNumber, String password) async {
+  static Future signUp(String phoneNumber, String password) async {
     try {
-      // get url
-      url = Uri.http('localhost:8000', 'api/v1/users/register');
+      // init query params
+      final queryParameters = {
+        'phonenumber': phoneNumber,
+        'password': password,
+      };
+      // ini
+      // init urls
+      url = Uri.http(subdomain, '$subdirectoryHead/signup', queryParameters);
+      print(url);
       // get response
-      final res = await http.post(url, body: {
-        "username": username,
-        "phonenumber": phoneNumber,
-        "password": password
-      });
+      final res = await http.post(url);
+      // get return data
+      final resBody = jsonDecode(res.body);
       // check and return
-      if (res.statusCode == 201) {
-        return res;
-      } else if (res.statusCode == 400) {
-        throw Exception('Bad request');
+      if (resBody['code'] == '1000') {
+        return resBody['data'];
       } else {
-        throw Exception('Can\'t create user');
+        throw Exception(resBody['message']);
+      }
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  /*
+   * @desc API cập nhật username
+   * @date 30/1/2023 
+   */
+  static Future changeUsername(String username) async {
+    try {
+      // get token
+      String token = await getToken();
+      // init query params
+      final queryParameters = {
+        'token': token,
+        'username': username,
+      };
+      // init urls
+      url = Uri.http(subdomain, '$subdirectoryHead/change_info_after_signup',
+          queryParameters);
+      print(url);
+      // get response
+      final res = await http.post(url);
+      // get return data
+      final resBody = jsonDecode(res.body);
+      // check and return
+      if (resBody['data']['code'] == '1000') {
+        return resBody['data']['data'];
+      } else {
+        throw Exception(resBody['message']);
       }
     } catch (e) {
       print(e.toString());
@@ -154,11 +190,15 @@ class UserRequest {
    */
   static Future login(String phoneNumber, String password) async {
     try {
+      // init query params
+      final queryParameters = {
+        'phonenumber': phoneNumber,
+        'password': password,
+      };
       // get url
-      url = Uri.http('localhost:8000', 'api/v1/users/login');
+      url = Uri.http(subdomain, '$subdirectoryHead/login', queryParameters);
       // get response
-      final res = await http
-          .post(url, body: {"phonenumber": phoneNumber, "password": password});
+      final res = await http.post(url);
       return res;
     } catch (e) {
       print(e.toString());

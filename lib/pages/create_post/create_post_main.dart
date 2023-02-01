@@ -5,16 +5,12 @@ import 'dart:io';
 import 'package:photo_picker_initial/network/post_request.dart';
 import 'package:photo_picker_initial/pages/home_page.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
 import '../../shared/font_size.dart';
 import 'feelings_activities_main.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:photo_picker_initial/network/user_request.dart';
+import 'package:photo_picker_initial/network/auth_request.dart';
 import 'package:photo_picker_initial/models/user.dart';
 
 class CreatePostMain extends StatefulWidget {
@@ -97,12 +93,6 @@ class _CreatePostMainState extends State<CreatePostMain> {
   }
 
   @override
-  void dispose() {
-    contentController.dispose();
-    super.dispose();
-  }
-
-  @override
   void initState() {
     super.initState();
     if (widget.emojiOrActivityType != null &&
@@ -119,7 +109,7 @@ class _CreatePostMainState extends State<CreatePostMain> {
     // Obtain shared preferences.
     final prefs = await SharedPreferences.getInstance();
     String userID = prefs.getString('userID').toString();
-    UserRequest.getUserByID(userID).then((result) {
+    AuthRequest.getUserByID(userID).then((result) {
       print(result.username);
       print(userID);
       setState(() {
@@ -305,7 +295,7 @@ class _CreatePostMainState extends State<CreatePostMain> {
                             });
                       }
                     },
-                    child: Text('POST',
+                    child: Text('DONE',
                         style: TextStyle(
                             color:
                                 isDisabled ? Colors.grey[400] : Colors.white)),
