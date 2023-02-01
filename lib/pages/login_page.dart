@@ -4,9 +4,9 @@ import 'home_page.dart';
 import 'find_account_page.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:fakebook/network/user_request.dart';
+import 'package:photo_picker_initial/network/user_request.dart';
 import 'dart:convert';
-import 'package:fakebook/models/user.dart';
+import 'package:photo_picker_initial/models/user.dart';
 
 import 'package:flutter/services.dart';
 

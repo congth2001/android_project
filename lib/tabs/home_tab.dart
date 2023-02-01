@@ -1,8 +1,8 @@
-import 'package:fakebook/widgets/what_on_your_.dart';
-import 'package:fakebook/widgets/separator_widget.dart';
-import 'package:fakebook/widgets/post_widget.dart';
-import 'package:fakebook/widgets/stories_widget.dart';
-import 'package:fakebook/models/post.dart';
+import 'package:photo_picker_initial/widgets/what_on_your_.dart';
+import 'package:photo_picker_initial/widgets/separator_widget.dart';
+import 'package:photo_picker_initial/widgets/post_widget.dart';
+import 'package:photo_picker_initial/widgets/stories_widget.dart';
+import 'package:photo_picker_initial/models/post.dart';
 import 'package:flutter/material.dart';
 
 import '../network/post_request.dart';

@@ -1,4 +1,4 @@
-import 'package:fakebook/pages/chat/message_requests.dart';
+import 'package:photo_picker_initial/pages/chat/message_requests.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/container.dart';
@@ -49,29 +49,30 @@ class _ChatSettingsState extends State<ChatSettings> {
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
                       fontSize: 18)),
-                      SizedBox(height: 50),
+              SizedBox(height: 50),
               Container(
                 color: Colors.white,
                 child: InkWell(
-                  onTap: (){
+                  onTap: () {
                     Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context)=>MessageRequests())
-                    );
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => MessageRequests()));
                   },
                   child: Row(
                     children: [
                       Container(
                         color: Colors.white,
-                        child:Container(
-                              height: 30,
-                              width: 30,
-                              decoration: BoxDecoration(
-                                  color: Colors.blue, shape: BoxShape.circle),
-                              child: Icon(Icons.sms, size: 18, color: Colors.white)),
-                        ),
-                        SizedBox(width: 10),
-                        Text('Message requests')
+                        child: Container(
+                            height: 30,
+                            width: 30,
+                            decoration: BoxDecoration(
+                                color: Colors.blue, shape: BoxShape.circle),
+                            child:
+                                Icon(Icons.sms, size: 18, color: Colors.white)),
+                      ),
+                      SizedBox(width: 10),
+                      Text('Message requests')
                     ],
                   ),
                 ),

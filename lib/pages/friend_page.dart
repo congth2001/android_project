@@ -1,4 +1,4 @@
-import 'package:fakebook/tabs/friends_tab.dart';
+import 'package:photo_picker_initial/tabs/friends_tab.dart';
 import 'package:flutter/material.dart';
 
 class FriendPage extends StatefulWidget {

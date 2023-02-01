@@ -2,8 +2,8 @@
 
 import 'dart:async';
 import 'dart:io';
-import 'package:fakebook/network/post_request.dart';
-import 'package:fakebook/pages/home_page.dart';
+import 'package:photo_picker_initial/network/post_request.dart';
+import 'package:photo_picker_initial/pages/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/container.dart';
@@ -14,8 +14,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../shared/font_size.dart';
 import 'feelings_activities_main.dart';
 
-import 'package:fakebook/network/user_request.dart';
-import 'package:fakebook/models/user.dart';
+import 'package:photo_picker_initial/network/user_request.dart';
+import 'package:photo_picker_initial/models/user.dart';
 
 class CreatePostMain extends StatefulWidget {
   final String? emoijOrActivityImage;
@@ -297,13 +297,12 @@ class _CreatePostMainState extends State<CreatePostMain> {
                         String described = contentController.text;
                         // Call API
                         print(described);
-                        PostRequest.create(described)
-                            .then((res) => {
+                        PostRequest.create(described).then((res) => {
                               Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context)=>HomePage())
-                              )
-                        });
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => HomePage()))
+                            });
                       }
                     },
                     child: Text('POST',

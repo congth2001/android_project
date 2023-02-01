@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:fakebook/pages/home_page.dart';
+import 'package:photo_picker_initial/pages/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/container.dart';
@@ -12,7 +12,8 @@ class AccountConfirmationPage extends StatefulWidget {
   const AccountConfirmationPage({Key? key}) : super(key: key);
 
   @override
-  State<AccountConfirmationPage> createState() => _AccountConfirmationPageState();
+  State<AccountConfirmationPage> createState() =>
+      _AccountConfirmationPageState();
 }
 
 class _AccountConfirmationPageState extends State<AccountConfirmationPage> {
@@ -30,9 +31,11 @@ class _AccountConfirmationPageState extends State<AccountConfirmationPage> {
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Column(children: [
             SizedBox(height: 50),
-            Text(
-              'Enter the code', 
-            style: TextStyle(color: Colors.black, fontSize: FontSize.titleSize, fontWeight: FontWeight.bold)),
+            Text('Enter the code',
+                style: TextStyle(
+                    color: Colors.black,
+                    fontSize: FontSize.titleSize,
+                    fontWeight: FontWeight.bold)),
             SizedBox(height: 20),
             TextField(
               style: TextStyle(fontSize: FontSize.contentSize),
@@ -42,14 +45,20 @@ class _AccountConfirmationPageState extends State<AccountConfirmationPage> {
             ),
             SizedBox(height: 20),
             SizedBox(
-                  width: double.infinity,
-                  height: 30,
-                  child: ElevatedButton(
-                    child: Text('Confirm', style: TextStyle(fontSize: FontSize.contentSize),),
-                    onPressed: () {
-                      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>HomePage()), (route) => false);
-                    },
-                  )),
+                width: double.infinity,
+                height: 30,
+                child: ElevatedButton(
+                  child: Text(
+                    'Confirm',
+                    style: TextStyle(fontSize: FontSize.contentSize),
+                  ),
+                  onPressed: () {
+                    Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(builder: (context) => HomePage()),
+                        (route) => false);
+                  },
+                )),
           ]),
         ));
   }

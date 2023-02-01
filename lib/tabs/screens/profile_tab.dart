@@ -1,9 +1,9 @@
 import 'dart:convert';
 
-import 'package:fakebook/models/user.dart';
-import 'package:fakebook/network/user_request.dart';
-import 'package:fakebook/widgets/separator_widget.dart';
-import 'package:fakebook/widgets/what_on_your_.dart';
+import 'package:photo_picker_initial/models/user.dart';
+import 'package:photo_picker_initial/network/user_request.dart';
+import 'package:photo_picker_initial/widgets/separator_widget.dart';
+import 'package:photo_picker_initial/widgets/what_on_your_.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

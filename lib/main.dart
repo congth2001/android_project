@@ -1,5 +1,5 @@
-import 'package:fakebook/pages/create_post/create_post_main.dart';
-import 'package:fakebook/pages/landing_page.dart';
+import 'package:photo_picker_initial/pages/create_post/create_post_main.dart';
+import 'package:photo_picker_initial/pages/landing_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -13,8 +13,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'fakebook',
+      title: 'facebook',
       debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
       home: LandingPage(),
     );
   }

@@ -2,8 +2,8 @@
 
 import 'dart:convert';
 
-import 'package:fakebook/network/user_request.dart';
-import 'package:fakebook/pages/create_account/creating_account.dart';
+import 'package:photo_picker_initial/network/user_request.dart';
+import 'package:photo_picker_initial/pages/create_account/creating_account.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';

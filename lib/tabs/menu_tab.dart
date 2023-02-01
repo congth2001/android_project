@@ -1,12 +1,12 @@
-import 'package:fakebook/pages/landing_page.dart';
+import 'package:photo_picker_initial/pages/landing_page.dart';
 import 'package:flutter/material.dart';
 
 import '../pages/friend_page.dart';
 import '../pages/profile_page.dart';
 import '../pages/search_page.dart';
 
-import 'package:fakebook/models/user.dart';
-import 'package:fakebook/network/user_request.dart';
+import 'package:photo_picker_initial/models/user.dart';
+import 'package:photo_picker_initial/network/user_request.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MenuTab extends StatefulWidget {
@@ -48,31 +48,35 @@ class _MenuTabState extends State<MenuTab> {
           children: [
             Padding(
               padding: const EdgeInsets.fromLTRB(15.0, 5.0, 0.0, 5.0),
-              child: Row(children: [
-                const Text('Menu', style: TextStyle(fontSize: 25.0, fontWeight: FontWeight.bold)),
-                const SizedBox(width: 210),
-                MaterialButton(
-                  elevation: 0,
-                  minWidth: 5,
-                  color: Colors.grey[300],
-                  shape: const CircleBorder(),
-                  child: const Icon(Icons.settings, color: Colors.black87),
-                  onPressed: () {},
-                ),
-                MaterialButton(
-                  elevation: 0,
-                  minWidth: 5,
-                  color: Colors.grey[300],
-                  shape: const CircleBorder(),
-                  child: const Icon(Icons.search, color: Colors.black),
-                  onPressed: () => {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => SearchPage()),
-                    )
-                  },
-                ),
-              ],),
+              child: Row(
+                children: [
+                  const Text('Menu',
+                      style: TextStyle(
+                          fontSize: 25.0, fontWeight: FontWeight.bold)),
+                  const SizedBox(width: 210),
+                  MaterialButton(
+                    elevation: 0,
+                    minWidth: 5,
+                    color: Colors.grey[300],
+                    shape: const CircleBorder(),
+                    child: const Icon(Icons.settings, color: Colors.black87),
+                    onPressed: () {},
+                  ),
+                  MaterialButton(
+                    elevation: 0,
+                    minWidth: 5,
+                    color: Colors.grey[300],
+                    shape: const CircleBorder(),
+                    child: const Icon(Icons.search, color: Colors.black),
+                    onPressed: () => {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => SearchPage()),
+                      )
+                    },
+                  ),
+                ],
+              ),
             ),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
@@ -89,7 +93,7 @@ class _MenuTabState extends State<MenuTab> {
               child: Row(
                 children: [
                   const SizedBox(width: 15.0),
-                   CircleAvatar(
+                  CircleAvatar(
                     radius: 25.0,
                     backgroundImage: NetworkImage(user.avatar.toString()),
                   ),
@@ -534,8 +538,7 @@ class _MenuTabState extends State<MenuTab> {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(
-                            builder: (context) => LandingPage()),
+                        MaterialPageRoute(builder: (context) => LandingPage()),
                       );
                     },
                   ),

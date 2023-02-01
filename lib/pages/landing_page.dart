@@ -1,9 +1,9 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:fakebook/pages/create_account/create_new_account.dart';
-import 'package:fakebook/pages/find_account_page.dart';
-import 'package:fakebook/pages/login_another_account.dart';
-import 'package:fakebook/pages/login_page.dart';
+import 'package:photo_picker_initial/pages/create_account/create_new_account.dart';
+import 'package:photo_picker_initial/pages/find_account_page.dart';
+import 'package:photo_picker_initial/pages/login_another_account.dart';
+import 'package:photo_picker_initial/pages/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';

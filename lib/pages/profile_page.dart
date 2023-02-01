@@ -1,4 +1,4 @@
-import 'package:fakebook/tabs/screens/profile_tab.dart';
+import 'package:photo_picker_initial/tabs/screens/profile_tab.dart';
 import 'package:flutter/material.dart';
 
 class ProfilePage extends StatefulWidget {

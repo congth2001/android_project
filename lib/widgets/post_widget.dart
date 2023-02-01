@@ -1,6 +1,6 @@
-import 'package:fakebook/models/user.dart';
+import 'package:photo_picker_initial/models/user.dart';
 import 'package:flutter/material.dart';
-import 'package:fakebook/models/post.dart';
+import 'package:photo_picker_initial/models/post.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:like_button/like_button.dart';
 

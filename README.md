@@ -1,12 +1,8 @@
-# untitled
+# photo_picker_initial
 
 A new Flutter project.
 
 ## Getting Started
-
-```bash
-flutter pub get
-```
 
 This project is a starting point for a Flutter application.
 

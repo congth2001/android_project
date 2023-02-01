@@ -1,5 +1,6 @@
-import 'package:fakebook/models/comment.dart';
-class Comment{
+import 'package:photo_picker_initial/models/comment.dart';
+
+class Comment {
   final String content;
   final String nameUser;
   final String imageUrlUser;
@@ -11,20 +12,82 @@ class Comment{
     required this.time,
   });
 }
-List<Comment> listOfComments=[
-  Comment(content: 'Xinh dep', nameUser: 'Andrew', imageUrlUser: 'assets/andrew.jpg', time: '21 minutes'),
-  Comment(content: 'Xinh dep. Buc anh that tuyet.', nameUser: 'Andrew', imageUrlUser: 'assets/andrew.jpg', time: '21 minutes'),
-  Comment(content: 'Xinh dep. Xinh dep. Buc anh that tuyet. Xinh dep. Buc anh that tuyet.', nameUser: 'Andrew', imageUrlUser: 'assets/andrew.jpg', time: '21 minutes'),
-  Comment(content: 'Xinh dep', nameUser: 'Andrew', imageUrlUser: 'assets/andrew.jpg', time: '21 minutes'),
-  Comment(content: 'Xinh dep', nameUser: 'Andrew', imageUrlUser: 'assets/andrew.jpg', time: '21 minutes'),
-  Comment(content: 'Xinh dep', nameUser: 'Andrew', imageUrlUser: 'assets/andrew.jpg', time: '21 minutes'),
-  Comment(content: 'Xinh dep', nameUser: 'Andrew', imageUrlUser: 'assets/andrew.jpg', time: '21 minutes'),
-  Comment(content: 'Xinh dep', nameUser: 'Andrew', imageUrlUser: 'assets/andrew.jpg', time: '21 minutes'),
-  Comment(content: 'Xinh dep', nameUser: 'Andrew', imageUrlUser: 'assets/andrew.jpg', time: '21 minutes'),
-  Comment(content: 'Xinh dep', nameUser: 'Andrew', imageUrlUser: 'assets/andrew.jpg', time: '21 minutes'),
-  Comment(content: 'Xinh dep', nameUser: 'Andrew', imageUrlUser: 'assets/andrew.jpg', time: '21 minutes'),
-  Comment(content: 'Xinh dep', nameUser: 'Andrew', imageUrlUser: 'assets/andrew.jpg', time: '21 minutes'),
-  Comment(content: 'Xinh dep', nameUser: 'Andrew', imageUrlUser: 'assets/andrew.jpg', time: '21 minutes'),
-  Comment(content: 'Xinh dep', nameUser: 'Andrew', imageUrlUser: 'assets/andrew.jpg', time: '21 minutes'),
-  Comment(content: 'Xinh dep', nameUser: 'Andrew', imageUrlUser: 'assets/andrew.jpg', time: '21 minutes'),
+
+List<Comment> listOfComments = [
+  Comment(
+      content: 'Xinh dep',
+      nameUser: 'Andrew',
+      imageUrlUser: 'assets/andrew.jpg',
+      time: '21 minutes'),
+  Comment(
+      content: 'Xinh dep. Buc anh that tuyet.',
+      nameUser: 'Andrew',
+      imageUrlUser: 'assets/andrew.jpg',
+      time: '21 minutes'),
+  Comment(
+      content:
+          'Xinh dep. Xinh dep. Buc anh that tuyet. Xinh dep. Buc anh that tuyet.',
+      nameUser: 'Andrew',
+      imageUrlUser: 'assets/andrew.jpg',
+      time: '21 minutes'),
+  Comment(
+      content: 'Xinh dep',
+      nameUser: 'Andrew',
+      imageUrlUser: 'assets/andrew.jpg',
+      time: '21 minutes'),
+  Comment(
+      content: 'Xinh dep',
+      nameUser: 'Andrew',
+      imageUrlUser: 'assets/andrew.jpg',
+      time: '21 minutes'),
+  Comment(
+      content: 'Xinh dep',
+      nameUser: 'Andrew',
+      imageUrlUser: 'assets/andrew.jpg',
+      time: '21 minutes'),
+  Comment(
+      content: 'Xinh dep',
+      nameUser: 'Andrew',
+      imageUrlUser: 'assets/andrew.jpg',
+      time: '21 minutes'),
+  Comment(
+      content: 'Xinh dep',
+      nameUser: 'Andrew',
+      imageUrlUser: 'assets/andrew.jpg',
+      time: '21 minutes'),
+  Comment(
+      content: 'Xinh dep',
+      nameUser: 'Andrew',
+      imageUrlUser: 'assets/andrew.jpg',
+      time: '21 minutes'),
+  Comment(
+      content: 'Xinh dep',
+      nameUser: 'Andrew',
+      imageUrlUser: 'assets/andrew.jpg',
+      time: '21 minutes'),
+  Comment(
+      content: 'Xinh dep',
+      nameUser: 'Andrew',
+      imageUrlUser: 'assets/andrew.jpg',
+      time: '21 minutes'),
+  Comment(
+      content: 'Xinh dep',
+      nameUser: 'Andrew',
+      imageUrlUser: 'assets/andrew.jpg',
+      time: '21 minutes'),
+  Comment(
+      content: 'Xinh dep',
+      nameUser: 'Andrew',
+      imageUrlUser: 'assets/andrew.jpg',
+      time: '21 minutes'),
+  Comment(
+      content: 'Xinh dep',
+      nameUser: 'Andrew',
+      imageUrlUser: 'assets/andrew.jpg',
+      time: '21 minutes'),
+  Comment(
+      content: 'Xinh dep',
+      nameUser: 'Andrew',
+      imageUrlUser: 'assets/andrew.jpg',
+      time: '21 minutes'),
 ];

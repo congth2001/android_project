@@ -1,6 +1,6 @@
 {
-    "name": "untitled",
-    "short_name": "untitled",
+    "name": "photo_picker_initial",
+    "short_name": "photo_picker_initial",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

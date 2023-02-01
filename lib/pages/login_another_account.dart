@@ -1,12 +1,12 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:fakebook/pages/create_account/create_new_account.dart';
-import 'package:fakebook/shared/font_size.dart';
+import 'package:photo_picker_initial/pages/create_account/create_new_account.dart';
+import 'package:photo_picker_initial/shared/font_size.dart';
 import 'package:flutter/material.dart';
 
 import 'find_account_page.dart';
 import 'home_page.dart';
-import 'package:fakebook/network/user_request.dart';
+import 'package:photo_picker_initial/network/user_request.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
@@ -101,50 +101,55 @@ class _LoginAnotherAccountState extends State<LoginAnotherAccount> {
                             .then((result) async {
                           print(result);
                           // Direct to next page
-                          if (result.statusCode == 200) {
-                            final user = jsonDecode(result.body);
-                            // Obtain shared preferences.
-                            final prefs = await SharedPreferences.getInstance();
-                            // Save an String value to 'username' key.
-                            await prefs.setString('userID', user['data']['id']);
-                            await prefs.setString('token', user['token']);
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => HomePage()),
-                            );
-                          } else {
-                            print(result.statusCode);
-                            String errorTitle = 'Incorrect Password';
-                            String errorDetail =
-                                'The password you entered is incorrect. Please try again.';
-                            showDialog(
-                                context: context,
-                                builder: (BuildContext context) => AlertDialog(
-                                        insetPadding: EdgeInsets.symmetric(
-                                            horizontal: 32),
-                                        title: Text(errorTitle,
-                                            style: TextStyle(
-                                                fontSize: FontSize.titleSize,
-                                                fontWeight: FontWeight.bold)),
-                                        content: Text(errorDetail,
-                                            style: TextStyle(
-                                                fontSize: FontSize.contentSize,
-                                                color: Color.fromARGB(
-                                                    255, 88, 88, 88))),
-                                        actions: [
-                                          TextButton(
-                                            child: Text('OK',
-                                                style: TextStyle(
-                                                    fontSize:
-                                                        FontSize.contentSize,
-                                                    color: Colors.black)),
-                                            onPressed: () {
-                                              Navigator.pop(context, 'Cancel');
-                                            },
-                                          )
-                                        ]));
-                          }
+
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => HomePage()),
+                          );
+                          // if (result.statusCode == 200) {
+                          //   final user = jsonDecode(result.body);
+                          //   // Obtain shared preferences.
+                          //   final prefs = await SharedPreferences.getInstance();
+                          //   // Save an String value to 'username' key.
+                          //   await prefs.setString('userID', user['data']['id']);
+                          //   await prefs.setString('token', user['token']);
+                          //   Navigator.push(
+                          //     context,
+                          //     MaterialPageRoute(
+                          //         builder: (context) => HomePage()),
+                          //   );
+                          // } else {
+                          //   print(result.statusCode);
+                          //   String errorTitle = 'Incorrect Password';
+                          //   String errorDetail =
+                          //       'The password you entered is incorrect. Please try again.';
+                          //   showDialog(
+                          //       context: context,
+                          //       builder: (BuildContext context) => AlertDialog(
+                          //               insetPadding: EdgeInsets.symmetric(
+                          //                   horizontal: 32),
+                          //               title: Text(errorTitle,
+                          //                   style: TextStyle(
+                          //                       fontSize: FontSize.titleSize,
+                          //                       fontWeight: FontWeight.bold)),
+                          //               content: Text(errorDetail,
+                          //                   style: TextStyle(
+                          //                       fontSize: FontSize.contentSize,
+                          //                       color: Color.fromARGB(
+                          //                           255, 88, 88, 88))),
+                          //               actions: [
+                          //                 TextButton(
+                          //                   child: Text('OK',
+                          //                       style: TextStyle(
+                          //                           fontSize:
+                          //                               FontSize.contentSize,
+                          //                           color: Colors.black)),
+                          //                   onPressed: () {
+                          //                     Navigator.pop(context, 'Cancel');
+                          //                   },
+                          //                 )
+                          //               ]));
+                          // }
                         });
                       },
                       child: Text(

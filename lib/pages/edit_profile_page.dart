@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:fakebook/shared/font_size.dart';
+import 'package:photo_picker_initial/shared/font_size.dart';
 import 'package:flutter/material.dart';
 
 class EditProfilePage extends StatefulWidget {

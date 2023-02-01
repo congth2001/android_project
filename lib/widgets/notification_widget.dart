@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fakebook/models/user_notification.dart';
+import 'package:photo_picker_initial/models/user_notification.dart';
 
 class NotificationWidget extends StatelessWidget {
   final UserNotification notification;

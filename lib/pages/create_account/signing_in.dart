@@ -2,7 +2,7 @@
 
 import 'dart:async';
 
-import 'package:fakebook/pages/create_account/account_confirmation.dart';
+import 'package:photo_picker_initial/pages/create_account/account_confirmation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/container.dart';

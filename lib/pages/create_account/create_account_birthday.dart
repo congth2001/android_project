@@ -1,8 +1,8 @@
 // ignore_for_file: prefer_const_constructors, prefer_interpolation_to_compose_strings
 
-import 'package:fakebook/pages/create_account/create_account_mobile_number.dart';
-import 'package:fakebook/pages/landing_page.dart';
-import 'package:fakebook/shared/font_size.dart';
+import 'package:photo_picker_initial/pages/create_account/create_account_mobile_number.dart';
+import 'package:photo_picker_initial/pages/landing_page.dart';
+import 'package:photo_picker_initial/shared/font_size.dart';
 import 'package:flutter/material.dart';
 import 'package:scroll_date_picker/scroll_date_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
