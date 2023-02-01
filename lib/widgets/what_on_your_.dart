@@ -4,12 +4,10 @@ import 'package:flutter/material.dart';
 import '../pages/profile_page.dart';
 
 import 'package:fakebook/models/user.dart';
-import 'package:fakebook/network/user_request.dart';
+import 'package:fakebook/network/auth_request.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
 class WriteSomethingWidget extends StatefulWidget {
-
   @override
   State<WriteSomethingWidget> createState() => _WriteSomethingWidgetState();
 }
@@ -28,7 +26,7 @@ class _WriteSomethingWidgetState extends State<WriteSomethingWidget> {
     // Obtain shared preferences.
     final prefs = await SharedPreferences.getInstance();
     String userID = prefs.getString('userID').toString();
-    UserRequest.getUserByID(userID).then((result) {
+    AuthRequest.getUserByID(userID).then((result) {
       // print(result.username);
       // print(userID);
       setState(() {
@@ -43,7 +41,8 @@ class _WriteSomethingWidgetState extends State<WriteSomethingWidget> {
       child: Column(
         children: <Widget>[
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 10.0),
+            padding:
+                const EdgeInsets.symmetric(horizontal: 5.0, vertical: 10.0),
             decoration: BoxDecoration(color: Colors.white),
             child: Row(
               //mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -51,10 +50,9 @@ class _WriteSomethingWidgetState extends State<WriteSomethingWidget> {
               children: <Widget>[
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white, // background
-                    elevation: 0,
-                    padding: EdgeInsets.only(left: -1)
-                  ),
+                      backgroundColor: Colors.white, // background
+                      elevation: 0,
+                      padding: EdgeInsets.only(left: -1)),
                   child: CircleAvatar(
                     radius: 24.0,
                     backgroundImage: NetworkImage(user.avatar.toString()),
@@ -67,7 +65,7 @@ class _WriteSomethingWidgetState extends State<WriteSomethingWidget> {
                   },
                 ),
                 Container(
-                  width: MediaQuery.of(context).size.width/1.5,
+                  width: MediaQuery.of(context).size.width / 1.5,
                   child: OutlinedButton(
                     style: OutlinedButton.styleFrom(
                       backgroundColor: Colors.white, // background
@@ -76,30 +74,37 @@ class _WriteSomethingWidgetState extends State<WriteSomethingWidget> {
                       side: BorderSide(color: Colors.grey.shade400),
                       shape: const StadiumBorder(),
                     ),
-                    onPressed: (){
+                    onPressed: () {
                       Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context)=> CreatePostMain())
-                        );
+                          MaterialPageRoute(
+                              builder: (context) => CreatePostMain()));
                     },
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(" What's on your mind?", style: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w400)),
+                        const Text(" What's on your mind?",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w400)),
                       ],
                     ),
                   ),
-                    // onPressed: () => {
-                    //   Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(builder: (context) => CreatePostPage()),
-                    // )
-                    // },
+                  // onPressed: () => {
+                  //   Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(builder: (context) => CreatePostPage()),
+                  // )
+                  // },
                 ),
-
                 MaterialButton(
                   minWidth: 10,
-                  child: Icon(Icons.photo_library, size: 25.0, color: Colors.green,),
+                  child: Icon(
+                    Icons.photo_library,
+                    size: 25.0,
+                    color: Colors.green,
+                  ),
                   onPressed: () {},
                 ),
               ],

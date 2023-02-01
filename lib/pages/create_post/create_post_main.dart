@@ -5,12 +5,7 @@ import 'dart:io';
 import 'package:fakebook/network/post_request.dart';
 import 'package:fakebook/pages/home_page.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
 import '../../shared/font_size.dart';
 import 'feelings_activities_main.dart';
 
@@ -91,12 +86,6 @@ class _CreatePostMainState extends State<CreatePostMain> {
             ),
           );
         });
-  }
-
-  @override
-  void dispose() {
-    contentController.dispose();
-    super.dispose();
   }
 
   @override
@@ -278,17 +267,15 @@ class _CreatePostMainState extends State<CreatePostMain> {
                         // Get description
                         String described = contentController.text;
                         // Call API
-                        print(described);
-                        PostRequest.create(described)
-                            .then((res) => {
+                        PostRequest.create(described).then((res) => {
                               Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context)=>HomePage())
-                              )
-                        });
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => HomePage()))
+                            });
                       }
                     },
-                    child: Text('POST',
+                    child: Text('DONE',
                         style: TextStyle(
                             color:
                                 isDisabled ? Colors.grey[400] : Colors.white)),

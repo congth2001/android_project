@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 
 import 'find_account_page.dart';
 import 'home_page.dart';
-import 'package:fakebook/network/user_request.dart';
+import 'package:fakebook/network/auth_request.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
@@ -22,6 +22,13 @@ class _LoginAnotherAccountState extends State<LoginAnotherAccount> {
   bool isVisible = true;
   final passwordController = TextEditingController();
   final phonenumberController = TextEditingController();
+
+  // set token
+  static void setToken(token) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setString("token", token);
+    print(prefs.getString("token"));
+  }
 
   @override
   void dispose() {
@@ -97,17 +104,12 @@ class _LoginAnotherAccountState extends State<LoginAnotherAccount> {
                       onPressed: () {
                         var phoneNumber = phonenumberController.text + "";
                         var password = passwordController.text + "";
-                        UserRequest.login(phoneNumber, password)
+                        AuthRequest.login(phoneNumber, password)
                             .then((result) async {
-                          print(result);
-                          // Direct to next page
                           if (result.statusCode == 200) {
                             final user = jsonDecode(result.body);
-                            // Obtain shared preferences.
-                            final prefs = await SharedPreferences.getInstance();
-                            // Save an String value to 'username' key.
-                            await prefs.setString('userID', user['data']['id']);
-                            await prefs.setString('token', user['token']);
+                            setToken(user['token']);
+                            // Direct to next page
                             Navigator.push(
                               context,
                               MaterialPageRoute(

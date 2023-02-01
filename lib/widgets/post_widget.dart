@@ -6,7 +6,7 @@ import 'package:like_button/like_button.dart';
 
 import '../shared/font_size.dart';
 import 'comment_widget.dart';
-import '../network/user_request.dart';
+import '../network/auth_request.dart';
 
 class PostWidget extends StatefulWidget {
   Post post;
@@ -17,7 +17,7 @@ class PostWidget extends StatefulWidget {
 }
 
 class _PostWidgetState extends State<PostWidget> {
-  User users = User();
+  User user = User();
   int numberOfLike = 0;
 
   @override
@@ -29,9 +29,9 @@ class _PostWidgetState extends State<PostWidget> {
       numberOfLike = likes.length;
     });
 
-    UserRequest.getUserByID(widget.post.author.toString()).then((result) {
+    AuthRequest.getUserByID(widget.post.author.toString()).then((result) {
       setState(() {
-        users = result;
+        user = result;
       });
     });
   }
@@ -55,7 +55,7 @@ class _PostWidgetState extends State<PostWidget> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(users.username.toString(),
+                  Text(user.username.toString(),
                       style: TextStyle(
                           fontWeight: FontWeight.bold, fontSize: 17.0)),
                   SizedBox(height: 5.0),

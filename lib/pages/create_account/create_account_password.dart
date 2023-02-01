@@ -134,10 +134,8 @@ class _PasswordPageState extends State<PasswordPage> {
                     height: 30,
                     child: ElevatedButton(
                         onPressed: () async {
-                          if (!RegExp(r'^(?=.*?[A-Z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{6,}$')
-                                  .hasMatch(passwordController.text) &&
-                              !RegExp(r'^(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{6,}$')
-                                  .hasMatch(passwordController.text)) {
+                          if (!RegExp(r'^[A-Za-z\d]{6,10}$')
+                              .hasMatch(passwordController.text)) {
                             setState(() {
                               isValid = false;
                             });

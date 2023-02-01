@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../models/user.dart';
-import '../network/user_request.dart';
+import '../network/auth_request.dart';
 
 class FriendSuggestionPage extends StatefulWidget {
   @override
@@ -15,7 +15,7 @@ class _FriendSuggestionPage extends State<FriendSuggestionPage>
   void initState() {
     super.initState();
     // Call API get all users
-    UserRequest.getAllUser().then((userList) {
+    AuthRequest.getAllUser().then((userList) {
       setState(() {
         users = userList;
       });

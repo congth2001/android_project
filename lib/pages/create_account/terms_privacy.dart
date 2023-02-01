@@ -2,7 +2,7 @@
 
 import 'dart:convert';
 
-import 'package:fakebook/network/user_request.dart';
+import 'package:fakebook/network/auth_request.dart';
 import 'package:fakebook/pages/create_account/creating_account.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -109,24 +109,19 @@ class _TermsAndPrivacyPageState extends State<TermsAndPrivacyPage> {
         height: 30,
         child: FloatingActionButton(
           onPressed: () {
-            // Call API
-            UserRequest.register(username, phoneNumber, password)
-                .then((res) async {
-              if (res.statusCode == 201) {
-                print(res.body);
-                final user = jsonDecode(res.body);
-                // Obtain shared preferences.
-                final prefs = await SharedPreferences.getInstance();
-                // Save an String value to 'username' key.
-                await prefs.setString('userID', user['data']['id']);
-                await prefs.setString('avatar', user['data']['avatar']);
-                await prefs.setString('token', user['token']);
-                // Direct to next page
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => CreatingAccountPage()));
-              }
+            // Call API đăng ký tài khoản
+            AuthRequest.signUp(phoneNumber, password).then((data) async {
+              print(data['id']);
+              // Get local storage
+              final prefs = await SharedPreferences.getInstance();
+              // Save an String value to 'username' key.
+              await prefs.setString('userID', data['id']);
+              await prefs.setString('username', username);
+              // Direct to next page
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => CreatingAccountPage()));
             });
           },
           child: Text('Sign up', style: TextStyle(color: Colors.white)),
