@@ -17,6 +17,7 @@ class AccountConfirmationPage extends StatefulWidget {
 }
 
 class _AccountConfirmationPageState extends State<AccountConfirmationPage> {
+  bool isValid = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,12 +39,33 @@ class _AccountConfirmationPageState extends State<AccountConfirmationPage> {
                     fontWeight: FontWeight.bold)),
             SizedBox(height: 20),
             TextField(
+              onChanged: (text) {
+                if (text.isEmpty || text.length != 6) {
+                  setState(() {
+                    isValid = false;
+                  });
+                } else {
+                  setState(() {
+                    isValid = true;
+                  });
+                }
+              },
               style: TextStyle(fontSize: FontSize.contentSize),
+              keyboardType: TextInputType.number,
+              maxLength: 6,
               decoration: InputDecoration(
                 hintText: 'Confirmation code',
               ),
             ),
-            SizedBox(height: 20),
+            !isValid
+                ? Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text('Enter Valid Code',
+                        style: TextStyle(fontSize: 12, color: Colors.red)))
+                : Text(''),
+            SizedBox(
+              height: 10,
+            ),
             SizedBox(
                 width: double.infinity,
                 height: 30,

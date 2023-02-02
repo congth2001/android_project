@@ -2,7 +2,7 @@
 
 import 'dart:async';
 
-import 'package:photo_picker_initial/pages/create_account/account_confirmation.dart';
+import 'package:photo_picker_initial/pages/create_account/create_account_send_email.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/container.dart';
@@ -48,7 +48,7 @@ class _SigningInPageState extends State<SigningInPage> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) =>
-                                    AccountConfirmationPage()),
+                                    CreateAccountSendEmail()),
                             (route) => false);
                       },
                     ),
@@ -150,7 +150,7 @@ class _SigningInPageState extends State<SigningInPage> {
                                                     context,
                                                     MaterialPageRoute(
                                                         builder: (context) =>
-                                                            AccountConfirmationPage()),
+                                                            CreateAccountSendEmail()),
                                                     (route) => false);
                                               },
                                               child: Text('OK',
