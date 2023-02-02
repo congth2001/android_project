@@ -117,7 +117,6 @@ class _LoginAnotherAccountState extends State<LoginAnotherAccount> {
                             .then((res) async {
                           // Gọi API thành công
                           if (res['code'] == '1000') {
-                            print(res['data']);
                             // Cập nhật storage
                             final prefs = await SharedPreferences.getInstance();
                             // lưu userID và token

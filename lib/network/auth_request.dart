@@ -126,6 +126,34 @@ class AuthRequest {
   }
 
   /*
+   * @desc API cập nhật mật khẩu
+   * @date 30/1/2023 
+   */
+  static Future changePassword(
+      String token, String currentPassword, String newPassword) async {
+    try {
+      // init query params
+      final queryParameters = {
+        'token': token,
+        'password': currentPassword,
+        'new_password': newPassword
+      };
+      // init urls
+      url = Uri.https(
+          subdomain, '$subdirectoryHead/change_password', queryParameters);
+      print(url);
+      // get response
+      final res = await http.post(url);
+      // get return data
+      final resBody = jsonDecode(res.body);
+      // check and return
+      return resBody;
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  /*
    * @desc API login
    * @date 30/1/2023 
    */

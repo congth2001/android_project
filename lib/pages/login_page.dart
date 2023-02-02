@@ -147,21 +147,22 @@ class LoginPageState extends State<LoginPage> {
                       AuthRequest.login(
                               user.name.toString(), phoneNumber, password)
                           .then((result) async {
-                        print(result.statusCode);
+                        // print(result.statusCode);
                         // Direct to next page
-                        if (result.statusCode == 200) {
+                        if (result['code'] == '1000') {
                           final user = jsonDecode(result.body);
                           // Obtain shared preferences.
                           final prefs = await SharedPreferences.getInstance();
                           // Save an String value to 'username' key.
                           await prefs.setString('userID', user['data']['id']);
-
+                          await prefs.setString(
+                              'token', result['data']['token']);
                           Navigator.push(
                             context,
                             MaterialPageRoute(builder: (context) => HomePage()),
                           );
                         } else {
-                          print(result.statusCode);
+                          // print(result.statusCode);
                           String errorTitle = 'Incorrect Password';
                           String errorDetail =
                               'The password you entered is incorrect. Please try again.';

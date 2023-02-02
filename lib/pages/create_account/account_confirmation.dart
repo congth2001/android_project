@@ -105,22 +105,18 @@ class _AccountConfirmationPageState extends State<AccountConfirmationPage> {
                         // Thành công
                         if (data['code'] == '1000') {
                           // Direct to next page
-                          Navigator.push(
+                          Navigator.pushAndRemoveUntil(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => CreatingAccountPage()));
+                                  builder: (context) => LoginAnotherAccount()),
+                              (route) => false);
                         } else {
-                          // Có lỗi
+                          // Hiển thị dialog cảnh báo tại đây
                           print(data['details']);
                         }
                       });
-                      Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => LoginAnotherAccount()),
-                          (route) => false);
                     } else {
-                      // Hiển thị dialog cảnh báo
+                      // Hiển thị cảnh báo tại đây
                     }
                   },
                 )),
