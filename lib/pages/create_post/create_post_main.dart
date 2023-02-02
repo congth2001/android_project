@@ -3,6 +3,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:photo_picker_initial/network/post_request.dart';
+import 'package:photo_picker_initial/network/user_request.dart';
 import 'package:photo_picker_initial/pages/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -109,12 +110,13 @@ class _CreatePostMainState extends State<CreatePostMain> {
     // Obtain shared preferences.
     final prefs = await SharedPreferences.getInstance();
     String userID = prefs.getString('userID').toString();
-    AuthRequest.getUserByID(userID).then((result) {
-      print(result.username);
-      print(userID);
-      setState(() {
-        user = result;
-      });
+    // Gọi API lấy thông tin người dùng
+    UserRequest.getUserByID(userID).then((data) {
+      if (data['code'] == '1000') {
+        setState(() {
+          user = data['data'];
+        });
+      }
     });
   }
 

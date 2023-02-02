@@ -14,12 +14,6 @@ class _FriendSuggestionPage extends State<FriendSuggestionPage>
   @override
   void initState() {
     super.initState();
-    // Call API get all users
-    AuthRequest.getAllUser().then((userList) {
-      setState(() {
-        users = userList;
-      });
-    });
   }
 
   @override

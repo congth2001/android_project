@@ -4,6 +4,7 @@ import 'home_page.dart';
 import 'find_account_page.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:photo_picker_initial/network/user_request.dart';
 import 'package:photo_picker_initial/network/auth_request.dart';
 import 'dart:convert';
 import 'package:photo_picker_initial/models/user.dart';
@@ -39,16 +40,17 @@ class LoginPageState extends State<LoginPage> {
   var user = User();
 
   getData() async {
-    // Obtain shared preferences.
+    // Gọi đến storage
     final prefs = await SharedPreferences.getInstance();
     phoneNumber = prefs.getString('phoneNumber').toString();
     String userID = prefs.getString('userID').toString();
-    AuthRequest.getUserByID(userID).then((result) {
-      print(result.username);
-      print(userID);
-      setState(() {
-        user = result;
-      });
+    // Gọi API lấy thông tin người dùng
+    UserRequest.getUserByID(userID).then((data) {
+      if (data['code'] == '1000') {
+        setState(() {
+          user = data['data'];
+        });
+      }
     });
   }
 

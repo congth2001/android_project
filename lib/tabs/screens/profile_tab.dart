@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:photo_picker_initial/models/user.dart';
 import 'package:photo_picker_initial/network/auth_request.dart';
+import 'package:photo_picker_initial/network/user_request.dart';
 import 'package:photo_picker_initial/widgets/separator_widget.dart';
 import 'package:photo_picker_initial/widgets/what_on_your_.dart';
 import 'package:flutter/material.dart';
@@ -34,15 +35,16 @@ class _ProfileTabState extends State<ProfileTab> {
   }
 
   getData() async {
-    // Obtain shared preferences.
+    // Lấy dữ liệu từ storage
     final prefs = await SharedPreferences.getInstance();
     String userID = prefs.getString('userID').toString();
-    AuthRequest.getUserByID(userID).then((result) {
-      print(result.username);
-      print(userID);
-      setState(() {
-        user = result;
-      });
+    // Gọi API lấy thông tin người dùng
+    UserRequest.getUserByID(userID).then((data) {
+      if (data['code'] == '1000') {
+        setState(() {
+          user = data['data'];
+        });
+      }
     });
   }
 

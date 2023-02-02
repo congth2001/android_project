@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:photo_picker_initial/models/post.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:like_button/like_button.dart';
+import 'package:photo_picker_initial/network/user_request.dart';
 
 import '../shared/font_size.dart';
 import 'comment_widget.dart';
@@ -28,11 +29,13 @@ class _PostWidgetState extends State<PostWidget> {
     setState(() {
       numberOfLike = likes.length;
     });
-
-    AuthRequest.getUserByID(widget.post.author.toString()).then((result) {
-      setState(() {
-        user = result;
-      });
+    // Gọi API lấy thông tin người dùng
+    UserRequest.getUserByID(widget.post.author.toString()).then((data) {
+      if (data['code'] == '1000') {
+        setState(() {
+          user = data['data'];
+        });
+      }
     });
   }
 
