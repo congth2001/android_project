@@ -29,6 +29,12 @@ class LoginPageState extends State<LoginPage> {
     super.dispose();
   }
 
+  static void setToken(token) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setString("token", token);
+    print(prefs.getString("token"));
+  }
+
   var phoneNumber = "";
   @override
   void initState() {
@@ -147,21 +153,22 @@ class LoginPageState extends State<LoginPage> {
                       var password = passwordController.text + "";
                       AuthRequest.login(phoneNumber, password)
                           .then((result) async {
-                        print(result.statusCode);
+                        // print(result.statusCode);
                         // Direct to next page
-                        if (result.statusCode == 200) {
+                        if (result['code'] == '1000') {
                           final user = jsonDecode(result.body);
                           // Obtain shared preferences.
                           final prefs = await SharedPreferences.getInstance();
                           // Save an String value to 'username' key.
                           await prefs.setString('userID', user['data']['id']);
-
+                          await prefs.setString(
+                              'token', result['data']['token']);
                           Navigator.push(
                             context,
                             MaterialPageRoute(builder: (context) => HomePage()),
                           );
                         } else {
-                          print(result.statusCode);
+                          // print(result.statusCode);
                           String errorTitle = 'Incorrect Password';
                           String errorDetail =
                               'The password you entered is incorrect. Please try again.';
