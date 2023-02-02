@@ -47,7 +47,7 @@ class AuthRequest {
    */
   static Future<List<User>> getAllUser() async {
     // get url
-    url = Uri.http('localhost:8000', 'api/v1/users/getAllUsers');
+    url = Uri.https(subdomain, 'api/v1/users/getAllUsers');
     // get response
     final res = await http.get(url);
     // get return data
@@ -59,6 +59,30 @@ class AuthRequest {
       throw Exception('Not Found');
     } else {
       throw Exception('Can\'t get users');
+    }
+  }
+
+  static Future getVerifyCode(String phoneNumber) async {
+    try {
+      // init query params
+      final queryParameters = {
+        'phonenumber': phoneNumber,
+      };
+      // update url
+      url = Uri.https(
+          subdomain, '$subdirectoryHead/get_verify_code', queryParameters);
+      // get response
+      final res = await http.post(url);
+      // get return data
+      final resBody = jsonDecode(res.body);
+      // check and return
+      if (resBody['code'] == '1000') {
+        return resBody['data']["verifyCode"];
+      } else {
+        throw Exception(resBody['message']);
+      }
+    } catch (e) {
+      print(e.toString());
     }
   }
 
@@ -106,7 +130,7 @@ class AuthRequest {
         'username': username,
       };
       // init urls
-      url = Uri.http(subdomain, '$subdirectoryHead/change_info_after_signup',
+      url = Uri.https(subdomain, '$subdirectoryHead/change_info_after_signup',
           queryParameters);
       print(url);
       // get response
@@ -131,7 +155,7 @@ class AuthRequest {
   static Future getUserByID(String id) async {
     try {
       // get url
-      url = Uri.http('localhost:8000', 'api/v1/users/show/$id');
+      url = Uri.https(subdomain, 'api/v1/users/show/$id');
       // get token
       String token = await getToken();
       // get response
@@ -162,7 +186,7 @@ class AuthRequest {
    */
   static Future<List<User>> getAllFriends() async {
     // get url
-    url = Uri.http('localhost:8000', 'api/v1/friends/list');
+    url = Uri.https('localhost:8000', 'api/v1/friends/list');
     // get token
     String token = await getToken();
     // get response
