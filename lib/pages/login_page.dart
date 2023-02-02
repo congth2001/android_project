@@ -153,13 +153,13 @@ class LoginPageState extends State<LoginPage> {
                         // print(result.statusCode);
                         // Direct to next page
                         if (result['code'] == '1000') {
-                          final user = result['data'];
+                          final data = result['data'];
                           // Obtain shared preferences.
                           final prefs = await SharedPreferences.getInstance();
                           // Save an String value to 'username' key.
-                          await prefs.setString('userID', user['data']['id']);
-                          await prefs.setString(
-                              'token', result['data']['token']);
+                          print(data);
+                          await prefs.setString('userID', data['id']);
+                          await prefs.setString('token', data['token']);
                           Navigator.push(
                             context,
                             MaterialPageRoute(builder: (context) => HomePage()),
