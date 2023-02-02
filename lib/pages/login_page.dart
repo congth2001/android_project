@@ -22,6 +22,9 @@ class LoginPageState extends State<LoginPage> {
   final passwordController = TextEditingController();
   bool noVisible = true;
   bool showText = false;
+  var user = User();
+  var phoneNumber = "";
+  var username = "";
 
   @override
   void dispose() {
@@ -29,21 +32,12 @@ class LoginPageState extends State<LoginPage> {
     super.dispose();
   }
 
-  static void setToken(token) async {
-    final prefs = await SharedPreferences.getInstance();
-    prefs.setString("token", token);
-    print(prefs.getString("token"));
-  }
-
-  var phoneNumber = "";
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     getData();
   }
-
-  var user = User();
 
   getData() async {
     // Gọi đến storage
@@ -55,6 +49,7 @@ class LoginPageState extends State<LoginPage> {
       if (data['code'] == '1000') {
         setState(() {
           user = data['data'];
+          username = prefs.getString('username').toString();
         });
       }
     });
@@ -151,12 +146,12 @@ class LoginPageState extends State<LoginPage> {
                 child: ElevatedButton(
                     onPressed: () {
                       var password = passwordController.text + "";
-                      AuthRequest.login(phoneNumber, password)
+                      AuthRequest.login(username, phoneNumber, password)
                           .then((result) async {
                         // print(result.statusCode);
                         // Direct to next page
                         if (result['code'] == '1000') {
-                          final user = jsonDecode(result.body);
+                          final user = result['data'];
                           // Obtain shared preferences.
                           final prefs = await SharedPreferences.getInstance();
                           // Save an String value to 'username' key.

@@ -7,6 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:photo_picker_initial/pages/landing_page.dart';
+import 'package:photo_picker_initial/pages/login_another_account.dart';
+import 'package:photo_picker_initial/pages/login_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../shared/font_size.dart';
@@ -21,6 +24,7 @@ class AccountConfirmationPage extends StatefulWidget {
 
 class _AccountConfirmationPageState extends State<AccountConfirmationPage> {
   bool isValid = true;
+  String code = "";
   String phoneNumber = ""; // the phone number of user
   final codeController = TextEditingController();
 
@@ -69,6 +73,7 @@ class _AccountConfirmationPageState extends State<AccountConfirmationPage> {
                 } else {
                   setState(() {
                     isValid = true;
+                    code = text;
                   });
                 }
               },
@@ -106,11 +111,12 @@ class _AccountConfirmationPageState extends State<AccountConfirmationPage> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => CreatingAccountPage()));
+                                builder: (context) => LoginAnotherAccount()));
                       } else {
-                        // var code = codeController.text + "";
-                        // print(phoneNumber);
-                        // print(data['code']);
+                        var code = codeController.text + "";
+                        print(code);
+                        print(phoneNumber);
+                        print(data['code']);
                         String errorTitle = 'Incorrect code';
                         String errorDetail =
                             'The code you entered is incorrect. Please try again.';
