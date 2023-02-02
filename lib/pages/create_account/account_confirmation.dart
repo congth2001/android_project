@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:photo_picker_initial/pages/landing_page.dart';
+import 'package:photo_picker_initial/pages/login_another_account.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../shared/font_size.dart';
@@ -21,6 +23,7 @@ class AccountConfirmationPage extends StatefulWidget {
 
 class _AccountConfirmationPageState extends State<AccountConfirmationPage> {
   bool isValid = true;
+  String code = "";
   String phoneNumber = ""; // the phone number of user
 
   @override
@@ -65,22 +68,9 @@ class _AccountConfirmationPageState extends State<AccountConfirmationPage> {
                     isValid = false;
                   });
                 } else {
-                  AuthRequest.checkVerifyCode(phoneNumber, text)
-                      .then((data) async {
-                    // Thành công
-                    if (data['code'] == '1000') {
-                      // Direct to next page
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => CreatingAccountPage()));
-                    } else {
-                      // Có lỗi
-                      print(data['details']);
-                    }
-                  });
                   setState(() {
                     isValid = true;
+                    code = text;
                   });
                 }
               },
@@ -109,10 +99,29 @@ class _AccountConfirmationPageState extends State<AccountConfirmationPage> {
                     style: TextStyle(fontSize: FontSize.contentSize),
                   ),
                   onPressed: () {
-                    Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(builder: (context) => HomePage()),
-                        (route) => false);
+                    if (isValid) {
+                      AuthRequest.checkVerifyCode(phoneNumber, code)
+                          .then((data) async {
+                        // Thành công
+                        if (data['code'] == '1000') {
+                          // Direct to next page
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => CreatingAccountPage()));
+                        } else {
+                          // Có lỗi
+                          print(data['details']);
+                        }
+                      });
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => LoginAnotherAccount()),
+                          (route) => false);
+                    } else {
+                      // Hiển thị dialog cảnh báo
+                    }
                   },
                 )),
           ]),

@@ -23,12 +23,20 @@ class _LoginAnotherAccountState extends State<LoginAnotherAccount> {
   bool isVisible = true;
   final passwordController = TextEditingController();
   final phonenumberController = TextEditingController();
+  String username = "";
 
-  // set token
-  static void setToken(token) async {
+  @override
+  void initState() {
+    super.initState();
+    getData();
+  }
+
+  getData() async {
+    // Gọi đến storage
     final prefs = await SharedPreferences.getInstance();
-    prefs.setString("token", token);
-    print(prefs.getString("token"));
+    setState(() {
+      username = prefs.getString('username').toString();
+    });
   }
 
   @override
@@ -105,18 +113,17 @@ class _LoginAnotherAccountState extends State<LoginAnotherAccount> {
                       onPressed: () {
                         var phoneNumber = phonenumberController.text + "";
                         var password = passwordController.text + "";
-                        AuthRequest.login(phoneNumber, password)
+                        AuthRequest.login(username, phoneNumber, password)
                             .then((res) async {
-                          print(res.runtimeType);
-                          print(res['code'].runtimeType);
+                          // Gọi API thành công
                           if (res['code'] == '1000') {
+                            print(res['data']);
                             // Cập nhật storage
                             final prefs = await SharedPreferences.getInstance();
-                            // Save an String value to 'username' key.
+                            // lưu userID và token
                             await prefs.setString('userID', res['data']['id']);
                             await prefs.setString(
                                 'token', res['data']['token']);
-                            print(prefs);
                             // Direct to next page
                             Navigator.push(
                               context,
@@ -124,6 +131,8 @@ class _LoginAnotherAccountState extends State<LoginAnotherAccount> {
                                   builder: (context) => HomePage()),
                             );
                           } else {
+                            print(res['details']);
+                            // Xử lý khi có lỗi
                             String errorTitle = 'Incorrect Password';
                             String errorDetail =
                                 'The password you entered is incorrect. Please try again.';

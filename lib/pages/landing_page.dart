@@ -31,16 +31,16 @@ class _LandingPageState extends State<LandingPage> {
   getData() async {
     // Obtain shared preferences.
     final prefs = await SharedPreferences.getInstance();
-    String? usernameTmp = prefs.getString('username');
+    String? token = prefs.getString('token');
     // Set showAccount
-    if (usernameTmp == "" || usernameTmp == null) {
+    if (token == null) {
       setState(() {
         showAccount = false;
       });
     } else {
       // update username
       setState(() {
-        username = usernameTmp.toString();
+        username = prefs.getString('username').toString();
         avatar = prefs.getString('avatar').toString();
       });
     }

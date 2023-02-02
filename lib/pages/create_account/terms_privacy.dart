@@ -110,12 +110,12 @@ class _TermsAndPrivacyPageState extends State<TermsAndPrivacyPage> {
         child: FloatingActionButton(
           onPressed: () {
             // Call API đăng ký tài khoản
-            AuthRequest.signUp(phoneNumber, password).then((data) async {
+            AuthRequest.signUp(username, phoneNumber, password)
+                .then((data) async {
               // Get local storage
               final prefs = await SharedPreferences.getInstance();
               // Save an String value to 'username' key.
               await prefs.setString('userID', data['id']);
-              await prefs.setString('username', username);
               // Direct to next page
               Navigator.push(
                   context,

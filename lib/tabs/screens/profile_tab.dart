@@ -43,20 +43,12 @@ class _ProfileTabState extends State<ProfileTab> {
       if (data['code'] == '1000') {
         setState(() {
           user = data['data'];
+          print(user);
         });
       }
     });
   }
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   UserRequest.getUserByID(userID).then((result) {
-  //     setState(() {
-  //       user = result;
-  //     });
-  //   });
-  // }
   File? _image;
 
   Future _pickImage(ImageSource source) async {

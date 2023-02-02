@@ -13,12 +13,6 @@ class AuthRequest {
   // url of api
   static var url = Uri();
 
-  // get token
-  static Future<String> getToken() async {
-    final prefs = await SharedPreferences.getInstance();
-    return prefs.getString("token").toString();
-  }
-
   /**
    * @desc API lấy mã xác thực
    */
@@ -49,12 +43,12 @@ class AuthRequest {
   /**
    * @desc API kiểm tra mã xác thực
    */
-  static Future checkVerifyCode(String phoneNumber, String code) async {
+  static Future checkVerifyCode(String phoneNumber, String otpCode) async {
     try {
       // init query params
       final queryParameters = {
         'phonenumber': phoneNumber,
-        'code': code,
+        'code_verify': otpCode,
       };
       // update url
       url = Uri.https(
@@ -73,7 +67,8 @@ class AuthRequest {
    * @desc API đăng ký tài khoản người dùng
    * @date 30/1/2023 
    */
-  static Future signUp(String phoneNumber, String password) async {
+  static Future signUp(
+      String username, String phoneNumber, String password) async {
     try {
       // init query params
       final queryParameters = {
@@ -90,6 +85,7 @@ class AuthRequest {
       final resBody = jsonDecode(res.body);
       // check and return
       if (resBody['code'] == '1000') {
+        // Trả về dữ liệu
         return resBody['data'];
       } else {
         throw Exception(resBody['message']);
@@ -103,10 +99,8 @@ class AuthRequest {
    * @desc API cập nhật username
    * @date 30/1/2023 
    */
-  static Future changeUsername(String username) async {
+  static Future changeUsername(String token, String username) async {
     try {
-      // get token
-      String token = await getToken();
       // init query params
       final queryParameters = {
         'token': token,
@@ -121,7 +115,7 @@ class AuthRequest {
       // get return data
       final resBody = jsonDecode(res.body);
       // check and return
-      if (resBody['data']['code'] == '1000') {
+      if (resBody['data'] != null) {
         return resBody['data']['data'];
       } else {
         throw Exception(resBody['message']);
@@ -135,7 +129,8 @@ class AuthRequest {
    * @desc API login
    * @date 30/1/2023 
    */
-  static Future login(String phoneNumber, String password) async {
+  static Future login(
+      String username, String phoneNumber, String password) async {
     try {
       // init query params
       final queryParameters = {
@@ -149,6 +144,14 @@ class AuthRequest {
       final res = await http.post(url);
       // get response body
       final resBody = jsonDecode(res.body);
+      // update username
+      if (resBody['code'] == '1000') {
+        if (resBody['data']['username'] == null) {
+          String token = resBody['data']['token'];
+          // Call API
+          await changeUsername(token, username);
+        }
+      }
       return resBody;
     } catch (e) {
       print(e.toString());
