@@ -74,7 +74,7 @@ class LoginPageState extends State<LoginPage> {
               ),
               SizedBox(height: 15),
               Text(
-                user.username.toString(),
+                user.name.toString(),
                 style: TextStyle(fontSize: FontSize.titleSize),
               ),
               SizedBox(height: 20),

@@ -1,9 +1,11 @@
+import 'package:photo_picker_initial/network/user_request.dart';
 import 'package:photo_picker_initial/pages/search_page.dart';
 import 'package:photo_picker_initial/tabs/home_tab.dart';
 import 'package:photo_picker_initial/tabs/notifications_tab.dart';
 import 'package:photo_picker_initial/tabs/menu_tab.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../tabs/friends_tab.dart';
 import '../tabs/watch_tab.dart';
@@ -22,6 +24,22 @@ class _HomePageState extends State<HomePage>
   void initState() {
     super.initState();
     _tabController = TabController(vsync: this, length: 5);
+    getData();
+  }
+
+  getData() async {
+    // Obtain shared preferences.
+    final prefs = await SharedPreferences.getInstance();
+    final userID = prefs.getString('userID').toString();
+    // Cập nhật username
+    UserRequest.getUserByID(userID).then((data) async {
+      if (data['code'] == '1000') {
+        await prefs.setString('username', data['data']['username']);
+      } else {
+        // Xử lý lỗi ở đây
+        print(data['details']);
+      }
+    });
   }
 
   @override

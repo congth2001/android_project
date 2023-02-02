@@ -329,7 +329,7 @@ class _CreatePostMainState extends State<CreatePostMain> {
                         Row(
                           // ignore: prefer_const_literals_to_create_immutables
                           children: [
-                            Text(user.username.toString(),
+                            Text(user.name.toString(),
                                 style: TextStyle(
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold,

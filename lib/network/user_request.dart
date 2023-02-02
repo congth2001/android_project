@@ -68,24 +68,18 @@ class UserRequest {
    */
   static Future getUserByID(String id) async {
     try {
-      await getToken().then((data) async {
-        // init query params
-        final queryParameters = {
-          'user_id': id,
-          'token': data,
-        };
-        // get url
-        url = Uri.https(
-            subdomain, '$subdirectoryHead/get_user_info', queryParameters);
-        // get response
-        final res = await http.post(url);
-        // get return data
-        final resBody = jsonDecode(res.body);
-        // return promise
-        return resBody;
-      }).catchError((e) {
-        print('Got error: $e'); // Finally, callback fires.
-      });
+      final queryParameters = {
+        'user_id': id,
+      };
+      // get url
+      url = Uri.https(
+          subdomain, '$subdirectoryHead/get_user_info', queryParameters);
+      // get response
+      final res = await http.post(url);
+      // get return data
+      final resBody = jsonDecode(res.body);
+      // return promise
+      return resBody;
     } catch (e) {
       print(e.toString());
     }

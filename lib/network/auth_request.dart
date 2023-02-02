@@ -144,9 +144,12 @@ class AuthRequest {
       };
       // get url
       url = Uri.https(subdomain, '$subdirectoryHead/login', queryParameters);
+      print(url);
       // get response
       final res = await http.post(url);
-      return res;
+      // get response body
+      final resBody = jsonDecode(res.body);
+      return resBody;
     } catch (e) {
       print(e.toString());
     }

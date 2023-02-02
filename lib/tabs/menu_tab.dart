@@ -104,7 +104,7 @@ class _MenuTabState extends State<MenuTab> {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(user.username.toString(),
+                      Text(user.name.toString(),
                           style: TextStyle(
                               color: Colors.black,
                               fontWeight: FontWeight.bold,

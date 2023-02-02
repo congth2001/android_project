@@ -61,7 +61,7 @@ class _FriendSuggestionPage extends State<FriendSuggestionPage>
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Text(users[0].username.toString(),
+                          Text(users[0].name.toString(),
                               style: TextStyle(
                                   fontSize: 16.0, fontWeight: FontWeight.bold)),
                           SizedBox(height: 15.0),
@@ -113,7 +113,7 @@ class _FriendSuggestionPage extends State<FriendSuggestionPage>
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Text(users[1].username.toString(),
+                          Text(users[1].name.toString(),
                               style: TextStyle(
                                   fontSize: 16.0, fontWeight: FontWeight.bold)),
                           SizedBox(height: 15.0),
@@ -165,7 +165,7 @@ class _FriendSuggestionPage extends State<FriendSuggestionPage>
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Text(users[2].username.toString(),
+                          Text(users[2].name.toString(),
                               style: TextStyle(
                                   fontSize: 16.0, fontWeight: FontWeight.bold)),
                           SizedBox(height: 15.0),

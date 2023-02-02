@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:photo_picker_initial/network/user_request.dart';
 import 'package:photo_picker_initial/pages/create_account/create_new_account.dart';
 import 'package:photo_picker_initial/shared/font_size.dart';
 import 'package:flutter/material.dart';
@@ -105,30 +106,24 @@ class _LoginAnotherAccountState extends State<LoginAnotherAccount> {
                         var phoneNumber = phonenumberController.text + "";
                         var password = passwordController.text + "";
                         AuthRequest.login(phoneNumber, password)
-                            .then((result) async {
-                          print(result);
-                          // Direct to next page
-
-                          // Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(builder: (context) => HomePage()),
-                          // );
-                          if (result.statusCode == 200) {
-                            final user = jsonDecode(result.body);
-                            print(user);
-                            // Obtain shared preferences.
+                            .then((res) async {
+                          print(res.runtimeType);
+                          print(res['code'].runtimeType);
+                          if (res['code'] == '1000') {
+                            // Cập nhật storage
                             final prefs = await SharedPreferences.getInstance();
                             // Save an String value to 'username' key.
-                            await prefs.setString('userID', user['data']['id']);
+                            await prefs.setString('userID', res['data']['id']);
                             await prefs.setString(
-                                'token', user['data']['token']);
+                                'token', res['data']['token']);
+                            print(prefs);
+                            // Direct to next page
                             Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (context) => HomePage()),
                             );
                           } else {
-                            print(result.statusCode);
                             String errorTitle = 'Incorrect Password';
                             String errorDetail =
                                 'The password you entered is incorrect. Please try again.';
@@ -159,6 +154,8 @@ class _LoginAnotherAccountState extends State<LoginAnotherAccount> {
                                           )
                                         ]));
                           }
+                        }).catchError((e) {
+                          print("Got error: $e");
                         });
                       },
                       child: Text(
