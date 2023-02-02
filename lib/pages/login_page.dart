@@ -24,6 +24,7 @@ class LoginPageState extends State<LoginPage> {
   bool showText = false;
   var user = User();
   var phoneNumber = "";
+  var username = "";
 
   @override
   void dispose() {
@@ -43,6 +44,9 @@ class LoginPageState extends State<LoginPage> {
     final prefs = await SharedPreferences.getInstance();
     phoneNumber = prefs.getString('phoneNumber').toString();
     String userID = prefs.getString('userID').toString();
+    setState(() {
+      username = prefs.getString('username').toString();
+    });
     // Gọi API lấy thông tin người dùng
     UserRequest.getUserByID(userID).then((data) {
       if (data['code'] == '1000') {
@@ -144,13 +148,12 @@ class LoginPageState extends State<LoginPage> {
                 child: ElevatedButton(
                     onPressed: () {
                       var password = passwordController.text + "";
-                      AuthRequest.login(
-                              user.name.toString(), phoneNumber, password)
+                      AuthRequest.login(username, phoneNumber, password)
                           .then((result) async {
                         // print(result.statusCode);
                         // Direct to next page
                         if (result['code'] == '1000') {
-                          final user = jsonDecode(result.body);
+                          final user = result['data'];
                           // Obtain shared preferences.
                           final prefs = await SharedPreferences.getInstance();
                           // Save an String value to 'username' key.

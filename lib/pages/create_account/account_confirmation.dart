@@ -9,6 +9,7 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:photo_picker_initial/pages/landing_page.dart';
 import 'package:photo_picker_initial/pages/login_another_account.dart';
+import 'package:photo_picker_initial/pages/login_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../shared/font_size.dart';
@@ -25,6 +26,7 @@ class _AccountConfirmationPageState extends State<AccountConfirmationPage> {
   bool isValid = true;
   String code = "";
   String phoneNumber = ""; // the phone number of user
+  final codeController = TextEditingController();
 
   @override
   void initState() {
@@ -62,6 +64,7 @@ class _AccountConfirmationPageState extends State<AccountConfirmationPage> {
                     fontWeight: FontWeight.bold)),
             SizedBox(height: 20),
             TextField(
+              controller: codeController,
               onChanged: (text) {
                 if (text.isEmpty || text.length != 4) {
                   setState(() {
@@ -76,7 +79,7 @@ class _AccountConfirmationPageState extends State<AccountConfirmationPage> {
               },
               style: TextStyle(fontSize: FontSize.contentSize),
               keyboardType: TextInputType.number,
-              maxLength: 6,
+              maxLength: 4,
               decoration: InputDecoration(
                 hintText: 'Confirmation code',
               ),
@@ -99,25 +102,51 @@ class _AccountConfirmationPageState extends State<AccountConfirmationPage> {
                     style: TextStyle(fontSize: FontSize.contentSize),
                   ),
                   onPressed: () {
-                    if (isValid) {
-                      AuthRequest.checkVerifyCode(phoneNumber, code)
-                          .then((data) async {
-                        // Thành công
-                        if (data['code'] == '1000') {
-                          // Direct to next page
-                          Navigator.pushAndRemoveUntil(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => LoginAnotherAccount()),
-                              (route) => false);
-                        } else {
-                          // Hiển thị dialog cảnh báo tại đây
-                          print(data['details']);
-                        }
-                      });
-                    } else {
-                      // Hiển thị cảnh báo tại đây
-                    }
+                    var code = codeController.text + "";
+                    AuthRequest.checkVerifyCode(phoneNumber, code)
+                        .then((data) async {
+                      // Thành công
+                      if (data['code'] == '1000') {
+                        // Direct to next page
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => LoginAnotherAccount()));
+                      } else {
+                        var code = codeController.text + "";
+                        print(code);
+                        print(phoneNumber);
+                        print(data['code']);
+                        String errorTitle = 'Incorrect code';
+                        String errorDetail =
+                            'The code you entered is incorrect. Please try again.';
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) => AlertDialog(
+                                    insetPadding:
+                                        EdgeInsets.symmetric(horizontal: 32),
+                                    title: Text(errorTitle,
+                                        style: TextStyle(
+                                            fontSize: FontSize.titleSize,
+                                            fontWeight: FontWeight.bold)),
+                                    content: Text(errorDetail,
+                                        style: TextStyle(
+                                            fontSize: FontSize.contentSize,
+                                            color: Color.fromARGB(
+                                                255, 88, 88, 88))),
+                                    actions: [
+                                      TextButton(
+                                        child: Text('OK',
+                                            style: TextStyle(
+                                                fontSize: FontSize.contentSize,
+                                                color: Colors.black)),
+                                        onPressed: () {
+                                          Navigator.pop(context, 'Cancel');
+                                        },
+                                      )
+                                    ]));
+                      }
+                    });
                   },
                 )),
           ]),
