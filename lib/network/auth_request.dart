@@ -62,6 +62,9 @@ class AuthRequest {
     }
   }
 
+  /**
+   * @desc API lấy mã xác thực
+   */
   static Future getVerifyCode(String phoneNumber) async {
     try {
       // init query params
@@ -81,6 +84,29 @@ class AuthRequest {
       } else {
         throw Exception(resBody['message']);
       }
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  /**
+   * @desc API kiểm tra mã xác thực
+   */
+  static Future checkVerifyCode(String phoneNumber, String code) async {
+    try {
+      // init query params
+      final queryParameters = {
+        'phonenumber': phoneNumber,
+        'code': code,
+      };
+      // update url
+      url = Uri.https(
+          subdomain, '$subdirectoryHead/check_verify_code', queryParameters);
+      // get response
+      final res = await http.post(url);
+      // get return data
+      final resBody = jsonDecode(res.body);
+      return resBody;
     } catch (e) {
       print(e.toString());
     }

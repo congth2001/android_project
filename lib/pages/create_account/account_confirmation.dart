@@ -1,10 +1,13 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:photo_picker_initial/network/auth_request.dart';
+import 'package:photo_picker_initial/pages/create_account/creating_account.dart';
 import 'package:photo_picker_initial/pages/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../shared/font_size.dart';
 
@@ -18,6 +21,23 @@ class AccountConfirmationPage extends StatefulWidget {
 
 class _AccountConfirmationPageState extends State<AccountConfirmationPage> {
   bool isValid = true;
+  String phoneNumber = ""; // the phone number of user
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getData();
+  }
+
+  getData() async {
+    // Obtain shared preferences.
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      phoneNumber = prefs.getString('phoneNumber').toString();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,11 +60,25 @@ class _AccountConfirmationPageState extends State<AccountConfirmationPage> {
             SizedBox(height: 20),
             TextField(
               onChanged: (text) {
-                if (text.isEmpty || text.length != 6) {
+                if (text.isEmpty || text.length != 4) {
                   setState(() {
                     isValid = false;
                   });
                 } else {
+                  AuthRequest.checkVerifyCode(phoneNumber, text)
+                      .then((data) async {
+                    // Thành công
+                    if (data['code'] == '1000') {
+                      // Direct to next page
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => CreatingAccountPage()));
+                    } else {
+                      // Có lỗi
+                      print(data['details']);
+                    }
+                  });
                   setState(() {
                     isValid = true;
                   });

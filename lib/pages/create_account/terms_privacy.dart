@@ -111,7 +111,6 @@ class _TermsAndPrivacyPageState extends State<TermsAndPrivacyPage> {
           onPressed: () {
             // Call API đăng ký tài khoản
             AuthRequest.signUp(phoneNumber, password).then((data) async {
-              print(data['id']);
               // Get local storage
               final prefs = await SharedPreferences.getInstance();
               // Save an String value to 'username' key.
