@@ -44,12 +44,14 @@ class LoginPageState extends State<LoginPage> {
     final prefs = await SharedPreferences.getInstance();
     phoneNumber = prefs.getString('phoneNumber').toString();
     String userID = prefs.getString('userID').toString();
+    setState(() {
+      username = prefs.getString('username').toString();
+    });
     // Gọi API lấy thông tin người dùng
     UserRequest.getUserByID(userID).then((data) {
       if (data['code'] == '1000') {
         setState(() {
           user = data['data'];
-          username = prefs.getString('username').toString();
         });
       }
     });
