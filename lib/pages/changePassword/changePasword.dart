@@ -73,7 +73,6 @@ class _changePasswordState extends State<changePassword> {
               style: TextStyle(fontSize: 12),
             ),
             SizedBox(height: 20),
-
             Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: TextField(
@@ -258,38 +257,6 @@ class _changePasswordState extends State<changePassword> {
                           }).catchError((e) {
                             print("Got error: $e");
                           });
-                        } else {
-                          String errorTitle = 'Incorrect confirm Password';
-                          String errorDetail =
-                              'The confirm password you entered is incorrect. Please try again.';
-                          showDialog(
-                              context: context,
-                              builder: (BuildContext context) => AlertDialog(
-                                      insetPadding:
-                                          EdgeInsets.symmetric(horizontal: 32),
-                                      title: Text(errorTitle,
-                                          style: TextStyle(
-                                              fontSize: FontSize.titleSize,
-                                              color: Color.fromARGB(
-                                                  255, 234, 19, 19),
-                                              fontWeight: FontWeight.bold)),
-                                      content: Text(errorDetail,
-                                          style: TextStyle(
-                                              fontSize: FontSize.contentSize,
-                                              color: Color.fromARGB(
-                                                  255, 88, 88, 88))),
-                                      actions: [
-                                        TextButton(
-                                          child: Text('OK',
-                                              style: TextStyle(
-                                                  fontSize:
-                                                      FontSize.contentSize,
-                                                  color: Colors.black)),
-                                          onPressed: () {
-                                            Navigator.pop(context, 'Cancel');
-                                          },
-                                        )
-                                      ]));
                         }
                       },
                       child: Text(
@@ -298,40 +265,6 @@ class _changePasswordState extends State<changePassword> {
                       ))),
             ),
             SizedBox(height: 15),
-            // TextButton(
-            //   child: Text(
-            //     'Forgot password?',
-            //     style: TextStyle(fontSize: FontSize.contentSize),
-            //   ),
-            //   onPressed: () {
-            //     Navigator.push(
-            //       context,
-            //       MaterialPageRoute(builder: (context) => FindAccountPage()),
-            //     );
-            //   },
-            // ),
-            // SizedBox(height: 30),
-            // Text("---------------------- OR ----------------------"),
-            // SizedBox(height: 30),
-            // Padding(
-            //   padding: const EdgeInsets.symmetric(horizontal: 16),
-            //   child: SizedBox(
-            //       width: 300,
-            //       height: 30,
-            //       child: ElevatedButton(
-            //           onPressed: () {
-            //             Navigator.push(
-            //                 context,
-            //                 MaterialPageRoute(
-            //                     builder: (context) => CreateNewAccount()));
-            //           },
-            //           style: ElevatedButton.styleFrom(
-            //               backgroundColor: Colors.green),
-            //           child: Text(
-            //             'Create New Facebook Account',
-            //             style: TextStyle(fontSize: FontSize.contentSize),
-            //           ))),
-            // ),
           ],
         ),
       ),
