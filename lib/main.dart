@@ -1,6 +1,7 @@
 import 'package:photo_picker_initial/pages/create_post/create_post_main.dart';
 import 'package:photo_picker_initial/pages/landing_page.dart';
 import 'package:flutter/material.dart';
+import 'package:photo_picker_initial/pages/changePassword/changePasword.dart';
 
 void main() {
   runApp(const MyApp());
