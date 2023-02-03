@@ -289,12 +289,10 @@ class _CreatePostMainState extends State<CreatePostMain> {
                         String described = contentController.text;
                         // Call API
                         print(described);
-                        PostRequest.create(described).then((res) => {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => HomePage()))
-                            });
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => HomePage()));
                       }
                     },
                     child: Text('DONE',

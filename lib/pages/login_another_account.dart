@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:photo_picker_initial/network/post_request.dart';
 import 'package:photo_picker_initial/network/user_request.dart';
 import 'package:photo_picker_initial/pages/create_account/create_new_account.dart';
 import 'package:photo_picker_initial/shared/font_size.dart';
@@ -29,6 +30,9 @@ class _LoginAnotherAccountState extends State<LoginAnotherAccount> {
   void initState() {
     super.initState();
     getData();
+    PostRequest.getPostList('0', '20').then((data) {
+      print(data);
+    });
   }
 
   getData() async {

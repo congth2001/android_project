@@ -112,25 +112,4 @@ class UserRequest {
       throw Exception('Can\'t get users');
     }
   }
-
-  /*
-   * @desc API login
-   * @date 30/1/2023 
-   */
-  static Future login(String phoneNumber, String password) async {
-    try {
-      // init query params
-      final queryParameters = {
-        'phonenumber': phoneNumber,
-        'password': password,
-      };
-      // get url
-      url = Uri.https(subdomain, '$subdirectoryHead/login', queryParameters);
-      // get response
-      final res = await http.post(url);
-      return res;
-    } catch (e) {
-      print(e.toString());
-    }
-  }
 }

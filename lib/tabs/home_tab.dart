@@ -18,7 +18,9 @@ class _HomeTabState extends State<HomeTab> {
   @override
   void initState() {
     super.initState();
-    PostRequest.getAllPost().then((postList) {
+    int a = 0;
+    int b = 2;
+    PostRequest.getPostList(a, b).then((postList) {
       setState(() {
         posts = postList;
       });
@@ -32,8 +34,6 @@ class _HomeTabState extends State<HomeTab> {
         children: [
           WriteSomethingWidget(),
           SeparatorWidget(),
-          //OnlineWidget(),
-          //SeparatorWidget(),
           StoriesWidget(),
           for (Post post in posts)
             Column(
