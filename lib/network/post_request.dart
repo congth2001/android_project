@@ -39,14 +39,13 @@ class PostRequest {
    * @desc API danh sách bài viết
    * @date 30/1/2023 
    */
-  static Future<List<Post>> getPostList(int index, int count,
-      [String? last_id]) async {
+  static Future<List<Post>> getAllPosts() async {
     try {
       // init query params
       final queryParameters = {
-        'index': index,
-        'count': count,
-        'last_id': last_id,
+        'index': 0,
+        'count': 100,
+        'last_id': 0,
       };
       // get url
       url = Uri.https(

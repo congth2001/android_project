@@ -14,22 +14,42 @@ class CommentRequest {
 
   /*
    * @desc API tạo comment
+   * @return comment mới được tạo
    * @date 30/1/2023 
    */
-  static Future addComment(String id) async {
+  static Future addComment(String token, String postID, String content) async {
     try {
       final queryParameters = {
-        'user_id': id,
+        'token': token,
+        'id': postID,
+        'comment': content,
+        'index': 0,
+        'count': 100,
       };
       // get url
       url = Uri.https(
-          subdomain, '$subdirectoryHead/get_user_info', queryParameters);
+          subdomain, '$subdirectoryHead/set_comment', queryParameters);
       // get response
       final res = await http.post(url);
       // get return data
       final resBody = jsonDecode(res.body);
-      // return promise
-      return resBody;
+      if (resBody['code'] == '1000') {
+        /**
+         * --------------- VÍ DỤ ---------------
+         * {
+            "id": "63dd27eedad1370034cd5d8b",
+            "comment": "xịn xò",
+            "created": "1675438062",
+            "poster": {
+                "id": "63dbe5a48d86cf00345b501f",
+                "name": "null",
+                "avatar": null
+            },
+            "is_blocked": "0"
+        }
+         */
+        return resBody['data'];
+      }
     } catch (e) {
       print(e.toString());
     }
