@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:photo_picker_initial/models/user.dart';
 import 'package:photo_picker_initial/network/auth_request.dart';
 import 'package:photo_picker_initial/network/user_request.dart';
@@ -28,6 +29,10 @@ class ProfileTab extends StatefulWidget {
 }
 
 class _ProfileTabState extends State<ProfileTab> {
+  bool isMe = true;
+  bool isFriend = false;
+  bool isReceivedRequestFromMe = false;
+  bool isSendRequestToMe = false;
   var user = User();
   @override
   void initState() {
@@ -105,7 +110,8 @@ class _ProfileTabState extends State<ProfileTab> {
                             decoration: BoxDecoration(
                                 color: Colors.blue[700],
                                 borderRadius: BorderRadius.circular(5.0)),
-                            child: Row(
+                            child: isMe
+                            ? Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: const [
                                 Icon(Icons.add_circle, color: Colors.white),
@@ -114,6 +120,101 @@ class _ProfileTabState extends State<ProfileTab> {
                                         color: Colors.white,
                                         fontSize: 16.0)),
                               ],
+                            )
+                            : isFriend 
+                            ? Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: const [
+                                Icon(Icons.person, color: Colors.white),
+                                Text(' Friends',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 16.0)),
+                              ],
+                            )
+                            : isReceivedRequestFromMe
+                            ? InkWell(
+                              onTap: (){
+                                setState(() {
+                                  isReceivedRequestFromMe = false;
+                                  isSendRequestToMe = false;
+                                });
+                              },
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: const [
+                                  Icon(Icons.person_add, color: Colors.white),
+                                  Text(' Requested',
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 16.0)),
+                                ],
+                              ),
+                            )
+                            : isSendRequestToMe
+                            ? InkWell(
+                              onTap: (){
+                                showBottomSheet(context: context, builder: (builder){
+                                  return SizedBox(
+                                    height: 100,
+                                    child: Container(
+                                      padding: const EdgeInsets.all(8),
+                                      child: Column(
+                                        children: [
+                                          InkWell(
+                                            onTap: (){},
+                                            child: Row(
+                                              children: [
+                                                Icon(Icons.check, color: Colors.black),
+                                                SizedBox(width: 10),
+                                                Text('Confirm', style: TextStyle(color: Colors.black, fontSize: 14))
+                                              ],
+                                            ),
+                                          ),
+                                          SizedBox(height: 10),
+                                          InkWell(
+                                            onTap: (){},
+                                            child: Row(
+                                              children: [
+                                                Icon(Icons.cancel, color: Colors.black),
+                                                SizedBox(width: 10),
+                                                Text('Cancel', style: TextStyle(color: Colors.black, fontSize: 14))
+                                              ],
+                                            ),
+                                          )
+                                        ]
+                                      )
+                                    )
+                                  );
+                                });
+                              },
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: const [
+                                  Icon(Icons.person, color: Colors.white),
+                                  Text(' Respond',
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 16.0)),
+                                ],
+                              ),
+                            )
+                            : InkWell(
+                              onTap: (){
+                                setState((){
+                                  isReceivedRequestFromMe = true;
+                                });
+                              },
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: const [
+                                  Icon(Icons.person_add, color: Colors.white),
+                                  Text(' Add Friend',
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 16.0)),
+                                ],
+                              ),
                             ),
                           ),
                           const SizedBox(width: 10),
@@ -125,7 +226,7 @@ class _ProfileTabState extends State<ProfileTab> {
                                 borderRadius: BorderRadius.circular(5.0)),
                             child: InkWell(
                               onTap: () {
-                                Navigator.push(
+                                if(isMe) Navigator.push(
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
@@ -133,9 +234,10 @@ class _ProfileTabState extends State<ProfileTab> {
                               },
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
-                                children: const [
-                                  Icon(Icons.edit, color: Colors.black),
-                                  Text(' Edit profile',
+                                children: [
+                                  Icon(isMe ? Icons.edit : FontAwesomeIcons.facebookMessenger, color: Colors.black),
+                                  SizedBox(width: 5),
+                                  Text(isMe ? ' Edit profile' : 'Message',
                                       style: TextStyle(
                                           color: Colors.black,
                                           fontSize: 16.0)),
@@ -157,7 +259,7 @@ class _ProfileTabState extends State<ProfileTab> {
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                              ProfileSettingPage()));
+                                              ProfileSettingPage(isMe: isMe)));
                                 },
                               ))
                         ],
