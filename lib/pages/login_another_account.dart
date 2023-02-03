@@ -24,6 +24,7 @@ class _LoginAnotherAccountState extends State<LoginAnotherAccount> {
   final passwordController = TextEditingController();
   final phonenumberController = TextEditingController();
   String username = "";
+  bool isLoading = true;
 
   @override
   void initState() {
@@ -36,6 +37,7 @@ class _LoginAnotherAccountState extends State<LoginAnotherAccount> {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
       username = prefs.getString('username').toString();
+      isLoading = false;
     });
   }
 
@@ -51,7 +53,7 @@ class _LoginAnotherAccountState extends State<LoginAnotherAccount> {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
-        body: SingleChildScrollView(
+        body: !isLoading ? SingleChildScrollView(
       child: Container(
         color: Colors.white,
         child: Column(
@@ -111,6 +113,9 @@ class _LoginAnotherAccountState extends State<LoginAnotherAccount> {
                   height: 30,
                   child: ElevatedButton(
                       onPressed: () {
+                        setState((){
+                          isLoading = true;
+                        });
                         var phoneNumber = phonenumberController.text + "";
                         var password = passwordController.text + "";
                         AuthRequest.login(username, phoneNumber, password)
@@ -158,6 +163,9 @@ class _LoginAnotherAccountState extends State<LoginAnotherAccount> {
                                                     color: Colors.black)),
                                             onPressed: () {
                                               Navigator.pop(context, 'Cancel');
+                                              setState(() {
+                                                isLoading = false;
+                                              });
                                             },
                                           )
                                         ]));
@@ -209,6 +217,6 @@ class _LoginAnotherAccountState extends State<LoginAnotherAccount> {
           ],
         ),
       ),
-    ));
+    ) : Center(child: CircularProgressIndicator()));
   }
 }

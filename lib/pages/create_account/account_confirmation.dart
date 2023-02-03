@@ -27,6 +27,7 @@ class _AccountConfirmationPageState extends State<AccountConfirmationPage> {
   String code = "";
   String phoneNumber = ""; // the phone number of user
   final codeController = TextEditingController();
+  bool isLoading = true;
 
   @override
   void initState() {
@@ -40,6 +41,7 @@ class _AccountConfirmationPageState extends State<AccountConfirmationPage> {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
       phoneNumber = prefs.getString('phoneNumber').toString();
+      isLoading = false;
     });
   }
 
@@ -53,7 +55,7 @@ class _AccountConfirmationPageState extends State<AccountConfirmationPage> {
                 style: TextStyle(
                     color: Colors.black, fontSize: FontSize.titleSize))),
         // ignore: prefer_const_literals_to_create_immutables
-        body: Container(
+        body: !isLoading ? Container(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Column(children: [
             SizedBox(height: 50),
@@ -102,6 +104,9 @@ class _AccountConfirmationPageState extends State<AccountConfirmationPage> {
                     style: TextStyle(fontSize: FontSize.contentSize),
                   ),
                   onPressed: () {
+                    setState(() {
+                      isLoading = true;
+                    });
                     var code = codeController.text + "";
                     AuthRequest.checkVerifyCode(phoneNumber, code)
                         .then((data) async {
@@ -142,6 +147,9 @@ class _AccountConfirmationPageState extends State<AccountConfirmationPage> {
                                                 color: Colors.black)),
                                         onPressed: () {
                                           Navigator.pop(context, 'Cancel');
+                                          setState(() {
+                                            isLoading = false;
+                                          });
                                         },
                                       )
                                     ]));
@@ -150,6 +158,6 @@ class _AccountConfirmationPageState extends State<AccountConfirmationPage> {
                   },
                 )),
           ]),
-        ));
+        ) : Center(child: CircularProgressIndicator()));
   }
 }
