@@ -19,7 +19,9 @@ class changePassword extends StatefulWidget {
 }
 
 class _changePasswordState extends State<changePassword> {
-  bool isVisible = true;
+  bool isVisible1 = true;
+  bool isVisible2 = true;
+  bool isVisible3 = true;
   bool isValid = true;
   final currentPasswordController = TextEditingController();
   final newPasswordController = TextEditingController();
@@ -78,18 +80,18 @@ class _changePasswordState extends State<changePassword> {
                 child: TextField(
                   controller: currentPasswordController,
                   style: TextStyle(fontSize: FontSize.contentSize),
-                  obscureText: isVisible,
+                  obscureText: isVisible1,
                   decoration: InputDecoration(
                     hintText: 'Current password',
                     suffixIcon: IconButton(
                       icon: Icon(
-                        isVisible ? Icons.visibility : Icons.visibility_off,
+                        isVisible1 ? Icons.visibility : Icons.visibility_off,
                         color: Colors.black,
                       ),
                       onPressed: () {
                         // Update the state i.e. toogle the state of passwordVisible variable
                         setState(() {
-                          isVisible = !isVisible;
+                          isVisible1 = !isVisible1;
                         });
                       },
                     ),
@@ -100,18 +102,18 @@ class _changePasswordState extends State<changePassword> {
                 child: TextField(
                   controller: newPasswordController,
                   style: TextStyle(fontSize: FontSize.contentSize),
-                  obscureText: isVisible,
+                  obscureText: isVisible2,
                   decoration: InputDecoration(
                     hintText: 'New password',
                     suffixIcon: IconButton(
                       icon: Icon(
-                        isVisible ? Icons.visibility : Icons.visibility_off,
+                        isVisible2 ? Icons.visibility : Icons.visibility_off,
                         color: Colors.black,
                       ),
                       onPressed: () {
                         // Update the state i.e. toogle the state of passwordVisible variable
                         setState(() {
-                          isVisible = !isVisible;
+                          isVisible2 = !isVisible2;
                         });
                       },
                     ),
@@ -134,18 +136,18 @@ class _changePasswordState extends State<changePassword> {
                   }
                 },
                 style: TextStyle(fontSize: FontSize.contentSize),
-                obscureText: isVisible,
+                obscureText: isVisible3,
                 decoration: InputDecoration(
                   hintText: 'Confirm password',
                   suffixIcon: IconButton(
                     icon: Icon(
-                      isVisible ? Icons.visibility : Icons.visibility_off,
+                      isVisible3 ? Icons.visibility : Icons.visibility_off,
                       color: Colors.black,
                     ),
                     onPressed: () {
                       // Update the state i.e. toogle the state of passwordVisible variable
                       setState(() {
-                        isVisible = !isVisible;
+                        isVisible3 = !isVisible3;
                       });
                     },
                   ),
