@@ -39,7 +39,7 @@ class PostRequest {
    * @desc API danh sách bài viết
    * @date 30/1/2023 
    */
-  static Future<List<Post>> getPostList(int index, int count,
+  static Future<List<Post>> getPostList(String index, String count,
       [String? last_id]) async {
     try {
       // init query params

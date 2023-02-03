@@ -5,6 +5,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:like_button/like_button.dart';
 import 'package:photo_picker_initial/network/user_request.dart';
 
+import 'package:shared_preferences/shared_preferences.dart';
+
 import '../shared/font_size.dart';
 import 'comment_widget.dart';
 import '../network/auth_request.dart';
@@ -20,23 +22,30 @@ class PostWidget extends StatefulWidget {
 class _PostWidgetState extends State<PostWidget> {
   User user = User();
   int numberOfLike = 0;
+  var userID = "";
+
+  getData() async {
+    // Obtain shared preferences.
+    final prefs = await SharedPreferences.getInstance();
+    userID = prefs.getString('userID').toString();
+  }
 
   @override
   void initState() {
     super.initState();
     List<String> likes = widget.post.likedUser as List<String>;
-
+    getData();
     setState(() {
       numberOfLike = likes.length;
     });
     // Gọi API lấy thông tin người dùng
-    UserRequest.getUserByID(widget.post.author.toString()).then((data) {
-      if (data['code'] == '1000') {
-        setState(() {
-          user = data['data'];
-        });
-      }
-    });
+    // UserRequest.getUserByID(widget.post.author.toString()).then((data) {
+    //   if (data['code'] == '1000') {
+    //     setState(() {
+    //       user = data['data'];
+    //     });
+    //   }
+    // });
   }
 
   final now = DateTime.now();
@@ -50,7 +59,7 @@ class _PostWidgetState extends State<PostWidget> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               CircleAvatar(
-                backgroundImage: AssetImage(widget.post.image.toString()),
+                backgroundImage: NetworkImage(widget.post.image.toString()),
                 radius: 20.0,
               ),
               SizedBox(width: 7.0),
@@ -58,7 +67,7 @@ class _PostWidgetState extends State<PostWidget> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(user.name.toString(),
+                  Text('user.name.toString()',
                       style: TextStyle(
                           fontWeight: FontWeight.bold, fontSize: 17.0)),
                   SizedBox(height: 5.0),
@@ -69,7 +78,7 @@ class _PostWidgetState extends State<PostWidget> {
               Spacer(),
               IconButton(
                   onPressed: () {
-                    if (widget.post.author == 'Sam Wilson') {
+                    if ("63d8be68c78b50001671034d" == userID) {
                       showModalBottomSheet(
                           context: context,
                           builder: (BuilderContext) {
