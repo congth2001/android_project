@@ -8,14 +8,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../models/post.dart';
 
 class PostRequest {
+  static const String subdomain = 'facebookhust.onrender.com';
+  static const String subdirectoryHead = "/it4788/post";
   // url of api
   static var url = Uri();
-
-  // get token
-  static Future<String> getToken() async {
-    final prefs = await SharedPreferences.getInstance();
-    return prefs.getString("token").toString();
-  }
 
   // get records list
   static List<Post> parsePostList(List<dynamic> data) {
@@ -40,126 +36,124 @@ class PostRequest {
   }
 
   /*
-   * @desc API lấy tất cả bài viết
+   * @desc API danh sách bài viết
    * @date 30/1/2023 
    */
-  static Future<List<Post>> getAllPost() async {
-    // get url
-    url = Uri.http('localhost:8000', 'api/v1/posts/list');
-    // get response
-    final res = await http.get(
-      url,
-      headers: {
-        HttpHeaders.authorizationHeader:
-            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImRhdCIsImlkIjoiNjNhMzMyN2E5OGJkMDEzMmZjZWFiMDZlIiwiaWF0IjoxNjczMDgxMzMxfQ.wd_pxa0sdMNh__XvFmQPGZR4W6IDFNXOJTYDDK6eOUc',
-      },
-    );
-    // get return data
-    final data = jsonDecode(res.body);
-    // check and return
-    if (res.statusCode == 200) {
-      return compute(parsePostList, data['data'] as List<dynamic>);
-    } else if (res.statusCode == 404) {
-      throw Exception('Not Found');
-    } else {
-      throw Exception('Can\'t get Posts');
-    }
-  }
-
-  /*
-   * @desc API lấy thông tin theo ID
-   * @date 30/1/2023 
-   */
-  static Future getPostByID(String id) async {
+  static Future<List<Post>> getPostList(int index, int count,
+      [String? last_id]) async {
     try {
+      // init query params
+      final queryParameters = {
+        'index': index,
+        'count': count,
+        'last_id': last_id,
+      };
       // get url
-      url = Uri.http('localhost:8000', 'api/v1/Posts/show/$id');
-      // get token
-      String token = await getToken();
+      url = Uri.https(
+          subdomain, '$subdirectoryHead/get_list_posts', queryParameters);
       // get response
-      final res = await http.get(
-        url,
-        headers: {
-          HttpHeaders.authorizationHeader: 'Bearer $token',
-        },
-      );
+      final res = await http.post(url);
       // get return data
       final resBody = jsonDecode(res.body);
       // check and return
-      if (res.statusCode == 200) {
-        return compute(parsePost, resBody['data'] as dynamic);
-      } else if (res.statusCode == 404) {
-        throw Exception('Not Found');
+      if (resBody['code'] == '1000') {
+        // Trả về danh sách bản ghi
+        return compute(parsePostList, resBody['data'] as List<dynamic>);
       } else {
-        throw Exception('Can\'t get Posts');
+        throw Exception(resBody['message']);
       }
     } catch (e) {
-      print(e.toString());
+      print('Got error in Get list of post: $e');
+      return List<Post>.empty();
     }
   }
 
   /*
-   * @desc API đăng bài viết
+   * @desc API thông tin bài viết
    * @date 30/1/2023 
    */
-  static Future create(String described) async {
+  static Future<Post> getPostByID(String id) async {
     try {
+      // init query params
+      final queryParameters = {
+        'id': id,
+      };
       // get url
-      url = Uri.http('localhost:8000', 'api/v1/posts/create');
-      // get token
-      String token = await getToken();
-      print(token);
+      url = Uri.https(subdomain, '$subdirectoryHead/get_post', queryParameters);
       // get response
-      final res = await http.post(
-        url,
-        body: {
-          "described": described,
-        },
-        headers: {
-          HttpHeaders.authorizationHeader: 'Bearer $token',
-        },
-      );
+      final res = await http.post(url);
+      // get return data
+      final resBody = jsonDecode(res.body);
       // check and return
-      if (res.statusCode == 200) {
-        return res;
-      } else if (res.statusCode == 400) {
-        throw Exception('Bad request');
+      if (resBody['code'] == '1000') {
+        // Trả về danh sách bản ghi
+        return compute(parsePost, resBody['data'] as dynamic);
       } else {
-        throw Exception('Can\'t create post');
+        throw Exception(resBody['message']);
       }
     } catch (e) {
-      print(e.toString());
+      print('Got error in Get post by id: $e');
+      return Post();
     }
   }
 
   /*
-   * @desc API thích và bỏ thích bài viết
-   * @date 31/1/2023 
+   * @desc API xóa bài viết
+   * @date 30/1/2023 
    */
-  static Future likeOrUnlike(String postID) async {
+  static Future deletePost(String id) async {
     try {
+      // init query params
+      final queryParameters = {
+        'id': id,
+      };
       // get url
-      url = Uri.http('localhost:8000', 'api/v1/postLike/action/$postID');
-      // get token
-      String token = await getToken();
-      print(token);
+      url = Uri.https(
+          subdomain, '$subdirectoryHead/delete_post', queryParameters);
       // get response
-      final res = await http.post(
-        url,
-        headers: {
-          HttpHeaders.authorizationHeader: 'Bearer $token',
-        },
-      );
+      final res = await http.post(url);
+      // get return data
+      final resBody = jsonDecode(res.body);
+      /**
+       * Thành công: {"code": "1000", "message": "OK"}
+       * Thất bại: {"code": "9992", "message": "Post is not existed"}
+       */
+      return resBody;
+    } catch (e) {
+      print('Got error in Delete post: $e');
+      return Post();
+    }
+  }
+
+  /*
+   * @desc API Đăng bài viết (hiện tại chỉ cho nhập nội dung)
+   * @date 30/1/2023 
+   */
+  static Future addPost(String described) async {
+    try {
+      // init query params
+      final queryParameters = {
+        'described': described,
+      };
+      // get url
+      url = Uri.https(
+          subdomain, '$subdirectoryHead/delete_post', queryParameters);
+      // get response
+      final res = await http.post(url);
+      // get return data
+      final resBody = jsonDecode(res.body);
       // check and return
-      if (res.statusCode == 200) {
-        return res;
-      } else if (res.statusCode == 400) {
-        throw Exception('Bad request');
+      if (resBody['code'] == '1000') {
+        /**
+         * Thành công: { "id": "63dd1dcedad1370034cd5d69","url": null }
+         */
+        return resBody['data'];
       } else {
-        throw Exception('Can\'t create post');
+        throw Exception(resBody['message']);
       }
     } catch (e) {
-      print(e.toString());
+      print('Got error in Add post: $e');
+      return Post();
     }
   }
 }
