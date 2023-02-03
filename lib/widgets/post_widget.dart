@@ -24,7 +24,7 @@ class _PostWidgetState extends State<PostWidget> {
   @override
   void initState() {
     super.initState();
-    List<String> likes = widget.post.like as List<String>;
+    List<String> likes = widget.post.likedUser as List<String>;
 
     setState(() {
       numberOfLike = likes.length;
@@ -50,7 +50,7 @@ class _PostWidgetState extends State<PostWidget> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               CircleAvatar(
-                backgroundImage: AssetImage(widget.post.images.toString()),
+                backgroundImage: AssetImage(widget.post.image.toString()),
                 radius: 20.0,
               ),
               SizedBox(width: 7.0),
@@ -62,8 +62,8 @@ class _PostWidgetState extends State<PostWidget> {
                       style: TextStyle(
                           fontWeight: FontWeight.bold, fontSize: 17.0)),
                   SizedBox(height: 5.0),
-                  Text(DateTime.parse(widget.post.createdAt.toString())
-                      .toString())
+                  Text(
+                      DateTime.parse(widget.post.created.toString()).toString())
                 ],
               ),
               Spacer(),
@@ -308,7 +308,7 @@ class _PostWidgetState extends State<PostWidget> {
               ),
               Row(
                 children: [
-                  Text('${widget.post.countComments} comments'),
+                  Text('18 comments'),
                 ],
               ),
             ],
