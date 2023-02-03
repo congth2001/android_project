@@ -13,6 +13,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import '../../pages/edit_profile_page.dart';
+import '../../pages/profile_setting_page.dart';
 import '../widgets/common_buttons.dart';
 import '../constants.dart';
 import 'select_photo_options_screen.dart';
@@ -49,56 +51,6 @@ class _ProfileTabState extends State<ProfileTab> {
     });
   }
 
-  File? _image;
-
-  Future _pickImage(ImageSource source) async {
-    try {
-      final image = await ImagePicker().pickImage(source: source);
-      if (image == null) return;
-      File? img = File(image.path);
-      img = await _cropImage(imageFile: img);
-      setState(() {
-        _image = img;
-        Navigator.of(context).pop();
-      });
-    } on PlatformException catch (e) {
-      print(e);
-      Navigator.of(context).pop();
-    }
-  }
-
-  Future<File?> _cropImage({required File imageFile}) async {
-    CroppedFile? croppedImage =
-        await ImageCropper().cropImage(sourcePath: imageFile.path);
-    if (croppedImage == null) return null;
-    return File(croppedImage.path);
-  }
-
-  void _showSelectPhotoOptions(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(
-          top: Radius.circular(25.0),
-        ),
-      ),
-      builder: (context) => DraggableScrollableSheet(
-          initialChildSize: 0.28,
-          maxChildSize: 0.4,
-          minChildSize: 0.28,
-          expand: false,
-          builder: (context, scrollController) {
-            return SingleChildScrollView(
-              controller: scrollController,
-              child: SelectPhotoOptionsScreen(
-                onTap: _pickImage,
-              ),
-            );
-          }),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -123,28 +75,17 @@ class _ProfileTabState extends State<ProfileTab> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: <Widget>[
-                    GestureDetector(
-                      behavior: HitTestBehavior.translucent,
-                      onTap: () {
-                        _showSelectPhotoOptions(context);
-                      },
-                      child: Container(
+                    Container(
                         decoration: BoxDecoration(
                           border: Border.all(color: Colors.white, width: 5),
                           borderRadius:
                               const BorderRadius.all(Radius.circular(100)),
                         ),
-                        child: _image == null
-                            ? const Text(
-                                'No image selected',
-                                style: TextStyle(fontSize: 20),
-                              )
-                            : CircleAvatar(
-                                backgroundImage: FileImage(_image!),
-                                radius: 80.0,
-                              ),
-                      ),
-                    ),
+                        child: CircleAvatar(
+                          backgroundImage: NetworkImage(user.avatar.toString()),
+                          radius: 80
+                        )
+                        ),
                     const SizedBox(height: 10.0),
                     Padding(
                       padding: EdgeInsets.only(left: 5),
@@ -167,11 +108,10 @@ class _ProfileTabState extends State<ProfileTab> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: const [
-                                Icon(Icons.post_add, color: Colors.white),
-                                Text(' Create',
+                                Icon(Icons.add_circle, color: Colors.white),
+                                Text(' Add to story',
                                     style: TextStyle(
                                         color: Colors.white,
-                                        fontWeight: FontWeight.bold,
                                         fontSize: 16.0)),
                               ],
                             ),
@@ -183,27 +123,43 @@ class _ProfileTabState extends State<ProfileTab> {
                             decoration: BoxDecoration(
                                 color: Colors.grey[300],
                                 borderRadius: BorderRadius.circular(5.0)),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: const [
-                                Icon(Icons.edit, color: Colors.black),
-                                Text(' Edit profile',
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 16.0)),
-                              ],
+                            child: InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            EditProfilePage()));
+                              },
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: const [
+                                  Icon(Icons.edit, color: Colors.black),
+                                  Text(' Edit profile',
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 16.0)),
+                                ],
+                              ),
                             ),
                           ),
                           const SizedBox(width: 10),
                           Container(
-                            height: 38.0,
-                            width: 46.0,
-                            decoration: BoxDecoration(
-                                color: Colors.grey[300],
-                                borderRadius: BorderRadius.circular(5.0)),
-                            child: Icon(Icons.more_horiz),
-                          )
+                              height: 38.0,
+                              width: 46.0,
+                              decoration: BoxDecoration(
+                                  color: Colors.grey[300],
+                                  borderRadius: BorderRadius.circular(5.0)),
+                              child: IconButton(
+                                icon: Icon(Icons.more_horiz),
+                                onPressed: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              ProfileSettingPage()));
+                                },
+                              ))
                         ],
                       ),
                     )
