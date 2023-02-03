@@ -67,4 +67,93 @@ class PostRequest {
       return List<Post>.empty();
     }
   }
+
+  /*
+   * @desc API thông tin bài viết
+   * @date 30/1/2023 
+   */
+  static Future<Post> getPostByID(String id) async {
+    try {
+      // init query params
+      final queryParameters = {
+        'id': id,
+      };
+      // get url
+      url = Uri.https(subdomain, '$subdirectoryHead/get_post', queryParameters);
+      // get response
+      final res = await http.post(url);
+      // get return data
+      final resBody = jsonDecode(res.body);
+      // check and return
+      if (resBody['code'] == '1000') {
+        // Trả về danh sách bản ghi
+        return compute(parsePost, resBody['data'] as dynamic);
+      } else {
+        throw Exception(resBody['message']);
+      }
+    } catch (e) {
+      print('Got error in Get post by id: $e');
+      return Post();
+    }
+  }
+
+  /*
+   * @desc API xóa bài viết
+   * @date 30/1/2023 
+   */
+  static Future deletePost(String id) async {
+    try {
+      // init query params
+      final queryParameters = {
+        'id': id,
+      };
+      // get url
+      url = Uri.https(
+          subdomain, '$subdirectoryHead/delete_post', queryParameters);
+      // get response
+      final res = await http.post(url);
+      // get return data
+      final resBody = jsonDecode(res.body);
+      /**
+       * Thành công: {"code": "1000", "message": "OK"}
+       * Thất bại: {"code": "9992", "message": "Post is not existed"}
+       */
+      return resBody;
+    } catch (e) {
+      print('Got error in Delete post: $e');
+      return Post();
+    }
+  }
+
+  /*
+   * @desc API Đăng bài viết (hiện tại chỉ cho nhập nội dung)
+   * @date 30/1/2023 
+   */
+  static Future addPost(String described) async {
+    try {
+      // init query params
+      final queryParameters = {
+        'described': described,
+      };
+      // get url
+      url = Uri.https(
+          subdomain, '$subdirectoryHead/delete_post', queryParameters);
+      // get response
+      final res = await http.post(url);
+      // get return data
+      final resBody = jsonDecode(res.body);
+      // check and return
+      if (resBody['code'] == '1000') {
+        /**
+         * Thành công: { "id": "63dd1dcedad1370034cd5d69","url": null }
+         */
+        return resBody['data'];
+      } else {
+        throw Exception(resBody['message']);
+      }
+    } catch (e) {
+      print('Got error in Add post: $e');
+      return Post();
+    }
+  }
 }
