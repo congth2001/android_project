@@ -5,7 +5,7 @@ class Post {
   List<Id>? likedUser;
   List<Id>? comments;
   List<Id>? reportsPost;
-  Id? author;
+  Author? author;
   String? described;
   String? status;
   int? created;
@@ -46,7 +46,8 @@ class Post {
         reportsPost!.add(new Id.fromJson(v));
       });
     }
-    author = json['author'] != null ? new Id.fromJson(json['author']) : null;
+    author =
+        json['author'] != null ? new Author.fromJson(json['author']) : null;
     described = json['described'];
     status = json['status'];
     created = json['created'];
@@ -125,6 +126,28 @@ class Image {
     }
     data['filename'] = this.filename;
     data['url'] = this.url;
+    return data;
+  }
+}
+
+class Author {
+  String? id;
+  String? username;
+  String? avatar;
+
+  Author({this.id, this.username, this.avatar});
+
+  Author.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    username = json['username'];
+    avatar = json['avatar'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['username'] = this.username;
+    data['avatar'] = this.avatar;
     return data;
   }
 }
