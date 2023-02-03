@@ -26,6 +26,7 @@ class _TermsAndPrivacyPageState extends State<TermsAndPrivacyPage> {
   var username = "";
   var phoneNumber = "";
   var password = "";
+  bool isLoading = true;
 
   @override
   void initState() {
@@ -40,13 +41,16 @@ class _TermsAndPrivacyPageState extends State<TermsAndPrivacyPage> {
     username = prefs.getString('username').toString();
     phoneNumber = prefs.getString('phoneNumber').toString();
     password = prefs.getString('password').toString();
+    setState(() {
+      isLoading = false;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
-    return Scaffold(
+    return !isLoading ? Scaffold(
       appBar: AppBar(
           toolbarHeight: 40,
           leading: IconButton(
@@ -109,6 +113,9 @@ class _TermsAndPrivacyPageState extends State<TermsAndPrivacyPage> {
         height: 30,
         child: FloatingActionButton(
           onPressed: () {
+            setState(() {
+              isLoading = true;
+            });
             // Call API đăng ký tài khoản
             AuthRequest.signUp(username, phoneNumber, password)
                 .then((data) async {
@@ -128,6 +135,6 @@ class _TermsAndPrivacyPageState extends State<TermsAndPrivacyPage> {
               borderRadius: BorderRadius.all(Radius.circular(5.0))),
         ),
       ),
-    );
+    ) : Center(child: CircularProgressIndicator());
   }
 }
