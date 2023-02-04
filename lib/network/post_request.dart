@@ -133,11 +133,15 @@ class PostRequest {
    * @desc API Đăng bài viết (hiện tại chỉ cho nhập nội dung)
    * @date 30/1/2023 
    */
-  static Future addPost(String described) async {
+  static Future addPost(
+    String described,
+    String token,
+  ) async {
     try {
       // init query params
       final queryParameters = {
         'described': described,
+        'token': token,
       };
       // get url
       url = Uri.https(
