@@ -28,7 +28,6 @@ class _WriteSomethingWidgetState extends State<WriteSomethingWidget> {
     final prefs = await SharedPreferences.getInstance();
     String userID = prefs.getString('userID').toString();
     avatar = prefs.getString('avatar').toString();
-    print('avatar in what on your: $avatar');
   }
 
   @override
