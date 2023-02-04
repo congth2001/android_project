@@ -30,14 +30,15 @@ class CommentRequest {
    * @return comment mới được tạo
    * @date 30/1/2023 
    */
-  static Future addComment(String token, String postID, String content) async {
+  static Future addComment(String token, String postID, String content,
+      [String? index = '0', String? count = '100']) async {
     try {
       final queryParameters = {
         'token': token,
         'id': postID,
         'comment': content,
-        'index': 0,
-        'count': 100,
+        'index': index,
+        'count': count,
       };
       // get url
       url = Uri.https(

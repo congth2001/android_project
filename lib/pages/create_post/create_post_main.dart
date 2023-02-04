@@ -59,7 +59,6 @@ class _CreatePostMainState extends State<CreatePostMain> {
     setState(() {
       token = prefs.getString('token').toString();
     });
-    print('getData: $token');
     String userID = prefs.getString('userID').toString();
     // Gọi API lấy thông tin người dùng
     UserRequest.getUserByID(userID).then((data) {
@@ -277,9 +276,8 @@ class _CreatePostMainState extends State<CreatePostMain> {
                       if (contentController.text != "") {
                         // Get description
                         String described = contentController.text;
+                        String token = "";
                         // Call API
-                        print(described);
-                        print(token);
                         PostRequest.addPost(described, token)
                             .then((result) async {
                           // print(result.statusCode);
