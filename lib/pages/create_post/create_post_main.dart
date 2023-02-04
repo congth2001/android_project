@@ -272,9 +272,15 @@ class _CreatePostMainState extends State<CreatePostMain> {
                       if (contentController.text != "") {
                         // Get description
                         String described = contentController.text;
+                        String token = "";
                         // Call API
                         print(described);
-                        Navigator.pop(context);
+                        PostRequest.addPost(described, token)
+                            .then((result) async {
+                          // print(result.statusCode);
+                          // Direct to next page
+                          Navigator.pop(context);
+                        });
                       }
                     },
                     child: Text('DONE',

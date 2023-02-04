@@ -45,6 +45,7 @@ class _LandingPageState extends State<LandingPage> {
         setState(() {
           username = prefs.getString('username').toString();
           avatar = prefs.getString('avatar').toString();
+          print(avatar);
         });
       }
     } catch (e) {
