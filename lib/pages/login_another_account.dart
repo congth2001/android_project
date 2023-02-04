@@ -139,6 +139,9 @@ class _LoginAnotherAccountState extends State<LoginAnotherAccount> {
                                           'username', res['data']['username']);
                                       await prefs.setString(
                                           'token', res['data']['token']);
+                                      if (res['data']['avatar'] != null)
+                                        await prefs.setString(
+                                            'avatar', res['data']['avatar']);
                                       // Direct to next page
                                       Navigator.push(
                                         context,
