@@ -281,7 +281,9 @@ class _PostWidgetState extends State<PostWidget> {
           ),
           SizedBox(height: 20.0),
           // Hiển thị nội dung bài viết
-          Text(postObj.described.toString(), style: TextStyle(fontSize: 15.0)),
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Text(postObj.described.toString(), style: TextStyle(fontSize: 15.0))),
           // Hiển thị ảnh của bài viết
           Container(
               padding: EdgeInsets.only(top: 10), child: Image.network(postImg)),
@@ -305,6 +307,7 @@ class _PostWidgetState extends State<PostWidget> {
                               Shadow(color: Colors.black, blurRadius: 4.0)
                             ])),
                   ]),
+                  SizedBox(width: 3),
                   Text(postObj.like.toString()),
                 ],
               ),
