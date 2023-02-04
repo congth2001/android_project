@@ -20,15 +20,19 @@ class PostWidget extends StatefulWidget {
 class _PostWidgetState extends State<PostWidget> {
   Post postObj = Post();
   String postImg = "";
+  String postID = "";
 
   @override
   void initState() {
     super.initState();
     setState(() {
       postObj = widget.post;
+      // Set up the image of post
       postImg = postObj.image != null
           ? postObj.image![0].url.toString()
           : "https://firebasestorage.googleapis.com/v0/b/social-network-app-19cd7.appspot.com/o/images%2Frn_image_picker_lib_temp_19d714d4-09ee-45a2-a1b0-c44329bcd180.jpg?alt=media&token=2ed540ab-1944-4061-b5d6-4f3ee8b598f8";
+      // Set up the id of post
+      postID = postObj.id.toString();
     });
   }
 
@@ -357,7 +361,8 @@ class _PostWidgetState extends State<PostWidget> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => CommentPage()));
+                                builder: (context) =>
+                                    CommentPage(postID: postID)));
                       },
                       child: Row(
                         children: [

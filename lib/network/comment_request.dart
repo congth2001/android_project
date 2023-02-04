@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
+import 'package:photo_picker_initial/models/comment.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CommentRequest {
@@ -11,6 +12,18 @@ class CommentRequest {
   static const String subdirectoryHead = "/it4788/comment";
   // url of api
   static var url = Uri();
+
+  // parse jsonMap to List
+  static List<Comment> parseCommentList(List<dynamic> data) {
+    try {
+      List<Comment> comments =
+          data.map((model) => Comment.fromJson(model)).toList();
+      return comments;
+    } catch (e) {
+      print('Exception in Parse comment list: $e');
+    }
+    return List<Comment>.empty();
+  }
 
   /*
    * @desc API tạo comment
@@ -90,7 +103,9 @@ class CommentRequest {
             "is_blocked": "0"
         }]
          */
-        return resBody['data'];
+        return compute(parseCommentList, resBody['data'] as List<dynamic>);
+      } else {
+        print('Got error in get comment list: ' + resBody['message']);
       }
     } catch (e) {
       print(e.toString());

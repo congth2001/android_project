@@ -3,9 +3,9 @@ class Comment {
   String? comment;
   Id? poster;
   Id? post;
-  int? created;
-  int? modified;
-  int? iV;
+  String? created;
+  String? modified;
+  String? iV;
 
   Comment(
       {this.iId,

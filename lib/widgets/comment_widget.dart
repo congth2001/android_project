@@ -3,14 +3,14 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:like_button/like_button.dart';
+import 'package:photo_picker_initial/network/comment_request.dart';
 import 'who_like.dart';
 import '../pages/profile_page.dart';
 
 import '../models/comment.dart';
 
 class CommentPage extends StatefulWidget {
-  const CommentPage({Key? key}) : super(key: key);
-
+  // Get data from parent
   String postID;
   CommentPage({required this.postID});
 
@@ -19,9 +19,20 @@ class CommentPage extends StatefulWidget {
 }
 
 class _CommentPageState extends State<CommentPage> {
+  // Variables
   final commentController = TextEditingController();
   bool canSend = false;
   List<Comment> commentList = List<Comment>.empty();
+
+  @override
+  void initState() {
+    super.initState();
+    CommentRequest.getCommentList(widget.postID).then((data) {
+      setState(() {
+        commentList = data;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
