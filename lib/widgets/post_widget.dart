@@ -58,6 +58,16 @@ class _PostWidgetState extends State<PostWidget> {
     }
   }
 
+  Comment(a) {
+    if (a == "0") {
+      return "";
+    }
+    if (a == "1") {
+      return "1 comment";
+    }
+    return a + " comments";
+  }
+
   final now = DateTime.now();
 
   Widget build(BuildContext context) {
@@ -333,7 +343,7 @@ class _PostWidgetState extends State<PostWidget> {
               ),
               Row(
                 children: [
-                  Text(postObj.comment.toString() + 'comments'),
+                  Text(Comment(postObj.comment.toString())),
                 ],
               ),
             ],
