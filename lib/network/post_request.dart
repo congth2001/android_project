@@ -8,7 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../models/post.dart';
 
 class PostRequest {
-  static const String subdomain = 'facebookhust.onrender.com';
+  static const String subdomain = 'facebook-8qes.onrender.com';
   static const String subdirectoryHead = "/it4788/post";
   // url of api
   static var url = Uri();
@@ -133,11 +133,15 @@ class PostRequest {
    * @desc API Đăng bài viết (hiện tại chỉ cho nhập nội dung)
    * @date 30/1/2023 
    */
-  static Future addPost(String described) async {
+  static Future addPost(
+    String described,
+    String token,
+  ) async {
     try {
       // init query params
       final queryParameters = {
         'described': described,
+        'token': token,
       };
       // get url
       url = Uri.https(

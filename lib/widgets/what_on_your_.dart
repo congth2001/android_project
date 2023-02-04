@@ -14,7 +14,7 @@ class WriteSomethingWidget extends StatefulWidget {
 }
 
 class _WriteSomethingWidgetState extends State<WriteSomethingWidget> {
-  var user = User();
+  String avatar = "";
 
   @override
   void initState() {
@@ -27,14 +27,8 @@ class _WriteSomethingWidgetState extends State<WriteSomethingWidget> {
     // Obtain shared preferences.
     final prefs = await SharedPreferences.getInstance();
     String userID = prefs.getString('userID').toString();
-    // Gọi API lấy thông tin người dùng
-    UserRequest.getUserByID(userID).then((data) {
-      if (data['code'] == '1000') {
-        setState(() {
-          user = data['data'];
-        });
-      }
-    });
+    avatar = prefs.getString('avatar').toString();
+    print('avatar in what on your: $avatar');
   }
 
   @override
@@ -57,7 +51,8 @@ class _WriteSomethingWidgetState extends State<WriteSomethingWidget> {
                       padding: EdgeInsets.only(left: -1)),
                   child: CircleAvatar(
                     radius: 24.0,
-                    backgroundImage: NetworkImage(user.avatar.toString()),
+                    // Avatar of user
+                    backgroundImage: NetworkImage(avatar),
                   ),
                   onPressed: () => {
                     Navigator.push(
