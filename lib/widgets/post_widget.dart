@@ -67,7 +67,7 @@ class _PostWidgetState extends State<PostWidget> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('user.name.toString()',
+                  Text(user.name.toString(),
                       style: TextStyle(
                           fontWeight: FontWeight.bold, fontSize: 17.0)),
                   SizedBox(height: 5.0),
