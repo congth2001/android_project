@@ -5,6 +5,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:like_button/like_button.dart';
 import 'package:photo_picker_initial/network/user_request.dart';
 
+import 'package:shared_preferences/shared_preferences.dart';
+
 import '../shared/font_size.dart';
 import 'comment_widget.dart';
 import '../network/auth_request.dart';
@@ -22,6 +24,7 @@ class _PostWidgetState extends State<PostWidget> {
   String postImg = "";
   String postID = "";
   bool isLiked = false;
+  String numberOfLikes = "0";
 
   @override
   void initState() {
@@ -35,7 +38,24 @@ class _PostWidgetState extends State<PostWidget> {
       // Set up the id of post
       postID = postObj.id.toString();
       isLiked = postObj.isLiked == '0' ? false : true;
+      // Set up number of likes
+      numberOfLikes = postObj.like.toString();
     });
+    getData();
+  }
+
+  var userID = "";
+  var token = "";
+  getData() async {
+    try {
+      // Gọi đến storage
+      final prefs = await SharedPreferences.getInstance();
+      // Cập nhật dữ liệu
+      userID = prefs.getString('userID').toString();
+      token = prefs.getString('token').toString();
+    } catch (e) {
+      print('Exception in login_page: $e');
+    }
   }
 
   final now = DateTime.now();
@@ -67,7 +87,7 @@ class _PostWidgetState extends State<PostWidget> {
               Spacer(),
               IconButton(
                   onPressed: () {
-                    if (postObj.author == 'Sam Wilson') {
+                    if (postObj.author!.id.toString() == userID) {
                       showModalBottomSheet(
                           context: context,
                           builder: (BuilderContext) {
@@ -308,12 +328,12 @@ class _PostWidgetState extends State<PostWidget> {
                             ])),
                   ]),
                   SizedBox(width: 3),
-                  Text(postObj.like.toString()),
+                  Text(numberOfLikes),
                 ],
               ),
               Row(
                 children: [
-                  Text(postObj.comment.toString() + ' comments'),
+                  Text(postObj.comment.toString()),
                 ],
               ),
             ],
@@ -333,6 +353,15 @@ class _PostWidgetState extends State<PostWidget> {
                         isLiked = !isLiked;
                       });
                       print(postObj.id);
+
+                      UserRequest.like(postObj.id.toString(), token)
+                          .then((result) async {
+                        // print(result.statusCode);
+                        // Direct to next page
+                        setState(() {
+                          numberOfLikes = result['like'];
+                        });
+                      });
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,

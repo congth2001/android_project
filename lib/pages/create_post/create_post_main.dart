@@ -107,11 +107,15 @@ class _CreatePostMainState extends State<CreatePostMain> {
   }
 
   var user = User();
+  String token = "";
   getData() async {
     // Obtain shared preferences.
     final prefs = await SharedPreferences.getInstance();
-    String userID = prefs.getString('userID').toString();
+    setState(() {
+      token = prefs.getString('token').toString();
+    });
     // Gọi API lấy thông tin người dùng
+    String userID = prefs.getString('userID').toString();
     UserRequest.getUserByID(userID).then((data) {
       setState(() {
         user = data;
@@ -274,7 +278,12 @@ class _CreatePostMainState extends State<CreatePostMain> {
                         String described = contentController.text;
                         // Call API
                         print(described);
-                        Navigator.pop(context);
+                        PostRequest.addPost(described, token)
+                            .then((result) async {
+                          // print(result.statusCode);
+                          // Direct to next page
+                          Navigator.pop(context);
+                        });
                       }
                     },
                     child: Text('DONE',
