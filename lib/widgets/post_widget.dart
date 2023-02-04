@@ -333,7 +333,7 @@ class _PostWidgetState extends State<PostWidget> {
               ),
               Row(
                 children: [
-                  Text(postObj.comment.toString()),
+                  Text(postObj.comment.toString() + 'comments'),
                 ],
               ),
             ],
