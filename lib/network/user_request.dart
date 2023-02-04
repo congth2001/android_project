@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
+import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/user.dart';
@@ -64,23 +65,34 @@ class UserRequest {
   }
 
   /*
-   * @desc API Lấy danh sách tất cả bạn bè
+   * @desc API cập nhật thông tin người dùng (chưa có thay đổi ảnh)
    * @date 30/1/2023 
    */
-  static Future<List<User>> getAllFriends() async {
-    // get url
-    url = Uri.https('localhost:8000', 'api/v1/friends/list');
-    // get response
-    final res = await http.post(url);
-    // get return data
-    final data = jsonDecode(res.body);
-    // check and return
-    if (res.statusCode == 200) {
-      return compute(parseUserList, data['data'] as List<dynamic>);
-    } else if (res.statusCode == 404) {
-      throw Exception('Not Found');
-    } else {
-      throw Exception('Can\'t get users');
+  static Future updateUser(User user) async {
+    try {
+      final queryParameters = {
+        'username': user.username,
+        'description': user.description,
+        'address': user.address,
+        'city': user.city,
+        'country': user.country,
+        'link': user.link
+      };
+      // get url
+      url = Uri.https(
+          subdomain, '$subdirectoryHead/set_user_info', queryParameters);
+      print(url);
+      // get response
+      final res = await http.post(url);
+      // get return data
+      final resBody = jsonDecode(res.body);
+      if (resBody['code'] == '1000') {
+        return compute(parseUser, resBody['data'] as dynamic);
+      } else {
+        throw Exception('Exception in get user by id: ' + resBody['message']);
+      }
+    } catch (e) {
+      print('Got error in get user by id: $e');
     }
   }
 
