@@ -21,6 +21,7 @@ class _PostWidgetState extends State<PostWidget> {
   Post postObj = Post();
   String postImg = "";
   String postID = "";
+  var isLiked;
 
   @override
   void initState() {
@@ -33,6 +34,8 @@ class _PostWidgetState extends State<PostWidget> {
           : "https://firebasestorage.googleapis.com/v0/b/social-network-app-19cd7.appspot.com/o/images%2Frn_image_picker_lib_temp_19d714d4-09ee-45a2-a1b0-c44329bcd180.jpg?alt=media&token=2ed540ab-1944-4061-b5d6-4f3ee8b598f8";
       // Set up the id of post
       postID = postObj.id.toString();
+      // init isLiked
+      isLiked = postObj.isLiked;
     });
   }
 
@@ -307,7 +310,7 @@ class _PostWidgetState extends State<PostWidget> {
               ),
               Row(
                 children: [
-                  Text('18 comments'),
+                  Text(postObj.comment.toString() + ' comments'),
                 ],
               ),
             ],
@@ -330,6 +333,7 @@ class _PostWidgetState extends State<PostWidget> {
                     dotSecondaryColor: Color(0xff0099cc),
                   ),
                   likeBuilder: (isLiked) {
+                    print('clicked like');
                     return isLiked
                         ? Row(
                             children: [
