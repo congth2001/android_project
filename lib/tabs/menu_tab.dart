@@ -17,6 +17,7 @@ class MenuTab extends StatefulWidget {
 
 class _MenuTabState extends State<MenuTab> {
   var user = User();
+  bool isLoading = true;
 
   @override
   void initState() {
@@ -33,13 +34,14 @@ class _MenuTabState extends State<MenuTab> {
     UserRequest.getUserByID(userID).then((data) {
       setState(() {
         user = data;
+        isLoading = false;
       });
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
+    return !isLoading ? SingleChildScrollView(
       child: Container(
         color: Colors.blueGrey[50],
         child: Column(
@@ -548,6 +550,6 @@ class _MenuTabState extends State<MenuTab> {
           ],
         ),
       ),
-    );
+    ) : Center(child: CircularProgressIndicator());
   }
 }
