@@ -144,8 +144,8 @@ class PostRequest {
         'token': token,
       };
       // get url
-      url = Uri.https(
-          subdomain, '$subdirectoryHead/delete_post', queryParameters);
+      url = Uri.https(subdomain, '$subdirectoryHead/add_post', queryParameters);
+      print(url);
       // get response
       final res = await http.post(url);
       // get return data

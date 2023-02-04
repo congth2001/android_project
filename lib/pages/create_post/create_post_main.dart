@@ -34,10 +34,39 @@ class _CreatePostMainState extends State<CreatePostMain> {
   final contentController = TextEditingController();
   bool isDisabled = true;
   bool isFocus = false;
+  var user = User();
+  String token = "";
 
   XFile? image;
 
   final ImagePicker picker = ImagePicker();
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.emojiOrActivityType != null &&
+        widget.emojiOrActivityType != '') {
+      setState(() {
+        isDisabled = false;
+      });
+    }
+    getData();
+  }
+
+  getData() async {
+    // Obtain shared preferences.
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      token = prefs.getString('token').toString();
+    });
+    String userID = prefs.getString('userID').toString();
+    // Gọi API lấy thông tin người dùng
+    UserRequest.getUserByID(userID).then((data) {
+      setState(() {
+        user = data;
+      });
+    });
+  }
 
   //we can upload image from camera or from gallery based on parameter
   Future getImage(ImageSource media) async {
@@ -92,31 +121,6 @@ class _CreatePostMainState extends State<CreatePostMain> {
             ),
           );
         });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    if (widget.emojiOrActivityType != null &&
-        widget.emojiOrActivityType != '') {
-      setState(() {
-        isDisabled = false;
-      });
-    }
-    getData();
-  }
-
-  var user = User();
-  getData() async {
-    // Obtain shared preferences.
-    final prefs = await SharedPreferences.getInstance();
-    String userID = prefs.getString('userID').toString();
-    // Gọi API lấy thông tin người dùng
-    UserRequest.getUserByID(userID).then((data) {
-      setState(() {
-        user = data;
-      });
-    });
   }
 
   @override
@@ -274,7 +278,6 @@ class _CreatePostMainState extends State<CreatePostMain> {
                         String described = contentController.text;
                         String token = "";
                         // Call API
-                        print(described);
                         PostRequest.addPost(described, token)
                             .then((result) async {
                           // print(result.statusCode);

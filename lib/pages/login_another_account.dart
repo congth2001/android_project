@@ -139,8 +139,13 @@ class _LoginAnotherAccountState extends State<LoginAnotherAccount> {
                                           'username', res['data']['username']);
                                       await prefs.setString(
                                           'token', res['data']['token']);
-                                      await prefs.setString(
-                                          'avatar', res['data']['avatar']);
+                                      if (res['data']['avatar'] != null)
+                                        await prefs.setString(
+                                            'avatar', res['data']['avatar']);
+                                      else {
+                                        await prefs.setString('avatar',
+                                            "https://friconix.com/png/fi-cnsuxx-user-circle-solid.png");
+                                      }
                                       // Direct to next page
                                       Navigator.push(
                                         context,
