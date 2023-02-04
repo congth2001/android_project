@@ -85,6 +85,38 @@ class UserRequest {
   }
 
   /*
+   * @desc API cập nhật thông tin người dùng
+   * @date 30/1/2023 
+   */
+  static Future updateUser(User user) async {
+    try {
+      final queryParameters = {
+        'username': user.username,
+        'description': user.description,
+        'address': user.address,
+        'city': user.city,
+        'country': user.country,
+        'link': user.link
+      };
+      // get url
+      url = Uri.https(
+          subdomain, '$subdirectoryHead/set_user_info', queryParameters);
+      print(url);
+      // get response
+      final res = await http.post(url);
+      // get return data
+      final resBody = jsonDecode(res.body);
+      if (resBody['code'] == '1000') {
+        return compute(parseUser, resBody['data'] as dynamic);
+      } else {
+        throw Exception('Exception in get user by id: ' + resBody['message']);
+      }
+    } catch (e) {
+      print('Got error in get user by id: $e');
+    }
+  }
+
+  /*
    * @desc API ấn like bài viết
    * @return đối tượng chứa số like mới của bài viết
    * @date 30/1/2023
