@@ -13,11 +13,6 @@ class UserRequest {
   static const String subdirectoryHead = "/it4788/user";
   // url of api
   static var url = Uri();
-  // get token
-  static Future<String> getToken() async {
-    final prefs = await SharedPreferences.getInstance();
-    return prefs.getString("token").toString();
-  }
 
   // get records list
   static List<User> parseUserList(List<dynamic> data) {
@@ -92,15 +87,8 @@ class UserRequest {
   static Future<List<User>> getAllFriends() async {
     // get url
     url = Uri.https('localhost:8000', 'api/v1/friends/list');
-    // get token
-    String token = await getToken();
     // get response
-    final res = await http.post(
-      url,
-      headers: {
-        HttpHeaders.authorizationHeader: 'Bearer $token',
-      },
-    );
+    final res = await http.post(url);
     // get return data
     final data = jsonDecode(res.body);
     // check and return
@@ -110,6 +98,38 @@ class UserRequest {
       throw Exception('Not Found');
     } else {
       throw Exception('Can\'t get users');
+    }
+  }
+
+  /*
+   * @desc API ấn like bài viết
+   * @return đối tượng chứa số like mới của bài viết
+   * @date 30/1/2023
+   */
+  static Future like(String postID, String token) async {
+    try {
+      // init query params
+      final queryParameters = {
+        'id': postID,
+        'token': token,
+      };
+      // get url
+      url = Uri.https(subdomain, 'api/v1/like/like', queryParameters);
+      // get response
+      final res = await http.post(url);
+      // get return data
+      final resBody = jsonDecode(res.body);
+      // check and return
+      if (resBody['code'] == '1000') {
+        /**
+         * Thành công: { "like": "1" }
+         */
+        return resBody['data'];
+      } else {
+        throw Exception(resBody['message']);
+      }
+    } catch (e) {
+      print('Got error in Add post: $e');
     }
   }
 }
