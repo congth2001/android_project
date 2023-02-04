@@ -18,6 +18,7 @@ class _HomeTabState extends State<HomeTab> {
   @override
   void initState() {
     super.initState();
+    // CALL API
     PostRequest.getAllPosts().then((postList) {
       setState(() {
         posts = postList;

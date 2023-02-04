@@ -40,21 +40,23 @@ class LoginPageState extends State<LoginPage> {
   }
 
   getData() async {
-    // Gọi đến storage
-    final prefs = await SharedPreferences.getInstance();
-    phoneNumber = prefs.getString('phoneNumber').toString();
-    String userID = prefs.getString('userID').toString();
-    setState(() {
-      username = prefs.getString('username').toString();
-    });
-    // Gọi API lấy thông tin người dùng
-    UserRequest.getUserByID(userID).then((data) {
-      if (data['code'] == '1000') {
+    try {
+      // Gọi đến storage
+      final prefs = await SharedPreferences.getInstance();
+      phoneNumber = prefs.getString('phoneNumber').toString();
+      String userID = prefs.getString('userID').toString();
+      setState(() {
+        username = prefs.getString('username').toString();
+      });
+      // Gọi API lấy thông tin người dùng
+      UserRequest.getUserByID(userID).then((data) {
         setState(() {
-          user = data['data'];
+          user = data;
         });
-      }
-    });
+      });
+    } catch (e) {
+      print('Exception in login_page: $e');
+    }
   }
 
   @override
@@ -77,7 +79,7 @@ class LoginPageState extends State<LoginPage> {
               ),
               SizedBox(height: 15),
               Text(
-                username,
+                user.username.toString(),
                 style: TextStyle(fontSize: FontSize.titleSize),
               ),
               SizedBox(height: 20),

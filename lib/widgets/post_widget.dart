@@ -20,32 +20,18 @@ class PostWidget extends StatefulWidget {
 }
 
 class _PostWidgetState extends State<PostWidget> {
-  User user = User();
-  int numberOfLike = 0;
-  var userID = "";
-
-  getData() async {
-    // Obtain shared preferences.
-    final prefs = await SharedPreferences.getInstance();
-    userID = prefs.getString('userID').toString();
-  }
+  Post postObj = Post();
+  String postImg = "";
 
   @override
   void initState() {
     super.initState();
-    List<String> likes = widget.post.likedUser as List<String>;
-    getData();
     setState(() {
-      numberOfLike = likes.length;
+      postObj = widget.post;
+      postImg = postObj.image != null
+          ? postObj.image![0].url.toString()
+          : "https://firebasestorage.googleapis.com/v0/b/social-network-app-19cd7.appspot.com/o/images%2Frn_image_picker_lib_temp_19d714d4-09ee-45a2-a1b0-c44329bcd180.jpg?alt=media&token=2ed540ab-1944-4061-b5d6-4f3ee8b598f8";
     });
-    // Gọi API lấy thông tin người dùng
-    // UserRequest.getUserByID(widget.post.author.toString()).then((data) {
-    //   if (data['code'] == '1000') {
-    //     setState(() {
-    //       user = data['data'];
-    //     });
-    //   }
-    // });
   }
 
   final now = DateTime.now();
@@ -59,7 +45,7 @@ class _PostWidgetState extends State<PostWidget> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               CircleAvatar(
-                backgroundImage: NetworkImage(widget.post.image.toString()),
+                backgroundImage: AssetImage("assets/andrew.jpg"),
                 radius: 20.0,
               ),
               SizedBox(width: 7.0),
@@ -67,18 +53,17 @@ class _PostWidgetState extends State<PostWidget> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(user.name.toString(),
+                  Text(postObj.author!.username.toString(),
                       style: TextStyle(
                           fontWeight: FontWeight.bold, fontSize: 17.0)),
                   SizedBox(height: 5.0),
-                  Text(
-                      DateTime.parse(widget.post.created.toString()).toString())
+                  Text(DateTime.parse(postObj.created.toString()).toString())
                 ],
               ),
               Spacer(),
               IconButton(
                   onPressed: () {
-                    if ("63d8be68c78b50001671034d" == userID) {
+                    if (postObj.author == 'Sam Wilson') {
                       showModalBottomSheet(
                           context: context,
                           builder: (BuilderContext) {
@@ -290,8 +275,11 @@ class _PostWidgetState extends State<PostWidget> {
             ],
           ),
           SizedBox(height: 20.0),
-          Text(widget.post.described.toString(),
-              style: TextStyle(fontSize: 15.0)),
+          // Hiển thị nội dung bài viết
+          Text(postObj.described.toString(), style: TextStyle(fontSize: 15.0)),
+          // Hiển thị ảnh của bài viết
+          Container(
+              padding: EdgeInsets.only(top: 10), child: Image.network(postImg)),
           SizedBox(height: 10.0),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -312,7 +300,7 @@ class _PostWidgetState extends State<PostWidget> {
                               Shadow(color: Colors.black, blurRadius: 4.0)
                             ])),
                   ]),
-                  Text(' ${numberOfLike}'),
+                  Text(postObj.like.toString()),
                 ],
               ),
               Row(

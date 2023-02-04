@@ -45,7 +45,6 @@ class _ProfileTabState extends State<ProfileTab> {
       if (data['code'] == '1000') {
         setState(() {
           user = data['data'];
-          print(user);
         });
       }
     });
@@ -82,14 +81,13 @@ class _ProfileTabState extends State<ProfileTab> {
                               const BorderRadius.all(Radius.circular(100)),
                         ),
                         child: CircleAvatar(
-                          backgroundImage: NetworkImage(user.avatar.toString()),
-                          radius: 80
-                        )
-                        ),
+                            backgroundImage:
+                                NetworkImage(user.avatar.toString()),
+                            radius: 80)),
                     const SizedBox(height: 10.0),
                     Padding(
                       padding: EdgeInsets.only(left: 5),
-                      child: Text(user.name.toString(),
+                      child: Text(user.username.toString(),
                           style: TextStyle(
                               fontSize: 22.0, fontWeight: FontWeight.bold)),
                     ),
@@ -111,8 +109,7 @@ class _ProfileTabState extends State<ProfileTab> {
                                 Icon(Icons.add_circle, color: Colors.white),
                                 Text(' Add to story',
                                     style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 16.0)),
+                                        color: Colors.white, fontSize: 16.0)),
                               ],
                             ),
                           ),
@@ -137,8 +134,7 @@ class _ProfileTabState extends State<ProfileTab> {
                                   Icon(Icons.edit, color: Colors.black),
                                   Text(' Edit profile',
                                       style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 16.0)),
+                                          color: Colors.black, fontSize: 16.0)),
                                 ],
                               ),
                             ),
