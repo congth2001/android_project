@@ -1,8 +1,8 @@
 class Comment {
   Id? iId;
   String? comment;
-  Id? poster;
   Id? post;
+  Poster? poster;
   String? created;
   String? modified;
   String? iV;
@@ -19,7 +19,8 @@ class Comment {
   Comment.fromJson(Map<String, dynamic> json) {
     iId = json['_id'] != null ? new Id.fromJson(json['_id']) : null;
     comment = json['comment'];
-    poster = json['poster'] != null ? new Id.fromJson(json['poster']) : null;
+    poster =
+        json['poster'] != null ? new Poster.fromJson(json['poster']) : null;
     post = json['post'] != null ? new Id.fromJson(json['post']) : null;
     created = json['created'];
     modified = json['modified'];
@@ -57,6 +58,28 @@ class Id {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['$oid'] = this.oid;
+    return data;
+  }
+}
+
+class Poster {
+  String? id;
+  String? name;
+  String? avatar;
+
+  Poster({this.id, this.name, this.avatar});
+
+  Poster.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    name = json['name'];
+    avatar = json['avatar'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['name'] = this.name;
+    data['avatar'] = this.avatar;
     return data;
   }
 }
