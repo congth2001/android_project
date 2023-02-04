@@ -97,7 +97,8 @@ class UserRequest {
         'token': token,
       };
       // get url
-      url = Uri.https(subdomain, 'api/v1/like/like', queryParameters);
+      url = Uri.https(subdomain, 'it4788/like/like', queryParameters);
+      print(url);
       // get response
       final res = await http.post(url);
       // get return data
@@ -112,7 +113,7 @@ class UserRequest {
         throw Exception(resBody['message']);
       }
     } catch (e) {
-      print('Got error in Add post: $e');
+      print('Got error in like: $e');
     }
   }
 }

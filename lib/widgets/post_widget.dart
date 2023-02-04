@@ -24,6 +24,7 @@ class _PostWidgetState extends State<PostWidget> {
   String postImg = "";
   String postID = "";
   bool isLiked = false;
+  String numberOfLikes = "0";
 
   @override
   void initState() {
@@ -37,17 +38,21 @@ class _PostWidgetState extends State<PostWidget> {
       // Set up the id of post
       postID = postObj.id.toString();
       isLiked = postObj.isLiked == '0' ? false : true;
+      // Set up number of likes
+      numberOfLikes = postObj.like.toString();
     });
     getData();
   }
 
   var userID = "";
+  var token = "";
   getData() async {
     try {
       // Gọi đến storage
       final prefs = await SharedPreferences.getInstance();
       // Cập nhật dữ liệu
       userID = prefs.getString('userID').toString();
+      token = prefs.getString('token').toString();
     } catch (e) {
       print('Exception in login_page: $e');
     }
@@ -323,12 +328,12 @@ class _PostWidgetState extends State<PostWidget> {
                             ])),
                   ]),
                   SizedBox(width: 3),
-                  Text(postObj.like.toString()),
+                  Text(numberOfLikes),
                 ],
               ),
               Row(
                 children: [
-                  Text('18 comments'),
+                  Text(postObj.comment.toString()),
                 ],
               ),
             ],
@@ -348,6 +353,15 @@ class _PostWidgetState extends State<PostWidget> {
                         isLiked = !isLiked;
                       });
                       print(postObj.id);
+
+                      UserRequest.like(postObj.id.toString(), token)
+                          .then((result) async {
+                        // print(result.statusCode);
+                        // Direct to next page
+                        setState(() {
+                          numberOfLikes = result['like'];
+                        });
+                      });
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
