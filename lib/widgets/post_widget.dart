@@ -4,7 +4,7 @@ import 'package:photo_picker_initial/models/post.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:like_button/like_button.dart';
 import 'package:photo_picker_initial/network/user_request.dart';
-
+import 'package:photo_picker_initial/network/post_request.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../shared/font_size.dart';
@@ -56,6 +56,16 @@ class _PostWidgetState extends State<PostWidget> {
     } catch (e) {
       print('Exception in login_page: $e');
     }
+  }
+
+  Comment(a) {
+    if (a == "0") {
+      return "";
+    }
+    if (a == "1") {
+      return "1 comment";
+    }
+    return a + " comments";
   }
 
   final now = DateTime.now();
@@ -140,7 +150,10 @@ class _PostWidgetState extends State<PostWidget> {
                                                             "You can edit the post if you need to make changes.",
                                                             style: TextStyle(
                                                                 color: Color.fromARGB(
-                                                                    255, 88, 88, 88),
+                                                                    255,
+                                                                    88,
+                                                                    88,
+                                                                    88),
                                                                 fontSize: FontSize
                                                                     .contentSize)),
                                                         actions: [
@@ -153,7 +166,19 @@ class _PostWidgetState extends State<PostWidget> {
                                                                             .contentSize,
                                                                     color: Colors
                                                                         .blue)),
-                                                            onPressed: () {},
+                                                            onPressed: () {
+                                                              print(postObj.id);
+                                                              PostRequest.deletePost(
+                                                                      postObj.id
+                                                                          .toString(),
+                                                                      token)
+                                                                  .then(
+                                                                      (result) async {
+                                                                print(result);
+                                                                Navigator.pop(
+                                                                    context);
+                                                              });
+                                                            },
                                                           ),
                                                           TextButton(
                                                             child: Text('EDIT',
@@ -333,7 +358,7 @@ class _PostWidgetState extends State<PostWidget> {
               ),
               Row(
                 children: [
-                  Text(postObj.comment.toString() + 'comments'),
+                  Text(Comment(postObj.comment.toString())),
                 ],
               ),
             ],

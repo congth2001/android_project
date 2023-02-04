@@ -105,15 +105,17 @@ class PostRequest {
    * @desc API xóa bài viết
    * @date 30/1/2023 
    */
-  static Future deletePost(String id) async {
+  static Future deletePost(String id, String token) async {
     try {
       // init query params
       final queryParameters = {
         'id': id,
+        'token': token,
       };
       // get url
       url = Uri.https(
           subdomain, '$subdirectoryHead/delete_post', queryParameters);
+      print(url);
       // get response
       final res = await http.post(url);
       // get return data
@@ -161,6 +163,44 @@ class PostRequest {
       }
     } catch (e) {
       print('Got error in Add post: $e');
+      return Post();
+    }
+  }
+
+  /*
+   * @desc API cập nhật bài viết (hiện tại chỉ cho nhập nội dung)
+   * @date 30/1/2023 
+   */
+  static Future editPost(
+    String token,
+    String postID,
+    String described,
+  ) async {
+    try {
+      // init query params
+      final queryParameters = {
+        'token': token,
+        'id': postID,
+        'described': described,
+      };
+      // get url
+      url = Uri.https(
+          subdomain, '$subdirectoryHead/delete_post', queryParameters);
+      // get response
+      final res = await http.post(url);
+      // get return data
+      final resBody = jsonDecode(res.body);
+      // check and return
+      if (resBody['code'] == '1000') {
+        /**
+         * Thành công: { "id": "63dd1dcedad1370034cd5d69","url": null }
+         */
+        return resBody['data'];
+      } else {
+        throw Exception(resBody['message']);
+      }
+    } catch (e) {
+      print('Got error in Edit post: $e');
       return Post();
     }
   }
