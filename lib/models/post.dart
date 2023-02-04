@@ -35,7 +35,7 @@ class Post {
     // PostImage
     if (json['image'] != null) {
       image = <PostImage>[];
-      json['PostImage'].forEach((v) {
+      json['image'].forEach((v) {
         image!.add(new PostImage.fromJson(v));
       });
     }
