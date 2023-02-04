@@ -132,9 +132,11 @@ class _LoginAnotherAccountState extends State<LoginAnotherAccount> {
                                       // Cập nhật storage
                                       final prefs =
                                           await SharedPreferences.getInstance();
-                                      // lưu userID và token
+                                      // lưu userID, username và token
                                       await prefs.setString(
                                           'userID', res['data']['id']);
+                                      await prefs.setString(
+                                          'username', res['data']['username']);
                                       await prefs.setString(
                                           'token', res['data']['token']);
                                       // Direct to next page
