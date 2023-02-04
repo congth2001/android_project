@@ -92,8 +92,8 @@ class _PasswordPageState extends State<PasswordPage> {
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Text(
                     isValid
-                        ? "Create a password with at least 6 characters. It should be something others couldn't guess."
-                        : 'Your password must have at least 6 letters, numbers and symbols (like ! and %).',
+                        ? "Create a password with at 6-10 characters. It should be something others couldn't guess."
+                        : 'Your password must have at 6-10 letters, numbers.',
                     style: TextStyle(
                         color: isValid ? Colors.black : Colors.red,
                         fontSize: FontSize.contentSize),
