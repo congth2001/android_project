@@ -21,7 +21,7 @@ class _PostWidgetState extends State<PostWidget> {
   Post postObj = Post();
   String postImg = "";
   String postID = "";
-  var isLiked;
+  bool isLiked = false;
 
   @override
   void initState() {
@@ -34,8 +34,7 @@ class _PostWidgetState extends State<PostWidget> {
           : "https://firebasestorage.googleapis.com/v0/b/social-network-app-19cd7.appspot.com/o/images%2Frn_image_picker_lib_temp_19d714d4-09ee-45a2-a1b0-c44329bcd180.jpg?alt=media&token=2ed540ab-1944-4061-b5d6-4f3ee8b598f8";
       // Set up the id of post
       postID = postObj.id.toString();
-      // init isLiked
-      isLiked = postObj.isLiked;
+      isLiked = postObj.isLiked == '0' ? false : true;
     });
   }
 
@@ -282,8 +281,9 @@ class _PostWidgetState extends State<PostWidget> {
           SizedBox(height: 20.0),
           // Hiển thị nội dung bài viết
           Align(
-            alignment: Alignment.centerLeft,
-            child: Text(postObj.described.toString(), style: TextStyle(fontSize: 15.0))),
+              alignment: Alignment.centerLeft,
+              child: Text(postObj.described.toString(),
+                  style: TextStyle(fontSize: 15.0))),
           // Hiển thị ảnh của bài viết
           Container(
               padding: EdgeInsets.only(top: 10), child: Image.network(postImg)),
@@ -325,41 +325,28 @@ class _PostWidgetState extends State<PostWidget> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
-                width: MediaQuery.of(context).size.width / 3 - 30,
-                height: 45,
-                child: (LikeButton(
-                  size: 60.0,
-                  circleColor: const CircleColor(
-                      start: Color(0xff00ddff), end: Color(0xff0099cc)),
-                  bubblesColor: const BubblesColor(
-                    dotPrimaryColor: Color(0xff33b5e5),
-                    dotSecondaryColor: Color(0xff0099cc),
-                  ),
-                  likeBuilder: (isLiked) {
-                    print('clicked like');
-                    return isLiked
-                        ? Row(
-                            children: [
-                              Icon(Icons.thumb_up,
-                                  color: Colors.blue[700], size: 20.0),
-                              Text('  Like',
-                                  style: TextStyle(
-                                      fontSize: 14.0,
-                                      fontWeight: FontWeight.w400,
-                                      color: Colors.blue[700]))
-                            ],
-                          )
-                        : Row(children: const [
-                            Icon(Icons.thumb_up_outlined,
-                                color: Colors.black54, size: 20.0),
-                            Text('  Like',
-                                style: TextStyle(
-                                    fontSize: 14.0,
-                                    fontWeight: FontWeight.w400))
-                          ]);
-                  },
-                )),
-              ),
+                  width: MediaQuery.of(context).size.width / 3 - 30,
+                  height: 45,
+                  child: InkWell(
+                    onTap: () {
+                      setState(() {
+                        isLiked = !isLiked;
+                      });
+                      print(postObj.id);
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.thumb_up,
+                            color: !isLiked ? Colors.black54 : Colors.blue,
+                            size: 20.0),
+                        SizedBox(width: 5),
+                        Text('Like',
+                            style: TextStyle(
+                                fontSize: 14.0, fontWeight: FontWeight.w400))
+                      ],
+                    ),
+                  )),
               Container(
                   width: MediaQuery.of(context).size.width / 3,
                   height: 45,
