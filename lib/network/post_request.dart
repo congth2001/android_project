@@ -105,15 +105,17 @@ class PostRequest {
    * @desc API xóa bài viết
    * @date 30/1/2023 
    */
-  static Future deletePost(String id) async {
+  static Future deletePost(String id, String token) async {
     try {
       // init query params
       final queryParameters = {
         'id': id,
+        'token': token,
       };
       // get url
       url = Uri.https(
           subdomain, '$subdirectoryHead/delete_post', queryParameters);
+      print(url);
       // get response
       final res = await http.post(url);
       // get return data
