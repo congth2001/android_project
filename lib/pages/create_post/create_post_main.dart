@@ -7,6 +7,7 @@ import 'package:photo_picker_initial/network/user_request.dart';
 import 'package:photo_picker_initial/pages/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:photo_picker_initial/pages/profile_page.dart';
 import '../../shared/font_size.dart';
 import 'feelings_activities_main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -132,11 +133,7 @@ class _CreatePostMainState extends State<CreatePostMain> {
               icon: const Icon(Icons.arrow_back, color: Colors.black, size: 20),
               onPressed: () {
                 if (isDisabled)
-                  Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(
-                          builder: (BuildContext context) => HomePage()),
-                      (route) => false);
+                  Navigator.pop(context);
                 else {
                   showModalBottomSheet(
                       context: context,
@@ -164,13 +161,8 @@ class _CreatePostMainState extends State<CreatePostMain> {
                                     InkWell(
                                       hoverColor: Colors.white,
                                       onTap: () {
-                                        Navigator.pushAndRemoveUntil(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder:
-                                                    (BuildContext context) =>
-                                                        HomePage()),
-                                            (route) => false);
+                                        Navigator.pop(context);
+                                        Navigator.pop(context);
                                       },
                                       child: Row(
                                         crossAxisAlignment:
@@ -203,13 +195,8 @@ class _CreatePostMainState extends State<CreatePostMain> {
                                     InkWell(
                                       hoverColor: Colors.white,
                                       onTap: () {
-                                        Navigator.pushAndRemoveUntil(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder:
-                                                    (BuildContext context) =>
-                                                        HomePage()),
-                                            (route) => false);
+                                        Navigator.pop(context);
+                                        Navigator.pop(context);
                                       },
                                       child: Row(
                                         crossAxisAlignment:
@@ -289,10 +276,7 @@ class _CreatePostMainState extends State<CreatePostMain> {
                         String described = contentController.text;
                         // Call API
                         print(described);
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => HomePage()));
+                        Navigator.pop(context);
                       }
                     },
                     child: Text('DONE',
