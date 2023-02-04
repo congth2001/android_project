@@ -36,6 +36,19 @@ class _PostWidgetState extends State<PostWidget> {
       // Set up the id of post
       postID = postObj.id.toString();
     });
+    getData();
+  }
+
+  var userID = "";
+  getData() async {
+    try {
+      // Gọi đến storage
+      final prefs = await SharedPreferences.getInstance();
+      // Cập nhật dữ liệu
+      userID = prefs.getString('userID').toString();
+    } catch (e) {
+      print('Exception in login_page: $e');
+    }
   }
 
   final now = DateTime.now();
@@ -67,7 +80,7 @@ class _PostWidgetState extends State<PostWidget> {
               Spacer(),
               IconButton(
                   onPressed: () {
-                    if (postObj.author == 'Sam Wilson') {
+                    if (postObj.author!.id.toString() == userID) {
                       showModalBottomSheet(
                           context: context,
                           builder: (BuilderContext) {
