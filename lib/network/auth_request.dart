@@ -8,7 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../models/user.dart';
 
 class AuthRequest {
-  static const String subdomain = 'facebookhust.onrender.com';
+  static const String subdomain = 'facebook-8qes.onrender.com';
   static const String subdirectoryHead = "/it4788/auth";
   // url of api
   static var url = Uri();
