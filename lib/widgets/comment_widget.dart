@@ -11,6 +11,9 @@ import '../models/comment.dart';
 class CommentPage extends StatefulWidget {
   const CommentPage({Key? key}) : super(key: key);
 
+  String postID;
+  CommentPage({required this.postID});
+
   @override
   State<CommentPage> createState() => _CommentPageState();
 }

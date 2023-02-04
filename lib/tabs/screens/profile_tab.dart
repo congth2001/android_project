@@ -42,11 +42,9 @@ class _ProfileTabState extends State<ProfileTab> {
     String userID = prefs.getString('userID').toString();
     // Gọi API lấy thông tin người dùng
     UserRequest.getUserByID(userID).then((data) {
-      if (data['code'] == '1000') {
-        setState(() {
-          user = data['data'];
-        });
-      }
+      setState(() {
+        user = data;
+      });
     });
   }
 

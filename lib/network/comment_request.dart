@@ -54,4 +54,46 @@ class CommentRequest {
       print(e.toString());
     }
   }
+
+  /*
+   * @desc API tạo comment
+   * @return comment mới được tạo
+   * @date 30/1/2023 
+   */
+  static Future getCommentList(String postID,
+      [String? index = '0', String? count = "100"]) async {
+    try {
+      final queryParameters = {
+        'id': postID,
+        'index': index,
+        'count': count,
+      };
+      // get url
+      url = Uri.https(
+          subdomain, '$subdirectoryHead/get_comment', queryParameters);
+      // get response
+      final res = await http.post(url);
+      // get return data
+      final resBody = jsonDecode(res.body);
+      if (resBody['code'] == '1000') {
+        /**
+         * --------------- VÍ DỤ ---------------
+         * [{
+            "id": "63dd27eedad1370034cd5d8b",
+            "comment": "xịn xò",
+            "created": "1675438062",
+            "poster": {
+                "id": "63dbe5a48d86cf00345b501f",
+                "name": "null",
+                "avatar": null
+            },
+            "is_blocked": "0"
+        }]
+         */
+        return resBody['data'];
+      }
+    } catch (e) {
+      print(e.toString());
+    }
+  }
 }
