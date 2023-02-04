@@ -198,7 +198,7 @@ class PostRequest {
         throw Exception(resBody['message']);
       }
     } catch (e) {
-      print('Got error in Add post: $e');
+      print('Got error in Edit post: $e');
       return Post();
     }
   }
