@@ -144,7 +144,7 @@ class _ChatViewState extends State<ChatView> {
                               ),
                             ]),
                             SizedBox(height: 3),
-                            Text(user.name.toString(),
+                            Text(user.username.toString(),
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                     color: Colors.black, fontSize: 12))
@@ -197,7 +197,7 @@ class _ChatViewState extends State<ChatView> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(user.name.toString(),
+                            Text(user.username.toString(),
                                 style: TextStyle(
                                     color: Colors.black,
                                     fontSize: FontSize.contentSize)),

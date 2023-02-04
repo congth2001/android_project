@@ -39,17 +39,21 @@ class PostRequest {
    * @desc API danh sách bài viết
    * @date 30/1/2023 
    */
-  static Future<List<Post>> getAllPosts() async {
+  static Future<List<Post>> getAllPosts(
+      [String? index = '0',
+      String? count = "100",
+      String? last_id = "0"]) async {
     try {
       // init query params
       final queryParameters = {
-        'index': 0,
-        'count': 100,
-        'last_id': 0,
+        'index': index,
+        'count': count,
+        'last_id': last_id,
       };
       // get url
       url = Uri.https(
           subdomain, '$subdirectoryHead/get_list_posts', queryParameters);
+      print(url);
       // get response
       final res = await http.post(url);
       // get return data
@@ -57,12 +61,13 @@ class PostRequest {
       // check and return
       if (resBody['code'] == '1000') {
         // Trả về danh sách bản ghi
-        return compute(parsePostList, resBody['data'] as List<dynamic>);
+        return compute(
+            parsePostList, resBody['data']['posts'] as List<dynamic>);
       } else {
         throw Exception(resBody['message']);
       }
     } catch (e) {
-      print('Got error in Get list of post: $e');
+      print('Got error in Get All Posts: $e');
       return List<Post>.empty();
     }
   }

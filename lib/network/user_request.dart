@@ -37,27 +37,6 @@ class UserRequest {
   }
 
   /*
-   * @desc API Lấy danh sách tất cả người dùng
-   * @date 30/1/2023 
-   */
-  static Future<List<User>> getAllUser() async {
-    // get url
-    url = Uri.https(subdomain, 'api/v1/users/getAllUsers');
-    // get response
-    final res = await http.get(url);
-    // get return data
-    final data = jsonDecode(res.body);
-    // check and return
-    if (res.statusCode == 200) {
-      return compute(parseUserList, data['data'] as List<dynamic>);
-    } else if (res.statusCode == 404) {
-      throw Exception('Not Found');
-    } else {
-      throw Exception('Can\'t get users');
-    }
-  }
-
-  /*
    * @desc API lấy thông tin người dùng theo ID
    * @date 30/1/2023 
    */
@@ -69,14 +48,18 @@ class UserRequest {
       // get url
       url = Uri.https(
           subdomain, '$subdirectoryHead/get_user_info', queryParameters);
+      print(url);
       // get response
       final res = await http.post(url);
       // get return data
       final resBody = jsonDecode(res.body);
-      // return promise
-      return resBody;
+      if (resBody['code'] == '1000') {
+        return compute(parseUser, resBody['data'] as dynamic);
+      } else {
+        throw Exception('Exception in get user by id: $resBody');
+      }
     } catch (e) {
-      print(e.toString());
+      print('Got error in get user by id: $e');
     }
   }
 

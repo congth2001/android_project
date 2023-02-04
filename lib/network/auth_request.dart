@@ -174,7 +174,6 @@ class AuthRequest {
       final resBody = jsonDecode(res.body);
       // update username
       if (resBody['code'] == '1000') {
-        print(resBody);
         if (resBody['data']['username'] == null) {
           String token = resBody['data']['token'];
           // Call API
@@ -183,7 +182,7 @@ class AuthRequest {
       }
       return resBody;
     } catch (e) {
-      print(e.toString());
+      print('Got error in login: $e');
     }
   }
 }

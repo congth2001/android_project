@@ -89,7 +89,7 @@ class _MessageRequestsState extends State<MessageRequests> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(user.name.toString(),
+                        Text(user.username.toString(),
                             style: TextStyle(
                                 color: Colors.black,
                                 fontSize: FontSize.contentSize)),

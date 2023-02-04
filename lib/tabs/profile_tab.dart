@@ -83,7 +83,7 @@ class _ProfileTabState extends State<ProfileTab> {
                     const SizedBox(height: 10.0),
                     Padding(
                       padding: EdgeInsets.only(left: 5),
-                      child: Text(user.name.toString(),
+                      child: Text(user.username.toString(),
                           style: TextStyle(
                               fontSize: 22.0, fontWeight: FontWeight.bold)),
                     ),

@@ -28,18 +28,17 @@ class _HomePageState extends State<HomePage>
   }
 
   getData() async {
-    // Obtain shared preferences.
-    final prefs = await SharedPreferences.getInstance();
-    final userID = prefs.getString('userID').toString();
-    // Cập nhật username
-    UserRequest.getUserByID(userID).then((data) async {
-      if (data['code'] == '1000') {
-        await prefs.setString('username', data['data']['username']);
-      } else {
-        // Xử lý lỗi ở đây
-        print(data['details']);
-      }
-    });
+    try {
+      // Obtain shared preferences.
+      final prefs = await SharedPreferences.getInstance();
+      final userID = prefs.getString('userID').toString();
+      // Cập nhật username
+      UserRequest.getUserByID(userID).then((data) async {
+        await prefs.setString('username', data['username']);
+      });
+    } catch (e) {
+      print('Exception in home_page: $e');
+    }
   }
 
   @override

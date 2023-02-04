@@ -10,7 +10,6 @@ class FriendSuggestionPage extends StatefulWidget {
 
 class _FriendSuggestionPage extends State<FriendSuggestionPage>
     with SingleTickerProviderStateMixin {
-  List<User> users = List<User>.empty();
   @override
   void initState() {
     super.initState();
@@ -61,7 +60,7 @@ class _FriendSuggestionPage extends State<FriendSuggestionPage>
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Text(users[0].name.toString(),
+                          Text("Neil Son",
                               style: TextStyle(
                                   fontSize: 16.0, fontWeight: FontWeight.bold)),
                           SizedBox(height: 15.0),
@@ -113,7 +112,7 @@ class _FriendSuggestionPage extends State<FriendSuggestionPage>
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Text(users[1].name.toString(),
+                          Text("Lucas",
                               style: TextStyle(
                                   fontSize: 16.0, fontWeight: FontWeight.bold)),
                           SizedBox(height: 15.0),
@@ -165,7 +164,7 @@ class _FriendSuggestionPage extends State<FriendSuggestionPage>
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Text(users[2].name.toString(),
+                          Text("Tiger",
                               style: TextStyle(
                                   fontSize: 16.0, fontWeight: FontWeight.bold)),
                           SizedBox(height: 15.0),
