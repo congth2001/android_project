@@ -22,9 +22,9 @@ class LoginPageState extends State<LoginPage> {
   final passwordController = TextEditingController();
   bool noVisible = true;
   bool showText = false;
-  var user = User();
-  var phoneNumber = "";
-  var username = "";
+  String avatar = ""; // avatar for showing
+  String username = ""; // username for showing
+  var phoneNumber = ""; // input login api
 
   @override
   void dispose() {
@@ -43,17 +43,10 @@ class LoginPageState extends State<LoginPage> {
     try {
       // Gọi đến storage
       final prefs = await SharedPreferences.getInstance();
+      // Cập nhật dữ liệu
       phoneNumber = prefs.getString('phoneNumber').toString();
-      String userID = prefs.getString('userID').toString();
-      setState(() {
-        username = prefs.getString('username').toString();
-      });
-      // Gọi API lấy thông tin người dùng
-      UserRequest.getUserByID(userID).then((data) {
-        setState(() {
-          user = data;
-        });
-      });
+      avatar = prefs.getString('avatar').toString();
+      username = prefs.getString('username').toString();
     } catch (e) {
       print('Exception in login_page: $e');
     }
@@ -73,13 +66,13 @@ class LoginPageState extends State<LoginPage> {
             children: [
               Center(
                 child: CircleAvatar(
-                  backgroundImage: NetworkImage(user.avatar.toString()),
+                  backgroundImage: NetworkImage(avatar),
                   radius: 35,
                 ),
               ),
               SizedBox(height: 15),
               Text(
-                user.username.toString(),
+                username,
                 style: TextStyle(fontSize: FontSize.titleSize),
               ),
               SizedBox(height: 20),
@@ -150,7 +143,7 @@ class LoginPageState extends State<LoginPage> {
                 child: ElevatedButton(
                     onPressed: () {
                       var password = passwordController.text + "";
-                      AuthRequest.login(username, phoneNumber, password)
+                      AuthRequest.login("username", phoneNumber, password)
                           .then((result) async {
                         // print(result.statusCode);
                         // Direct to next page

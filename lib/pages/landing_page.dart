@@ -30,20 +30,25 @@ class _LandingPageState extends State<LandingPage> {
   }
 
   getData() async {
-    // Obtain shared preferences.
-    final prefs = await SharedPreferences.getInstance();
-    String? token = prefs.getString('token');
-    // Set showAccount
-    if (token == null) {
-      setState(() {
-        showAccount = false;
-      });
-    } else {
-      // update username
-      setState(() {
-        username = prefs.getString('username').toString();
-        avatar = prefs.getString('avatar').toString();
-      });
+    try {
+      // Obtain shared preferences.
+      final prefs = await SharedPreferences.getInstance();
+      String? token = prefs.getString('token');
+      print('token in langing page: $token');
+      // Set showAccount
+      if (token == null) {
+        setState(() {
+          showAccount = false;
+        });
+      } else {
+        // update username
+        setState(() {
+          username = prefs.getString('username').toString();
+          avatar = prefs.getString('avatar').toString();
+        });
+      }
+    } catch (e) {
+      print('Exception in landing page: $e');
     }
   }
 
@@ -84,7 +89,7 @@ class _LandingPageState extends State<LandingPage> {
                                       backgroundImage: NetworkImage(avatar),
                                       radius: 25,
                                     )),
-                                Text(username.toString(),
+                                Text(username,
                                     style: TextStyle(
                                         fontSize: FontSize.titleSize,
                                         color: Colors.black))
