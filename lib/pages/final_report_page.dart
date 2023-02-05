@@ -11,6 +11,13 @@ class FinalReportPage extends StatefulWidget {
 class _FinalReportPage extends State<FinalReportPage> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
+    Future<File?> _cropImage({required File imageFile}) async {
+    CroppedFile? croppedImage =
+        await ImageCropper().cropImage(sourcePath: imageFile.path);
+    if (croppedImage == null) return null;
+    return File(croppedImage.path);
+  }
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
