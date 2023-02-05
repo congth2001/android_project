@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -10,7 +11,21 @@ import '../models/user.dart';
 class FriendRequest {
   // Hằng số
   static const String subdomain = 'facebook-8qes.onrender.com';
-  static const String subdirectoryHead = "/it4788/friend";
+  static const String subdirectoryHead = "/it4788/post";
+  // url of api
+  static var url = Uri();
+
+  // get records list
+  static List<FetchRequest> parsePostList(List<dynamic> data) {
+    try {
+      List<FetchRequest> Posts = data.map((model) => FetchRequest.fromJson(model)).toList();
+      return Posts;
+    } catch (e) {
+      print(e.toString());
+    }
+    return List<FetchRequest>.empty();
+  }
+ 
   // url of
   static var url;
 
