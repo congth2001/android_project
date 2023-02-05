@@ -15,6 +15,7 @@ class ProfileTab extends StatefulWidget {
 
 class _ProfileTabState extends State<ProfileTab> {
   var user = User();
+  bool isLoading = true;
   @override
   void initState() {
     // TODO: implement initState
@@ -31,6 +32,7 @@ class _ProfileTabState extends State<ProfileTab> {
       if (data['code'] == '1000') {
         setState(() {
           user = data['data'];
+          isLoading = false;
         });
       }
     });
@@ -47,7 +49,7 @@ class _ProfileTabState extends State<ProfileTab> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
+    return !isLoading ? SingleChildScrollView(
         child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -468,6 +470,6 @@ class _ProfileTabState extends State<ProfileTab> {
         ),
         SeparatorWidget(),
       ],
-    ));
+    )) : Center(child: CircularProgressIndicator());
   }
 }

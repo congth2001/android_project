@@ -301,15 +301,24 @@ class _CreatePostMainState extends State<CreatePostMain> {
               SizedBox(height: 10),
               Row(
                 children: [
-                  Container(
-                    height: 40,
-                    width: 40,
-                    margin: const EdgeInsets.only(left: 8),
-                    decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        image: DecorationImage(
-                            fit: BoxFit.cover,
-                            image: NetworkImage(user.avatar.toString()))),
+                  InkWell(
+                    hoverColor: Colors.white,
+                    onTap: (){
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context)=>ProfilePage(userID: user.id))
+                      );
+                    },
+                    child: Container(
+                      height: 40,
+                      width: 40,
+                      margin: const EdgeInsets.only(left: 8),
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image: NetworkImage(user.avatar.toString()))),
+                    ),
                   ),
                   SizedBox(width: 5),
                   Column(

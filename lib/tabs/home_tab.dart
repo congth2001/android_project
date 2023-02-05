@@ -14,6 +14,7 @@ class HomeTab extends StatefulWidget {
 
 class _HomeTabState extends State<HomeTab> {
   List<Post> posts = List<Post>.empty();
+  bool isLoading = true;
 
   @override
   void initState() {
@@ -22,13 +23,14 @@ class _HomeTabState extends State<HomeTab> {
     PostRequest.getAllPosts().then((postList) {
       setState(() {
         posts = postList;
+        isLoading = false;
       });
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
+    return !isLoading ? SingleChildScrollView(
       child: Column(
         children: [
           WriteSomethingWidget(),
@@ -44,6 +46,6 @@ class _HomeTabState extends State<HomeTab> {
           SeparatorWidget(),
         ],
       ),
-    );
+    ) : Center(child: CircularProgressIndicator());
   }
 }
