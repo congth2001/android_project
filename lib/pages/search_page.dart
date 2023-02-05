@@ -67,7 +67,7 @@ class _SearchPage extends State<SearchPage>
                           )
                         ],
                       ),
-                      FriendListWidget(),
+                      // FriendWidget(),
                     ]))));
   }
 }

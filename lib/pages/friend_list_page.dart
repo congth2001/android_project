@@ -1,5 +1,9 @@
+// import 'dart:html';
+
 import 'package:photo_picker_initial/widgets/friend_list_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:photo_picker_initial/network/friend_request.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class FriendListPage extends StatefulWidget {
   @override
@@ -8,6 +12,42 @@ class FriendListPage extends StatefulWidget {
 
 class _FriendListPage extends State<FriendListPage>
     with SingleTickerProviderStateMixin {
+//  List<User> friendList = List<User>.empty();
+  var friendList = [];
+  var userID = "";
+  var token = "";
+  String total = "";
+  @override
+  void initState() {
+    super.initState();
+    // setState(() {
+    //   postObj = widget.post;
+    //   numberOfLikes = postObj.like.toString();
+    // });
+    getData();
+  }
+
+  getData() async {
+    try {
+      // Gọi đến storage
+      final prefs = await SharedPreferences.getInstance();
+      // Cập nhật dữ liệu
+      userID = prefs.getString('userID').toString();
+      token = prefs.getString('token').toString();
+      FriendRequest.getUserFriendList(token, userID).then((data) {
+        setState(() {
+          // print(data);
+          friendList = data['friends'];
+          total = data['total'];
+          print(friendList);
+          print(total);
+        });
+      });
+    } catch (e) {
+      print('Exception in login_page: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,7 +99,7 @@ class _FriendListPage extends State<FriendListPage>
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
-                          Text('100 friends',
+                          Text(total.toString() + " friends",
                               style: TextStyle(
                                   fontSize: 19.0, fontWeight: FontWeight.bold)),
                           Container(
@@ -74,7 +114,14 @@ class _FriendListPage extends State<FriendListPage>
                           )
                         ],
                       ),
-                      FriendListWidget(),
+
+                      // FriendWidget(friendList: friendList),
+                      for (var friendObj in friendList)
+                        Column(
+                          children: <Widget>[
+                            FriendWidget(friendObj: friendObj),
+                          ],
+                        ),
                     ]))));
   }
 }
