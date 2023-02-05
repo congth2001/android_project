@@ -55,24 +55,40 @@ class _changePasswordState extends State<changePassword> {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
-        body: SingleChildScrollView(
+      appBar: AppBar(
+        backgroundColor: Colors.grey[100],
+        elevation: 0,
+        leading: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.grey[100], // background
+              foregroundColor: Colors.black,
+              elevation: 0,
+              shape: const CircleBorder(),
+            ),
+            child: const Icon(Icons.arrow_back, color: Colors.black, size: 30),
+            onPressed: () => {Navigator.pop(context)},
+          ),
+      ),
+      body: SingleChildScrollView(
       child: Container(
-        color: Colors.white,
+        padding: EdgeInsets.only(left: 15),
+        color: Colors.grey[100],
         child: Column(
           children: [
-            SizedBox(
-                height: height / 4,
-                width: width,
-                child: Image(
-                  image: AssetImage("assets/login_another_account.jpg"),
-                  fit: BoxFit.cover,
-                )),
+            // SizedBox(
+            //     height: height / 4,
+            //     width: width,
+            //     child: Image(
+            //       image: AssetImage("assets/login_another_account.jpg"),
+            //       fit: BoxFit.cover,
+            //     )),
+            Text('Change password', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 24)),
             SizedBox(
               height: 20,
             ),
             Text(
-              'Tiếng việt * English * More.....',
-              style: TextStyle(fontSize: 12),
+              'Your password must be at least 6 characters and should include a combination of numbers and letters',
+              style: TextStyle(fontSize: 15),
             ),
             SizedBox(height: 20),
             Padding(
