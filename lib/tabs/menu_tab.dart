@@ -1,4 +1,5 @@
 import 'package:photo_picker_initial/network/user_request.dart';
+import 'package:photo_picker_initial/pages/Setting/changePassword/changePasword.dart';
 import 'package:photo_picker_initial/pages/landing_page.dart';
 import 'package:flutter/material.dart';
 
@@ -62,7 +63,47 @@ class _MenuTabState extends State<MenuTab> {
                     color: Colors.grey[300],
                     shape: const CircleBorder(),
                     child: const Icon(Icons.settings, color: Colors.black87),
-                    onPressed: () {},
+                    onPressed: () {
+                      showModalBottomSheet(
+                          context: context,
+                          builder: (BuilderContext) {
+                            return SizedBox(
+                                height: 70,
+                                child: Container(
+                                    padding: const EdgeInsets.all(8),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        InkWell(
+                                          hoverColor: Colors.white,
+                                          onTap: () {
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(builder: (context)=>changePassword())
+                                            );
+                                          },
+                                          child: Row(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              Icon(Icons.build,
+                                                  color: Colors.black),
+                                              SizedBox(width: 10),
+                                              Text('Change password',
+                                                  style: TextStyle(
+                                                    fontSize: 14,
+                                                    color: Colors.black,
+                                                  )),
+                                            ],
+                                          ),
+                                        ),
+                                        SizedBox(height: 10)
+                                      ],
+                                    )));
+                          });
+                    
+                    },
                   ),
                   MaterialButton(
                     elevation: 0,
