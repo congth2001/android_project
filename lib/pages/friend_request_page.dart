@@ -80,7 +80,7 @@ class _FriendRequestPage extends State<FriendRequestPage>
                         children: <Widget>[
                           Text('Friend Requests',
                               style: TextStyle(
-                                  fontSize: 19.0, fontWeight: FontWeight.bold)),
+                                  fontSize: 18.0, fontWeight: FontWeight.bold)),
                           SizedBox(width: 10.0),
                           Text(total,
                               style: TextStyle(
