@@ -1,368 +1,236 @@
+// ignore_for_file: prefer_const_constructors
+
+import 'package:photo_picker_initial/pages/landing_page.dart';
 import 'package:flutter/material.dart';
+import '../../shared/font_size.dart';
+import 'login_page.dart';
 
-import '../models/user.dart';
-import '../network/auth_request.dart';
+class FindAccountPage extends StatefulWidget {
+  const FindAccountPage({Key? key}) : super(key: key);
 
-class FriendSuggestionPage extends StatefulWidget {
   @override
-  _FriendSuggestionPage createState() => _FriendSuggestionPage();
+  State<FindAccountPage> createState() => _FindAccountPageState();
 }
 
-class _FriendSuggestionPage extends State<FriendSuggestionPage>
-    with SingleTickerProviderStateMixin {
+class _FindAccountPageState extends State<FindAccountPage> {
+  String type = "Phone";
+  final inputController = TextEditingController();
+  bool isValid = true;
+  bool isFound = false;
+
   @override
-  void initState() {
-    super.initState();
+  void dispose() {
+    inputController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Suggestion',
-              style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 17,
-                  fontWeight: FontWeight.w400)),
-          leading: ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.white, // background
-              foregroundColor: Colors.black,
-              elevation: 0,
-              shape: const CircleBorder(),
-            ),
-            child: const Icon(Icons.arrow_back, color: Colors.black, size: 30),
-            onPressed: () => {Navigator.pop(context)},
-          ),
-          backgroundColor: Colors.white,
-          elevation: 0.5,
-        ),
+            toolbarHeight: 40,
+            leading: IconButton(
+                icon: Icon(Icons.arrow_back, color: Colors.black, size: 20),
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => LandingPage()));
+                }),
+            backgroundColor: Colors.white,
+            title: Text('Find your account',
+                style: TextStyle(
+                    color: Colors.black, fontSize: FontSize.titleSize))),
         body: SingleChildScrollView(
-          child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 15.0),
-              color: Colors.white,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text('People You May Know',
-                      style: TextStyle(
-                          fontSize: 19.0, fontWeight: FontWeight.bold)),
-                  SizedBox(height: 15.0),
-                  Row(
-                    children: <Widget>[
-                      CircleAvatar(
-                        backgroundImage: AssetImage('assets/mathew.jpg'),
-                        radius: 40.0,
-                      ),
-                      SizedBox(width: 20.0),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text("Neil Son",
-                              style: TextStyle(
-                                  fontSize: 16.0, fontWeight: FontWeight.bold)),
-                          SizedBox(height: 15.0),
-                          Row(
-                            children: <Widget>[
-                              Container(
-                                height: 35,
-                                width: 130,
-                                decoration: BoxDecoration(
-                                    color: Colors.blue[700],
-                                    borderRadius: BorderRadius.circular(5.0)),
-                                child: MaterialButton(
-                                  onPressed: () {},
-                                  height: 12,
-                                  child: Text('Add Friend',
-                                      style: TextStyle(
-                                          color: Colors.white, fontSize: 15.0)),
-                                ),
-                              ),
-                              SizedBox(width: 15),
-                              Container(
-                                  height: 35,
-                                  width: 130,
-                                  decoration: BoxDecoration(
-                                      color: Colors.grey[300],
-                                      borderRadius: BorderRadius.circular(5.0)),
-                                  child: MaterialButton(
-                                    onPressed: () {},
-                                    child: Text('Remove',
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 15.0)),
-                                  )),
+            child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+          height: (height - 40),
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  children: [
+                    SizedBox(height: 40),
+                    Center(
+                        child: Text(
+                            !isFound
+                                ? (type == 'Phone'
+                                    ? 'Enter Your Phone Number'
+                                    : 'Enter Your Email')
+                                : 'Enter Your Phone number or Choose Your Account',
+                            style: TextStyle(
+                                fontSize: FontSize.titleSize,
+                                fontWeight: FontWeight.bold))),
+                    SizedBox(height: 10),
+                    TextField(
+                        onChanged: (value) {
+                          if (value.isNotEmpty) {
+                            setState(() {
+                              isValid = true;
+                            });
+                          }
+                        },
+                        controller: inputController,
+                        style: TextStyle(fontSize: FontSize.contentSize),
+                        decoration: InputDecoration(
+                          suffixIcon: IconButton(
+                            icon:
+                                Icon(Icons.clear, color: Colors.grey, size: 16),
+                            onPressed: () {
+                              inputController.clear();
+                              setState(() {
+                                isFound = false;
+                              });
+                            },
+                          ),
+                          labelText: type == 'Phone' ? 'Phone' : 'Email',
+                        )),
+                    SizedBox(height: 10),
+                    !isValid
+                        ? Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                                type == 'Phone'
+                                    ? 'Enter your phone'
+                                    : 'Enter your email',
+                                style:
+                                    TextStyle(fontSize: 12, color: Colors.red)))
+                        : Text(''),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    !isFound
+                        ? SizedBox(
+                            width: double.infinity,
+                            height: 30,
+                            child: ElevatedButton(
+                                onPressed: () {
+                                  if (inputController.text.isEmpty) {
+                                    setState(() {
+                                      isValid = false;
+                                    });
+                                  } else {
+                                    setState(() {
+                                      isFound = true;
+                                    });
+                                    if (!isFound) {
+                                      showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) =>
+                                              AlertDialog(
+                                                  insetPadding:
+                                                      EdgeInsets.symmetric(
+                                                          horizontal: 16),
+                                                  title: Text(
+                                                      'No accounts match that information.',
+                                                      style: TextStyle(
+                                                          fontSize: FontSize
+                                                              .titleSize,
+                                                          fontWeight:
+                                                              FontWeight.bold)),
+                                                  content: Text(
+                                                      "Make sure you've entered the correct phone number or email address.",
+                                                      style: TextStyle(
+                                                          fontSize: FontSize
+                                                              .contentSize,
+                                                          color: Color.fromARGB(
+                                                              255, 88, 88, 88))),
+                                                  actions: [
+                                                    TextButton(
+                                                      child: Text(
+                                                          'SEARCH AGAIN',
+                                                          style: TextStyle(
+                                                              fontSize: FontSize
+                                                                  .contentSize,
+                                                              color: Color
+                                                                  .fromARGB(
+                                                                      255,
+                                                                      10,
+                                                                      90,
+                                                                      156))),
+                                                      onPressed: () {
+                                                        inputController.clear();
+                                                        Navigator.pop(context,
+                                                            'Search again');
+                                                      },
+                                                    ),
+                                                  ]));
+                                    }
+                                  }
+                                },
+                                child: Text(
+                                  'Find Your Account',
+                                  style:
+                                      TextStyle(fontSize: FontSize.contentSize),
+                                )),
+                          )
+                        : Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              TextButton(
+                                  style: TextButton.styleFrom(
+                                      foregroundColor: Colors.white,
+                                      textStyle: TextStyle()),
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => LoginPage()),
+                                    );
+                                  },
+                                  child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Row(children: [
+                                          Container(
+                                              margin: const EdgeInsets.only(
+                                                  right: 20),
+                                              child: CircleAvatar(
+                                                backgroundImage: AssetImage(
+                                                    'assets/andrew.jpg'),
+                                                radius: 25,
+                                              )),
+                                          Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text('Andrew',
+                                                  style: TextStyle(
+                                                      fontSize:
+                                                          FontSize.titleSize,
+                                                      color: Colors.black)),
+                                              Text('Facebook User',
+                                                  style: TextStyle(
+                                                      color: Colors.grey,
+                                                      fontSize: 13))
+                                            ],
+                                          )
+                                        ]),
+                                      ])),
+                              Divider(thickness: 1, color: Colors.grey[400]),
                             ],
                           )
-                        ],
-                      )
-                    ],
-                  ),
-                  SizedBox(height: 20.0),
-                  Row(
-                    children: <Widget>[
-                      CircleAvatar(
-                        backgroundImage: AssetImage('assets/joey.jpg'),
-                        radius: 40.0,
-                      ),
-                      SizedBox(width: 20.0),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text("Lucas",
-                              style: TextStyle(
-                                  fontSize: 16.0, fontWeight: FontWeight.bold)),
-                          SizedBox(height: 15.0),
-                          Row(
-                            children: <Widget>[
-                              Container(
-                                height: 35,
-                                width: 130,
-                                decoration: BoxDecoration(
-                                    color: Colors.blue[700],
-                                    borderRadius: BorderRadius.circular(5.0)),
-                                child: MaterialButton(
-                                  onPressed: () {},
-                                  height: 12,
-                                  child: Text('Add Friend',
-                                      style: TextStyle(
-                                          color: Colors.white, fontSize: 15.0)),
-                                ),
-                              ),
-                              SizedBox(width: 15),
-                              Container(
-                                  height: 35,
-                                  width: 130,
-                                  decoration: BoxDecoration(
-                                      color: Colors.grey[300],
-                                      borderRadius: BorderRadius.circular(5.0)),
-                                  child: MaterialButton(
-                                    onPressed: () {},
-                                    child: Text('Remove',
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 15.0)),
-                                  )),
-                            ],
-                          )
-                        ],
-                      )
-                    ],
-                  ),
-                  SizedBox(height: 20.0),
-                  Row(
-                    children: <Widget>[
-                      CircleAvatar(
-                        backgroundImage: AssetImage('assets/adelle.jpg'),
-                        radius: 40.0,
-                      ),
-                      SizedBox(width: 20.0),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text("Tiger",
-                              style: TextStyle(
-                                  fontSize: 16.0, fontWeight: FontWeight.bold)),
-                          SizedBox(height: 15.0),
-                          Row(
-                            children: <Widget>[
-                              Container(
-                                height: 35,
-                                width: 130,
-                                decoration: BoxDecoration(
-                                    color: Colors.blue[700],
-                                    borderRadius: BorderRadius.circular(5.0)),
-                                child: MaterialButton(
-                                  onPressed: () {},
-                                  height: 12,
-                                  child: Text('Add Friend',
-                                      style: TextStyle(
-                                          color: Colors.white, fontSize: 15.0)),
-                                ),
-                              ),
-                              SizedBox(width: 15),
-                              Container(
-                                  height: 35,
-                                  width: 130,
-                                  decoration: BoxDecoration(
-                                      color: Colors.grey[300],
-                                      borderRadius: BorderRadius.circular(5.0)),
-                                  child: MaterialButton(
-                                    onPressed: () {},
-                                    child: Text('Remove',
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 15.0)),
-                                  )),
-                            ],
-                          )
-                        ],
-                      )
-                    ],
-                  ),
-                  SizedBox(height: 20.0),
-                  Row(
-                    children: <Widget>[
-                      CircleAvatar(
-                        backgroundImage: AssetImage('assets/timothy.jpg'),
-                        radius: 40.0,
-                      ),
-                      SizedBox(width: 20.0),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text('Timothy',
-                              style: TextStyle(
-                                  fontSize: 16.0, fontWeight: FontWeight.bold)),
-                          SizedBox(height: 15.0),
-                          Row(
-                            children: <Widget>[
-                              Container(
-                                height: 35,
-                                width: 130,
-                                decoration: BoxDecoration(
-                                    color: Colors.blue[700],
-                                    borderRadius: BorderRadius.circular(5.0)),
-                                child: MaterialButton(
-                                  onPressed: () {},
-                                  height: 12,
-                                  child: Text('Add Friend',
-                                      style: TextStyle(
-                                          color: Colors.white, fontSize: 15.0)),
-                                ),
-                              ),
-                              SizedBox(width: 15),
-                              Container(
-                                  height: 35,
-                                  width: 130,
-                                  decoration: BoxDecoration(
-                                      color: Colors.grey[300],
-                                      borderRadius: BorderRadius.circular(5.0)),
-                                  child: MaterialButton(
-                                    onPressed: () {},
-                                    child: Text('Remove',
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 15.0)),
-                                  )),
-                            ],
-                          )
-                        ],
-                      )
-                    ],
-                  ),
-                  SizedBox(height: 20.0),
-                  Row(
-                    children: <Widget>[
-                      CircleAvatar(
-                        backgroundImage: AssetImage('assets/jeremy.jpg'),
-                        radius: 40.0,
-                      ),
-                      SizedBox(width: 20.0),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text('Jeremy',
-                              style: TextStyle(
-                                  fontSize: 16.0, fontWeight: FontWeight.bold)),
-                          SizedBox(height: 15.0),
-                          Row(
-                            children: <Widget>[
-                              Container(
-                                height: 35,
-                                width: 130,
-                                decoration: BoxDecoration(
-                                    color: Colors.blue[700],
-                                    borderRadius: BorderRadius.circular(5.0)),
-                                child: MaterialButton(
-                                  onPressed: () {},
-                                  height: 12,
-                                  child: Text('Add Friend',
-                                      style: TextStyle(
-                                          color: Colors.white, fontSize: 15.0)),
-                                ),
-                              ),
-                              SizedBox(width: 15),
-                              Container(
-                                  height: 35,
-                                  width: 130,
-                                  decoration: BoxDecoration(
-                                      color: Colors.grey[300],
-                                      borderRadius: BorderRadius.circular(5.0)),
-                                  child: MaterialButton(
-                                    onPressed: () {},
-                                    child: Text('Remove',
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 15.0)),
-                                  )),
-                            ],
-                          )
-                        ],
-                      )
-                    ],
-                  ),
-                  SizedBox(height: 20.0),
-                  Row(
-                    children: <Widget>[
-                      CircleAvatar(
-                        backgroundImage: AssetImage('assets/tanya.jpg'),
-                        radius: 40.0,
-                      ),
-                      SizedBox(width: 20.0),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text('Tanya',
-                              style: TextStyle(
-                                  fontSize: 16.0, fontWeight: FontWeight.bold)),
-                          SizedBox(height: 15.0),
-                          Row(
-                            children: <Widget>[
-                              Container(
-                                height: 35,
-                                width: 130,
-                                decoration: BoxDecoration(
-                                    color: Colors.blue[700],
-                                    borderRadius: BorderRadius.circular(5.0)),
-                                child: MaterialButton(
-                                  onPressed: () {},
-                                  height: 12,
-                                  child: Text('Add Friend',
-                                      style: TextStyle(
-                                          color: Colors.white, fontSize: 15.0)),
-                                ),
-                              ),
-                              SizedBox(width: 15),
-                              Container(
-                                  height: 35,
-                                  width: 130,
-                                  decoration: BoxDecoration(
-                                      color: Colors.grey[300],
-                                      borderRadius: BorderRadius.circular(5.0)),
-                                  child: MaterialButton(
-                                    onPressed: () {},
-                                    child: Text('Remove',
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 15.0)),
-                                  )),
-                            ],
-                          )
-                        ],
-                      )
-                    ],
-                  ),
-                  SizedBox(height: 20.0)
-                ],
-              )),
-        ));
+                  ],
+                ),
+                if (!isFound)
+                  Center(
+                      child: TextButton(
+                    child: Text(
+                        type == 'Phone'
+                            ? 'Search by your email instead'
+                            : 'Search by your phone instead',
+                        style: TextStyle(
+                            fontSize: FontSize.contentSize,
+                            color: Colors.blue)),
+                    onPressed: () {
+                      setState(() {
+                        type = type == 'Phone' ? 'Email' : 'Phone';
+                      });
+                    },
+                  ))
+              ]),
+        )));
   }
 }
