@@ -41,6 +41,7 @@ class _ProfileTabState extends State<ProfileTab> {
   bool isSendRequestToMe = false;
   List<Post> posts = List<Post>.empty();
   bool isLoading = true;
+  String avatar = "";
   var user = User();
   @override
   void initState() {
@@ -51,6 +52,9 @@ class _ProfileTabState extends State<ProfileTab> {
 
   getData() async {
     final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      avatar = prefs.getString('avatar').toString();
+    });
     String meID = prefs.getString('userID').toString();
     if (widget.userID != null) {
       if (widget.userID == meID) {
@@ -110,8 +114,7 @@ class _ProfileTabState extends State<ProfileTab> {
                                     Radius.circular(100)),
                               ),
                               child: CircleAvatar(
-                                  backgroundImage:
-                                      NetworkImage(user.avatar.toString()),
+                                  backgroundImage: NetworkImage(avatar),
                                   radius: 80)),
                           const SizedBox(height: 10.0),
                           Padding(
