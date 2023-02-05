@@ -2,17 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:photo_picker_initial/network/user_request.dart';
 import 'package:like_button/like_button.dart';
 import 'package:photo_picker_initial/network/comment_request.dart';
 import 'who_like.dart';
 import '../pages/profile_page.dart';
 
+import 'package:shared_preferences/shared_preferences.dart';
 import '../models/comment.dart';
+import 'package:photo_picker_initial/models/post.dart';
 
 class CommentPage extends StatefulWidget {
   // Get data from parent
-  String postID;
-  CommentPage({required this.postID});
+  Post post;
+  CommentPage({required this.post});
 
   @override
   State<CommentPage> createState() => _CommentPageState();
@@ -24,14 +27,39 @@ class _CommentPageState extends State<CommentPage> {
   bool canSend = false;
   List<Comment> commentList = List<Comment>.empty();
 
+  Post postObj = Post();
+  String postImg = "";
+  String postID = "";
+  bool isLiked = false;
+  String numberOfLikes = "0";
+
   @override
   void initState() {
     super.initState();
-    CommentRequest.getCommentList(widget.postID).then((data) {
+    setState(() {
+      postObj = widget.post;
+      numberOfLikes = postObj.like.toString();
+    });
+    CommentRequest.getCommentList(postObj.id.toString()).then((data) {
       setState(() {
         commentList = data;
       });
     });
+    getData();
+  }
+
+  var userID = "";
+  var token = "";
+  getData() async {
+    try {
+      // Gọi đến storage
+      final prefs = await SharedPreferences.getInstance();
+      // Cập nhật dữ liệu
+      userID = prefs.getString('userID').toString();
+      token = prefs.getString('token').toString();
+    } catch (e) {
+      print('Exception in login_page: $e');
+    }
   }
 
   @override
@@ -55,7 +83,7 @@ class _CommentPageState extends State<CommentPage> {
                     children: [
                       Icon(Icons.thumb_up, color: Colors.blue, size: 20),
                       SizedBox(width: 5),
-                      Text('190',
+                      Text(numberOfLikes,
                           style: TextStyle(color: Colors.black, fontSize: 14)),
                       Icon(Icons.keyboard_arrow_right, color: Colors.black)
                     ],
@@ -182,7 +210,16 @@ class _CommentPageState extends State<CommentPage> {
               canSend
                   ? IconButton(
                       icon: Icon(Icons.send, color: Colors.blue, size: 18),
-                      onPressed: () {},
+                      onPressed: () {
+                        var comment = commentController.text + "";
+                        // print(postID);
+                        CommentRequest.addComment(
+                                token, postObj.id.toString(), comment)
+                            .then((result) async {
+                          print(result);
+                          Navigator.pop(context);
+                        });
+                      },
                     )
                   : Icon(Icons.send, color: Colors.grey, size: 18)
             ],

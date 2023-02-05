@@ -5,7 +5,7 @@ import 'package:photo_picker_initial/pages/create_account/create_new_account.dar
 import 'package:photo_picker_initial/shared/font_size.dart';
 import 'package:flutter/material.dart';
 
-import '../home_page.dart';
+import '../../home_page.dart';
 import 'package:photo_picker_initial/network/auth_request.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
