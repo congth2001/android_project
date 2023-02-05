@@ -60,30 +60,7 @@ class _TermsAndPrivacyPageState extends State<TermsAndPrivacyPage> {
           leading: IconButton(
               icon: Icon(Icons.arrow_back, color: Colors.black, size: 20),
               onPressed: () {
-                showDialog(
-                    context: context,
-                    builder: (BuildContext context) => AlertDialog(
-                            insetPadding: EdgeInsets.symmetric(horizontal: 16),
-                            title: Text(
-                                'Do you want to stop creating your account?',
-                                style: TextStyle(
-                                    fontSize: FontSize.titleSize,
-                                    fontWeight: FontWeight.bold)),
-                            content: Text(
-                                "If you stop now, you'll lose any progress you've made.",
-                                style: TextStyle(
-                                    fontSize: FontSize.contentSize,
-                                    color: Color.fromARGB(255, 88, 88, 88))),
-                            actions: [
-                              TextButton(
-                                child: Text('Continue creating account',
-                                    style: TextStyle(
-                                        fontSize: FontSize.contentSize,
-                                        color: Colors.black)),
-                                onPressed: () {
-                                  Navigator.pop(context, 'Cancel');
-                                },
-                              ),
+               
                               TextButton(
                                 child: Text('Stop creating account',
                                     style: TextStyle(
@@ -99,11 +76,7 @@ class _TermsAndPrivacyPageState extends State<TermsAndPrivacyPage> {
                               ),
                             ]));
               }),
-          backgroundColor: Colors.white,
-          title: Text('Terms & Privacy',
-              style: TextStyle(
-                  color: Colors.black, fontSize: FontSize.titleSize))),
-      body: Column(
+          
         children: [
           Expanded(
             child: InAppWebView(
