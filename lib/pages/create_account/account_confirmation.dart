@@ -30,6 +30,8 @@ class _AccountConfirmationPageState extends State<AccountConfirmationPage> {
   String username = "";
   final codeController = TextEditingController();
   bool isLoading = true;
+  String defaultAvatar =
+      "https://friconix.com/png/fi-cnsuxx-user-circle-solid.png";
 
   @override
   void initState() {
@@ -39,7 +41,7 @@ class _AccountConfirmationPageState extends State<AccountConfirmationPage> {
   }
 
   getData() async {
-    // Obtain shared preferences.
+    // Biến toàn cục
     final prefs = await SharedPreferences.getInstance();
     setState(() {
       phoneNumber = prefs.getString('phoneNumber').toString();
@@ -47,6 +49,17 @@ class _AccountConfirmationPageState extends State<AccountConfirmationPage> {
       username = prefs.getString('username').toString();
       isLoading = false;
     });
+  }
+
+  setData(var avatar, String token, String userID) async {
+    // Biến toàn cục
+    final prefs = await SharedPreferences.getInstance();
+    String tmpAvatar = avatar == null ? defaultAvatar : avatar;
+    print('Im in account_confirm $tmpAvatar');
+    // Cập nhật storage
+    await prefs.setString('avatar', tmpAvatar);
+    await prefs.setString('token', token);
+    await prefs.setString('userID', userID);
   }
 
   @override
@@ -121,6 +134,10 @@ class _AccountConfirmationPageState extends State<AccountConfirmationPage> {
                               AuthRequest.login(phoneNumber, password)
                                   .then((data) {
                                 if (data['code'] == '1000') {
+                                  var user = data['data'];
+                                  // Cập nhật storage
+                                  setData(user['avatar'], user['token'],
+                                      user['id']);
                                   // Cập nhật tên người dùng
                                   AuthRequest.changeUsername(
                                           data['data']['token'], username)
@@ -165,7 +182,7 @@ class _AccountConfirmationPageState extends State<AccountConfirmationPage> {
                                                               MaterialPageRoute(
                                                                   builder:
                                                                       (context) =>
-                                                                          LoginAnotherAccount()),
+                                                                          HomePage()),
                                                               (route) => false);
                                                         },
                                                       ),
@@ -307,6 +324,8 @@ class _AccountConfirmationPageState extends State<AccountConfirmationPage> {
                                             )
                                           ]));
                             }
+                          }).catchError((e) {
+                            print('Exception in account_confirmation: $e');
                           });
                         },
                       )),
