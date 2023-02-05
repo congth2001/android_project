@@ -14,7 +14,7 @@ class _FriendRequestPage extends State<FriendRequestPage>
   var userID = "";
   var token = "";
   String total = "";
-  var friendList;
+  var friendRequestList = [];
   @override
   void initState() {
     super.initState();
@@ -32,13 +32,13 @@ class _FriendRequestPage extends State<FriendRequestPage>
       // Cập nhật dữ liệu
       userID = prefs.getString('userID').toString();
       token = prefs.getString('token').toString();
-      FriendRequest.getUserFriendList(token, userID).then((data) {
+      FriendRequest.getRequestedList(token).then((data) {
         setState(() {
           // print(data);
-          friendList = data['friends'];
+          friendRequestList = data['request'];
           total = data['total'];
-          print(friendList);
-          print(total);
+
+          // print(friendRequestList);
         });
       });
     } catch (e) {
@@ -82,7 +82,7 @@ class _FriendRequestPage extends State<FriendRequestPage>
                               style: TextStyle(
                                   fontSize: 19.0, fontWeight: FontWeight.bold)),
                           SizedBox(width: 10.0),
-                          Text('8',
+                          Text(total,
                               style: TextStyle(
                                   fontSize: 20.0,
                                   fontWeight: FontWeight.bold,
@@ -100,7 +100,12 @@ class _FriendRequestPage extends State<FriendRequestPage>
                           )
                         ],
                       ),
-                      RequestWidget(),
+                      for (var friendRequestObj in friendRequestList)
+                        Column(
+                          children: <Widget>[
+                            RequestWidget(friendRequestObj: friendRequestObj),
+                          ],
+                        ),
                     ]))));
   }
 }
