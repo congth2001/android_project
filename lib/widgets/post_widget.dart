@@ -274,8 +274,11 @@ class _PostWidgetState extends State<PostWidget> {
                                         InkWell(
                                           hoverColor: Colors.white,
                                           onTap: () {
-                                            Navigator.push(context,
-                                            MaterialPageRoute(builder: (context) => RequestReportPage()));
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        RequestReportPage()));
                                           },
                                           child: Row(
                                             crossAxisAlignment:

@@ -143,7 +143,7 @@ class LoginPageState extends State<LoginPage> {
                 child: ElevatedButton(
                     onPressed: () {
                       var password = passwordController.text + "";
-                      AuthRequest.login("username", phoneNumber, password)
+                      AuthRequest.login(phoneNumber, password)
                           .then((result) async {
                         // print(result.statusCode);
                         // Direct to next page
@@ -151,19 +151,14 @@ class LoginPageState extends State<LoginPage> {
                           final data = result['data'];
                           // Obtain shared preferences.
                           final prefs = await SharedPreferences.getInstance();
-                          // Save an String value to 'username' key.
-                          print(data);
-                          await prefs.setString('userID', data['id']);
-                          await prefs.setString('token', data['token']);
                           Navigator.push(
                             context,
                             MaterialPageRoute(builder: (context) => HomePage()),
                           );
                         } else {
                           // print(result.statusCode);
-                          String errorTitle = 'Incorrect Password';
-                          String errorDetail =
-                              'The password you entered is incorrect. Please try again.';
+                          String errorTitle = 'Error';
+                          String errorDetail = result['message'];
                           showDialog(
                               context: context,
                               builder: (BuildContext context) => AlertDialog(

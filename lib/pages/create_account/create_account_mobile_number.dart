@@ -135,7 +135,7 @@ class _MobileNumberPageState extends State<MobileNumberPage> {
                     height: 30,
                     child: ElevatedButton(
                         onPressed: () async {
-                          if (mobileNumberController.text == '') {
+                          if (mobileNumberController.text == '' || mobileNumberController.text.length != 10) {
                             setState(() {
                               isValid = false;
                             });

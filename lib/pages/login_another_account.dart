@@ -26,6 +26,8 @@ class _LoginAnotherAccountState extends State<LoginAnotherAccount> {
   final phonenumberController = TextEditingController();
   String username = "";
   bool isLoading = true;
+  String defaultAvatar =
+      "https://friconix.com/png/fi-cnsuxx-user-circle-solid.png";
 
   @override
   void initState() {
@@ -40,6 +42,24 @@ class _LoginAnotherAccountState extends State<LoginAnotherAccount> {
       username = prefs.getString('username').toString();
       isLoading = false;
     });
+  }
+
+  setData(
+    var avatar,
+    String token,
+    String username,
+    String userID,
+    String phoneNumber,
+  ) async {
+    // Biến toàn cục
+    final prefs = await SharedPreferences.getInstance();
+    String tmpAvatar = avatar == null ? defaultAvatar : avatar;
+    // Cập nhật storage
+    await prefs.setString('avatar', tmpAvatar);
+    await prefs.setString('token', token);
+    await prefs.setString('userID', userID);
+    await prefs.setString('username', username);
+    await prefs.setString('phoneNumber', phoneNumber);
   }
 
   @override
@@ -80,6 +100,7 @@ class _LoginAnotherAccountState extends State<LoginAnotherAccount> {
                         padding: const EdgeInsets.symmetric(horizontal: 16),
                         child: TextField(
                           controller: phonenumberController,
+                          keyboardType: TextInputType.number,
                           style: TextStyle(fontSize: FontSize.contentSize),
                           decoration: InputDecoration(
                             hintText: 'Phone or email',
@@ -124,28 +145,16 @@ class _LoginAnotherAccountState extends State<LoginAnotherAccount> {
                                   var phoneNumber =
                                       phonenumberController.text + "";
                                   var password = passwordController.text + "";
-                                  AuthRequest.login(
-                                          username, phoneNumber, password)
+                                  AuthRequest.login(phoneNumber, password)
                                       .then((res) async {
                                     // Gọi API thành công
                                     if (res['code'] == '1000') {
-                                      // Cập nhật storage
-                                      final prefs =
-                                          await SharedPreferences.getInstance();
-                                      // lưu userID, username và token
-                                      await prefs.setString(
-                                          'userID', res['data']['id']);
-                                      await prefs.setString(
-                                          'username', res['data']['username']);
-                                      await prefs.setString(
-                                          'token', res['data']['token']);
-                                      if (res['data']['avatar'] != null) {
-                                        await prefs.setString(
-                                            'avatar', res['data']['avatar']);
-                                      } else {
-                                        await prefs.setString('avatar',
-                                            "https://friconix.com/png/fi-cnsuxx-user-circle-solid.png");
-                                      }
+                                      setData(
+                                          res['data']['avatar'],
+                                          res['data']['token'],
+                                          res['data']['username'],
+                                          res['data']['id'],
+                                          phoneNumber);
                                       // Direct to next page
                                       Navigator.push(
                                         context,

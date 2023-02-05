@@ -15,19 +15,23 @@ class WriteSomethingWidget extends StatefulWidget {
 
 class _WriteSomethingWidgetState extends State<WriteSomethingWidget> {
   String avatar = "";
+  String userID = "";
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     getData();
+    print(userID);
   }
 
   getData() async {
     // Obtain shared preferences.
     final prefs = await SharedPreferences.getInstance();
-    String userID = prefs.getString('userID').toString();
-    avatar = prefs.getString('avatar').toString();
+    setState(() {
+      userID = prefs.getString('userID').toString();
+      avatar = prefs.getString('avatar').toString();
+    });
   }
 
   @override
@@ -56,7 +60,7 @@ class _WriteSomethingWidgetState extends State<WriteSomethingWidget> {
                   onPressed: () => {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => ProfilePage()),
+                      MaterialPageRoute(builder: (context) => ProfilePage(userID: userID,)),
                     )
                   },
                 ),

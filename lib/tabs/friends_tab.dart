@@ -76,11 +76,11 @@ class _FriendsTabPage extends State<FriendsTab>
                           style: TextStyle(
                               fontSize: 13.0, fontWeight: FontWeight.w500)),
                       onPressed: () => {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => FriendSuggestionPage()),
-                        )
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //       builder: (context) => FriendSuggestionPage()),
+                        // )
                       },
                     ),
                   ),
