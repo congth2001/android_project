@@ -204,4 +204,40 @@ class PostRequest {
       return Post();
     }
   }
+
+  /*
+   * @desc API tìm kiếm bài viết theo nội dung
+   * @param keyword: không được rỗng
+   * @date 30/1/2023 
+   */
+  static Future search(String token, String keyword,
+      [String? index = '0', String? count = "100"]) async {
+    try {
+      // init query params
+      final queryParameters = {
+        'token': token,
+        'keyword': keyword,
+        'index': index,
+        'count': count,
+      };
+      // get url
+      url = Uri.https(subdomain, 'it4788/search/search', queryParameters);
+      // get response
+      final res = await http.post(url);
+      // get return data
+      final resBody = jsonDecode(res.body);
+      // check and return
+      if (resBody['code'] == '1000') {
+        /**
+         * Thành công: { "id": "63dd1dcedad1370034cd5d69","url": null }
+         */
+        return resBody['data'];
+      } else {
+        throw Exception(resBody['message']);
+      }
+    } catch (e) {
+      print('Got error in Edit post: $e');
+      return Post();
+    }
+  }
 }
