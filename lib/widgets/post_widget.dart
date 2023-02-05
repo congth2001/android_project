@@ -7,6 +7,7 @@ import 'package:photo_picker_initial/network/user_request.dart';
 import 'package:photo_picker_initial/network/post_request.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../pages/profile_page.dart';
 import '../pages/request_report_page.dart';
 import '../shared/font_size.dart';
 import 'comment_widget.dart';
@@ -78,10 +79,19 @@ class _PostWidgetState extends State<PostWidget> {
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              CircleAvatar(
-                backgroundImage:
-                    NetworkImage(postObj.author!.avatar.toString()),
-                radius: 20.0,
+              InkWell(
+                hoverColor: Colors.white,
+                onTap: (){
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context)=>ProfilePage(userID: postObj.author!.id))
+                  );
+                },
+                child: CircleAvatar(
+                  backgroundImage:
+                      NetworkImage(postObj.author!.avatar.toString()),
+                  radius: 20.0,
+                ),
               ),
               SizedBox(width: 7.0),
               Column(

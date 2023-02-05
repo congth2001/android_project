@@ -25,6 +25,7 @@ class LoginPageState extends State<LoginPage> {
   String avatar = ""; // avatar for showing
   String username = ""; // username for showing
   var phoneNumber = ""; // input login api
+  bool isLoading = true;
 
   @override
   void dispose() {
@@ -47,6 +48,9 @@ class LoginPageState extends State<LoginPage> {
       phoneNumber = prefs.getString('phoneNumber').toString();
       avatar = prefs.getString('avatar').toString();
       username = prefs.getString('username').toString();
+      setState(() {
+        isLoading = false;
+      });
     } catch (e) {
       print('Exception in login_page: $e');
     }
@@ -55,7 +59,7 @@ class LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: SingleChildScrollView(
+        body: !isLoading ? SingleChildScrollView(
       child: Container(
         color: Colors.white,
         padding: const EdgeInsets.all(8),
@@ -142,6 +146,7 @@ class LoginPageState extends State<LoginPage> {
                 height: 30,
                 child: ElevatedButton(
                     onPressed: () {
+                      isLoading = true;
                       var password = passwordController.text + "";
                       AuthRequest.login(phoneNumber, password)
                           .then((result) async {
@@ -182,6 +187,9 @@ class LoginPageState extends State<LoginPage> {
                                                   color: Colors.black)),
                                           onPressed: () {
                                             Navigator.pop(context, 'Cancel');
+                                            setState(() {
+                                              isLoading = false;
+                                            });
                                           },
                                         )
                                       ]));
@@ -209,6 +217,6 @@ class LoginPageState extends State<LoginPage> {
           ),
         ),
       ),
-    ));
+    ) : Center(child: CircularProgressIndicator()));
   }
 }
