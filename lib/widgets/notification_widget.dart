@@ -29,7 +29,7 @@ class NotificationWidget extends StatelessWidget {
                 children: <Widget>[
                   Text(notification.content,
                       style: TextStyle(
-                          fontSize: 17.0, fontWeight: FontWeight.bold)),
+                          fontSize: 15.0, fontWeight: FontWeight.bold)),
                   Text(notification.time,
                       style: TextStyle(fontSize: 15.0, color: Colors.grey)),
                 ],

@@ -55,13 +55,13 @@ class _MenuTabState extends State<MenuTab> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(15.0, 5.0, 0.0, 5.0),
+                    padding: const EdgeInsets.fromLTRB(15.0, 5.0, 0.0, 3.0),
                     child: Row(
                       children: [
                         const Text('Menu',
                             style: TextStyle(
                                 fontSize: 25.0, fontWeight: FontWeight.bold)),
-                        const SizedBox(width: 210),
+                        const SizedBox(width: 160),
                         MaterialButton(
                           elevation: 0,
                           minWidth: 5,

@@ -58,7 +58,7 @@ class _HomePageState extends State<HomePage>
           child: Text('facebook',
               style: TextStyle(
                   color: Colors.blueAccent[400],
-                  fontSize: 27.0,
+                  fontSize: 25.0,
                   fontWeight: FontWeight.bold)),
         ),
         leadingWidth: 250,

@@ -102,10 +102,10 @@ class _SuggestionWidgetState extends State<SuggestionWidget> {
                                           color: Colors.white, fontSize: 15.0)),
                             ),
                           ),
-                          SizedBox(width: 15),
+                          SizedBox(width: 10),
                           Container(
                               height: 35,
-                              width: 130,
+                              width: 87,
                               decoration: BoxDecoration(
                                   color: Colors.grey[300],
                                   borderRadius: BorderRadius.circular(5.0)),

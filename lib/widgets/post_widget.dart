@@ -81,11 +81,12 @@ class _PostWidgetState extends State<PostWidget> {
             children: [
               InkWell(
                 hoverColor: Colors.white,
-                onTap: (){
+                onTap: () {
                   Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context)=>ProfilePage(userID: postObj.author!.id))
-                  );
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              ProfilePage(userID: postObj.author!.id)));
                 },
                 child: CircleAvatar(
                   backgroundImage:
@@ -435,7 +436,7 @@ class _PostWidgetState extends State<PostWidget> {
                               color: Colors.black54, size: 20.0),
                           Text('  Comment',
                               style: TextStyle(
-                                  fontSize: 14.0, fontWeight: FontWeight.w400))
+                                  fontSize: 12.0, fontWeight: FontWeight.w400))
                         ],
                         mainAxisAlignment: MainAxisAlignment.center,
                       )))),

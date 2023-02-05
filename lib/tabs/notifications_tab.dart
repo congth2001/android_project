@@ -121,7 +121,7 @@ class NotificationsTab extends StatelessWidget {
                                           fontSize: 16.0,
                                           fontWeight: FontWeight.w800)),
                                   Text('sent you a friend request.',
-                                      style: TextStyle(fontSize: 16)),
+                                      style: TextStyle(fontSize: 14)),
                                 ],
                               ),
                             ],
@@ -130,7 +130,7 @@ class NotificationsTab extends StatelessWidget {
                             children: [
                               Row(
                                 children: const [
-                                  SizedBox(width: 26),
+                                  SizedBox(width: 20),
                                   Icon(Icons.more_horiz),
                                 ],
                               ),
@@ -157,10 +157,10 @@ class NotificationsTab extends StatelessWidget {
                                       color: Colors.white, fontSize: 15.0)),
                             ),
                           ),
-                          SizedBox(width: 15),
+                          SizedBox(width: 10),
                           Container(
                               height: 35,
-                              width: 130,
+                              width: 87,
                               decoration: BoxDecoration(
                                   color: Colors.grey[300],
                                   borderRadius: BorderRadius.circular(5.0)),

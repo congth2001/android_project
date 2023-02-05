@@ -60,12 +60,15 @@ class _WriteSomethingWidgetState extends State<WriteSomethingWidget> {
                   onPressed: () => {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => ProfilePage(userID: userID,)),
+                      MaterialPageRoute(
+                          builder: (context) => ProfilePage(
+                                userID: userID,
+                              )),
                     )
                   },
                 ),
                 Container(
-                  width: MediaQuery.of(context).size.width / 1.5,
+                  width: MediaQuery.of(context).size.width / 1.6,
                   child: OutlinedButton(
                     style: OutlinedButton.styleFrom(
                       backgroundColor: Colors.white, // background

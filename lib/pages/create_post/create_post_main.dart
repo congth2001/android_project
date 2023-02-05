@@ -35,7 +35,7 @@ class _CreatePostMainState extends State<CreatePostMain> {
   bool isFocus = false;
   var user = User();
   String token = "";
-
+  String avatar = "";
   XFile? image;
 
   final ImagePicker picker = ImagePicker();
@@ -57,6 +57,7 @@ class _CreatePostMainState extends State<CreatePostMain> {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
       token = prefs.getString('token').toString();
+      avatar = prefs.getString('avatar').toString();
     });
     String userID = prefs.getString('userID').toString();
     // Gọi API lấy thông tin người dùng
@@ -301,11 +302,12 @@ class _CreatePostMainState extends State<CreatePostMain> {
                 children: [
                   InkWell(
                     hoverColor: Colors.white,
-                    onTap: (){
+                    onTap: () {
                       Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context)=>ProfilePage(userID: user.id))
-                      );
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  ProfilePage(userID: user.id)));
                     },
                     child: Container(
                       height: 40,
@@ -314,8 +316,7 @@ class _CreatePostMainState extends State<CreatePostMain> {
                       decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           image: DecorationImage(
-                              fit: BoxFit.cover,
-                              image: NetworkImage(user.avatar.toString()))),
+                              fit: BoxFit.cover, image: NetworkImage(avatar))),
                     ),
                   ),
                   SizedBox(width: 5),

@@ -74,7 +74,7 @@ class _FriendsTabPage extends State<FriendsTab>
                       ),
                       child: Text('Suggestions',
                           style: TextStyle(
-                              fontSize: 13.0, fontWeight: FontWeight.w500)),
+                              fontSize: 12.0, fontWeight: FontWeight.w500)),
                       onPressed: () => {
                         // Navigator.push(
                         //   context,
@@ -97,7 +97,7 @@ class _FriendsTabPage extends State<FriendsTab>
                       ),
                       child: Text('Your Friends',
                           style: TextStyle(
-                              fontSize: 13.0, fontWeight: FontWeight.w500)),
+                              fontSize: 12.0, fontWeight: FontWeight.w500)),
                       onPressed: () => {
                         Navigator.push(
                           context,
@@ -120,7 +120,7 @@ class _FriendsTabPage extends State<FriendsTab>
                       ),
                       child: Text('Friend request',
                           style: TextStyle(
-                              fontSize: 13.0, fontWeight: FontWeight.w500)),
+                              fontSize: 12.0, fontWeight: FontWeight.w500)),
                       onPressed: () => {
                         Navigator.push(
                           context,
