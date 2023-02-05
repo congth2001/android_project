@@ -1,90 +1,60 @@
 class User {
-  String? gender;
-  List<String>? blockedInbox;
-  String? sId;
-  String? phoneNumber;
-  String? password;
+  String? id;
   String? username;
+  String? created;
+  String? description;
   String? avatar;
   String? coverImage;
-  String? createdAt;
-  String? updatedAt;
-  int? iV;
+  String? link;
   String? address;
-  String? birthday;
   String? city;
   String? country;
-  String? description;
+  String? listing;
+  String? isFriend;
 
   User(
-      {this.gender,
-      this.blockedInbox,
-      this.sId,
-      this.phoneNumber,
-      this.password,
+      {this.id,
       this.username,
+      this.created,
+      this.description,
       this.avatar,
       this.coverImage,
-      this.createdAt,
-      this.updatedAt,
-      this.iV,
+      this.link,
       this.address,
-      this.birthday,
       this.city,
       this.country,
-      this.description});
+      this.listing,
+      this.isFriend});
 
   User.fromJson(Map<String, dynamic> json) {
-    gender = json['gender'];
-    blockedInbox = json['blocked_inbox'].cast<String>();
-    sId = json['_id'];
-    phoneNumber = json['phoneNumber'];
-    password = json['password'];
+    id = json['id'];
     username = json['username'];
+    created = json['created'];
+    description = json['description'];
     avatar = json['avatar'];
     coverImage = json['cover_image'];
-    createdAt = json['createdAt'];
-    updatedAt = json['updatedAt'];
-    iV = json['__v'];
+    link = json['link'];
     address = json['address'];
-    birthday = json['birthday'];
     city = json['city'];
     country = json['country'];
-    description = json['description'];
+    listing = json['listing'];
+    isFriend = json['is_friend'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['gender'] = this.gender;
-    data['blocked_inbox'] = this.blockedInbox;
-    data['_id'] = this.sId;
-    data['phoneNumber'] = this.phoneNumber;
-    data['password'] = this.password;
+    data['id'] = this.id;
     data['username'] = this.username;
+    data['created'] = this.created;
+    data['description'] = this.description;
     data['avatar'] = this.avatar;
     data['cover_image'] = this.coverImage;
-    data['createdAt'] = this.createdAt;
-    data['updatedAt'] = this.updatedAt;
-    data['__v'] = this.iV;
+    data['link'] = this.link;
     data['address'] = this.address;
-    data['birthday'] = this.birthday;
     data['city'] = this.city;
     data['country'] = this.country;
-    data['description'] = this.description;
+    data['listing'] = this.listing;
+    data['is_friend'] = this.isFriend;
     return data;
   }
 }
-
-// List<User> users = [
-//   new User(avatar: 'assets/adelle.jpg', username: 'Adelle ashjg sdjz'),
-//   new User(avatar: 'assets/andrew.jpg', username: 'Andrew'),
-//   new User(avatar: 'assets/andy.jpg', username: 'Andy'),
-//   new User(avatar: 'assets/chris.jpg', username: 'Chris'),
-//   new User(avatar: 'assets/john.jpg', username: 'John'),
-//   new User(avatar: 'assets/joey.jpg', username: 'Joey'),
-//   new User(avatar: 'assets/james.jpg', username: 'James'),
-//   new User(avatar: 'assets/kalle.jpg', username: 'Kalle'),
-//   new User(avatar: 'assets/kalle.jpg', username: 'Kalle'),
-//   new User(avatar: 'assets/kalle.jpg', username: 'Kalle'),
-//   new User(avatar: 'assets/kalle.jpg', username: 'Kalle'),
-// ];

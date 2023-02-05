@@ -1,8 +1,8 @@
-import 'package:fakebook/widgets/what_on_your_.dart';
-import 'package:fakebook/widgets/separator_widget.dart';
-import 'package:fakebook/widgets/post_widget.dart';
-import 'package:fakebook/widgets/stories_widget.dart';
-import 'package:fakebook/models/post.dart';
+import 'package:photo_picker_initial/widgets/what_on_your_.dart';
+import 'package:photo_picker_initial/widgets/separator_widget.dart';
+import 'package:photo_picker_initial/widgets/post_widget.dart';
+import 'package:photo_picker_initial/widgets/stories_widget.dart';
+import 'package:photo_picker_initial/models/post.dart';
 import 'package:flutter/material.dart';
 
 import '../network/post_request.dart';
@@ -14,26 +14,27 @@ class HomeTab extends StatefulWidget {
 
 class _HomeTabState extends State<HomeTab> {
   List<Post> posts = List<Post>.empty();
+  bool isLoading = true;
 
   @override
   void initState() {
     super.initState();
-    PostRequest.getAllPost().then((postList) {
+    // CALL API
+    PostRequest.getAllPosts().then((postList) {
       setState(() {
         posts = postList;
+        isLoading = false;
       });
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
+    return !isLoading ? SingleChildScrollView(
       child: Column(
         children: [
           WriteSomethingWidget(),
           SeparatorWidget(),
-          //OnlineWidget(),
-          //SeparatorWidget(),
           StoriesWidget(),
           for (Post post in posts)
             Column(
@@ -45,6 +46,6 @@ class _HomeTabState extends State<HomeTab> {
           SeparatorWidget(),
         ],
       ),
-    );
+    ) : Center(child: CircularProgressIndicator());
   }
 }

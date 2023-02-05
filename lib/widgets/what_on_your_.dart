@@ -1,9 +1,38 @@
-import 'package:fakebook/pages/create_post/create_post_main.dart';
+import 'package:photo_picker_initial/network/user_request.dart';
+import 'package:photo_picker_initial/pages/create_post/create_post_main.dart';
 import 'package:flutter/material.dart';
 
 import '../pages/profile_page.dart';
 
-class WriteSomethingWidget extends StatelessWidget {
+import 'package:photo_picker_initial/models/user.dart';
+import 'package:photo_picker_initial/network/auth_request.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+class WriteSomethingWidget extends StatefulWidget {
+  @override
+  State<WriteSomethingWidget> createState() => _WriteSomethingWidgetState();
+}
+
+class _WriteSomethingWidgetState extends State<WriteSomethingWidget> {
+  String avatar = "";
+  String userID = "";
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getData();
+    print(userID);
+  }
+
+  getData() async {
+    // Obtain shared preferences.
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      userID = prefs.getString('userID').toString();
+      avatar = prefs.getString('avatar').toString();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +40,8 @@ class WriteSomethingWidget extends StatelessWidget {
       child: Column(
         children: <Widget>[
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 10.0),
+            padding:
+                const EdgeInsets.symmetric(horizontal: 5.0, vertical: 10.0),
             decoration: BoxDecoration(color: Colors.white),
             child: Row(
               //mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -19,23 +49,26 @@ class WriteSomethingWidget extends StatelessWidget {
               children: <Widget>[
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white, // background
-                    elevation: 0,
-                    padding: EdgeInsets.only(left: -1)
-                  ),
+                      backgroundColor: Colors.white, // background
+                      elevation: 0,
+                      padding: EdgeInsets.only(left: -1)),
                   child: CircleAvatar(
                     radius: 24.0,
-                    backgroundImage: NetworkImage('https://firebasestorage.googleapis.com/v0/b/social-network-app-19cd7.appspot.com/o/images%2Frn_image_picker_lib_temp_19d714d4-09ee-45a2-a1b0-c44329bcd180.jpg?alt=media&token=2ed540ab-1944-4061-b5d6-4f3ee8b598f8&fbclid=IwAR0PCicGfnvSYpF0E-dVR6bRJ40SS-NYlipPh8VQsvWHQPM7_hsh6E9aAP8'),
+                    // Avatar of user
+                    backgroundImage: NetworkImage(avatar),
                   ),
                   onPressed: () => {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => ProfilePage()),
+                      MaterialPageRoute(
+                          builder: (context) => ProfilePage(
+                                userID: userID,
+                              )),
                     )
                   },
                 ),
                 Container(
-                  width: MediaQuery.of(context).size.width/1.5,
+                  width: MediaQuery.of(context).size.width / 1.6,
                   child: OutlinedButton(
                     style: OutlinedButton.styleFrom(
                       backgroundColor: Colors.white, // background
@@ -44,30 +77,37 @@ class WriteSomethingWidget extends StatelessWidget {
                       side: BorderSide(color: Colors.grey.shade400),
                       shape: const StadiumBorder(),
                     ),
-                    onPressed: (){
+                    onPressed: () {
                       Navigator.push(
-                          context, 
-                          MaterialPageRoute(builder: (context)=> CreatePostMain())
-                        );
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => CreatePostMain()));
                     },
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(" What's on your mind?", style: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w400)),
+                        const Text(" What's on your mind?",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w400)),
                       ],
                     ),
                   ),
-                    // onPressed: () => {
-                    //   Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(builder: (context) => CreatePostPage()),
-                    // )
-                    // },
+                  // onPressed: () => {
+                  //   Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(builder: (context) => CreatePostPage()),
+                  // )
+                  // },
                 ),
-
                 MaterialButton(
                   minWidth: 10,
-                  child: Icon(Icons.photo_library, size: 25.0, color: Colors.green,),
+                  child: Icon(
+                    Icons.photo_library,
+                    size: 25.0,
+                    color: Colors.green,
+                  ),
                   onPressed: () {},
                 ),
               ],

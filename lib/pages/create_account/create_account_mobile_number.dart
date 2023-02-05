@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:fakebook/pages/create_account/create_account_password.dart';
+import 'package:photo_picker_initial/pages/create_account/create_account_password.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../shared/font_size.dart';
@@ -135,7 +135,7 @@ class _MobileNumberPageState extends State<MobileNumberPage> {
                     height: 30,
                     child: ElevatedButton(
                         onPressed: () async {
-                          if (mobileNumberController.text == '') {
+                          if (mobileNumberController.text == '' || mobileNumberController.text.length != 10) {
                             setState(() {
                               isValid = false;
                             });

@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:fakebook/pages/create_account/terms_privacy.dart';
+import 'package:photo_picker_initial/pages/create_account/terms_privacy.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../shared/font_size.dart';
@@ -92,8 +92,8 @@ class _PasswordPageState extends State<PasswordPage> {
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Text(
                     isValid
-                        ? "Create a password with at least 6 characters. It should be something others couldn't guess."
-                        : 'Your password must have at least 6 letters, numbers and symbols (like ! and %).',
+                        ? "Create a password with at 6-10 characters. It should be something others couldn't guess."
+                        : 'Your password must have at 6-10 letters, numbers.',
                     style: TextStyle(
                         color: isValid ? Colors.black : Colors.red,
                         fontSize: FontSize.contentSize),
@@ -134,10 +134,8 @@ class _PasswordPageState extends State<PasswordPage> {
                     height: 30,
                     child: ElevatedButton(
                         onPressed: () async {
-                          if (!RegExp(r'^(?=.*?[A-Z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{6,}$')
-                                  .hasMatch(passwordController.text) &&
-                              !RegExp(r'^(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{6,}$')
-                                  .hasMatch(passwordController.text)) {
+                          if (!RegExp(r'^[A-Za-z\d]{6,10}$')
+                              .hasMatch(passwordController.text)) {
                             setState(() {
                               isValid = false;
                             });

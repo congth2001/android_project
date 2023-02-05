@@ -1,6 +1,6 @@
-import 'package:fakebook/pages/create_post/activities_tab.dart';
-import 'package:fakebook/pages/create_post/create_post_main.dart';
-import 'package:fakebook/pages/create_post/feelings_tab.dart';
+import 'package:photo_picker_initial/pages/create_post/activities_tab.dart';
+import 'package:photo_picker_initial/pages/create_post/create_post_main.dart';
+import 'package:photo_picker_initial/pages/create_post/feelings_tab.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/container.dart';

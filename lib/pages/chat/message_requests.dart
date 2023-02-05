@@ -1,4 +1,4 @@
-import 'package:fakebook/pages/chat/message_request_detail.dart';
+import 'package:photo_picker_initial/pages/chat/message_request_detail.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/container.dart';

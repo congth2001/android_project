@@ -1,18 +1,18 @@
 // ignore_for_file: prefer_const_constructors
-
 import 'dart:async';
 import 'dart:io';
-import 'package:fakebook/network/post_request.dart';
-import 'package:fakebook/pages/home_page.dart';
+import 'package:photo_picker_initial/network/post_request.dart';
+import 'package:photo_picker_initial/network/user_request.dart';
+import 'package:photo_picker_initial/pages/home_page.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:photo_picker_initial/pages/profile_page.dart';
 import '../../shared/font_size.dart';
 import 'feelings_activities_main.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'package:photo_picker_initial/network/auth_request.dart';
+import 'package:photo_picker_initial/models/user.dart';
 
 class CreatePostMain extends StatefulWidget {
   final String? emoijOrActivityImage;
@@ -33,10 +33,40 @@ class _CreatePostMainState extends State<CreatePostMain> {
   final contentController = TextEditingController();
   bool isDisabled = true;
   bool isFocus = false;
-
+  var user = User();
+  String token = "";
+  String avatar = "";
   XFile? image;
 
   final ImagePicker picker = ImagePicker();
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.emojiOrActivityType != null &&
+        widget.emojiOrActivityType != '') {
+      setState(() {
+        isDisabled = false;
+      });
+    }
+    getData();
+  }
+
+  getData() async {
+    // Obtain shared preferences.
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      token = prefs.getString('token').toString();
+      avatar = prefs.getString('avatar').toString();
+    });
+    String userID = prefs.getString('userID').toString();
+    // Gọi API lấy thông tin người dùng
+    UserRequest.getUserByID(userID).then((data) {
+      setState(() {
+        user = data;
+      });
+    });
+  }
 
   //we can upload image from camera or from gallery based on parameter
   Future getImage(ImageSource media) async {
@@ -94,23 +124,6 @@ class _CreatePostMainState extends State<CreatePostMain> {
   }
 
   @override
-  void dispose() {
-    contentController.dispose();
-    super.dispose();
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    if (widget.emojiOrActivityType != null &&
-        widget.emojiOrActivityType != '') {
-      setState(() {
-        isDisabled = false;
-      });
-    }
-  }
-
-  @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
@@ -122,11 +135,7 @@ class _CreatePostMainState extends State<CreatePostMain> {
               icon: const Icon(Icons.arrow_back, color: Colors.black, size: 20),
               onPressed: () {
                 if (isDisabled)
-                  Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(
-                          builder: (BuildContext context) => HomePage()),
-                      (route) => false);
+                  Navigator.pop(context);
                 else {
                   showModalBottomSheet(
                       context: context,
@@ -154,13 +163,8 @@ class _CreatePostMainState extends State<CreatePostMain> {
                                     InkWell(
                                       hoverColor: Colors.white,
                                       onTap: () {
-                                        Navigator.pushAndRemoveUntil(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder:
-                                                    (BuildContext context) =>
-                                                        HomePage()),
-                                            (route) => false);
+                                        Navigator.pop(context);
+                                        Navigator.pop(context);
                                       },
                                       child: Row(
                                         crossAxisAlignment:
@@ -193,13 +197,8 @@ class _CreatePostMainState extends State<CreatePostMain> {
                                     InkWell(
                                       hoverColor: Colors.white,
                                       onTap: () {
-                                        Navigator.pushAndRemoveUntil(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder:
-                                                    (BuildContext context) =>
-                                                        HomePage()),
-                                            (route) => false);
+                                        Navigator.pop(context);
+                                        Navigator.pop(context);
                                       },
                                       child: Row(
                                         crossAxisAlignment:
@@ -277,17 +276,16 @@ class _CreatePostMainState extends State<CreatePostMain> {
                       if (contentController.text != "") {
                         // Get description
                         String described = contentController.text;
-                        // get userID
-                        final prefs = await SharedPreferences.getInstance();
-                        // get username
-                        String userID = prefs.getString('userID').toString();
                         // Call API
-                        print(described + userID);
-                        PostRequest.create(described, userID)
-                            .then((res) => {print(res)});
+                        PostRequest.addPost(described, token)
+                            .then((result) async {
+                          // print(result.statusCode);
+                          // Direct to next page
+                          Navigator.pop(context);
+                        });
                       }
                     },
-                    child: Text('POST',
+                    child: Text('DONE',
                         style: TextStyle(
                             color:
                                 isDisabled ? Colors.grey[400] : Colors.white)),
@@ -302,15 +300,24 @@ class _CreatePostMainState extends State<CreatePostMain> {
               SizedBox(height: 10),
               Row(
                 children: [
-                  Container(
-                    height: 40,
-                    width: 40,
-                    margin: const EdgeInsets.only(left: 8),
-                    decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        image: DecorationImage(
-                            fit: BoxFit.cover,
-                            image: AssetImage("assets/andrew.jpg"))),
+                  InkWell(
+                    hoverColor: Colors.white,
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  ProfilePage(userID: user.id)));
+                    },
+                    child: Container(
+                      height: 40,
+                      width: 40,
+                      margin: const EdgeInsets.only(left: 8),
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          image: DecorationImage(
+                              fit: BoxFit.cover, image: NetworkImage(avatar))),
+                    ),
                   ),
                   SizedBox(width: 5),
                   Column(
@@ -319,7 +326,7 @@ class _CreatePostMainState extends State<CreatePostMain> {
                         Row(
                           // ignore: prefer_const_literals_to_create_immutables
                           children: [
-                            Text('Andrew',
+                            Text(user.username.toString(),
                                 style: TextStyle(
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold,

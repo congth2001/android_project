@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fakebook/models/user_notification.dart';
+import 'package:photo_picker_initial/models/user_notification.dart';
 
 class NotificationWidget extends StatelessWidget {
   final UserNotification notification;
@@ -29,7 +29,7 @@ class NotificationWidget extends StatelessWidget {
                 children: <Widget>[
                   Text(notification.content,
                       style: TextStyle(
-                          fontSize: 17.0, fontWeight: FontWeight.bold)),
+                          fontSize: 15.0, fontWeight: FontWeight.bold)),
                   Text(notification.time,
                       style: TextStyle(fontSize: 15.0, color: Colors.grey)),
                 ],

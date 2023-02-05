@@ -1,9 +1,10 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:fakebook/pages/create_account/create_new_account.dart';
-import 'package:fakebook/pages/find_account_page.dart';
-import 'package:fakebook/pages/login_another_account.dart';
-import 'package:fakebook/pages/login_page.dart';
+import 'package:photo_picker_initial/network/post_request.dart';
+import 'package:photo_picker_initial/pages/create_account/create_new_account.dart';
+import 'package:photo_picker_initial/pages/find_account_page.dart';
+import 'package:photo_picker_initial/pages/login_another_account.dart';
+import 'package:photo_picker_initial/pages/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -29,20 +30,26 @@ class _LandingPageState extends State<LandingPage> {
   }
 
   getData() async {
-    // Obtain shared preferences.
-    final prefs = await SharedPreferences.getInstance();
-    String? usernameTmp = prefs.getString('username');
-    // Set showAccount
-    if (usernameTmp == "" || usernameTmp == null) {
-      setState(() {
-        showAccount = false;
-      });
-    } else {
-      // update username
-      setState(() {
-        username = usernameTmp.toString();
-        avatar = prefs.getString('avatar').toString();
-      });
+    try {
+      // Obtain shared preferences.
+      final prefs = await SharedPreferences.getInstance();
+      String? token = prefs.getString('token');
+      print('token in langing page: $token');
+      // Set showAccount
+      if (token == null) {
+        setState(() {
+          showAccount = false;
+        });
+      } else {
+        // update username
+        setState(() {
+          username = prefs.getString('username').toString();
+          avatar = prefs.getString('avatar').toString();
+          print(avatar);
+        });
+      }
+    } catch (e) {
+      print('Exception in landing page: $e');
     }
   }
 
@@ -83,7 +90,7 @@ class _LandingPageState extends State<LandingPage> {
                                       backgroundImage: NetworkImage(avatar),
                                       radius: 25,
                                     )),
-                                Text(username.toString(),
+                                Text(username,
                                     style: TextStyle(
                                         fontSize: FontSize.titleSize,
                                         color: Colors.black))

@@ -1,7 +1,14 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:fakebook/shared/font_size.dart';
+import 'dart:io';
+
+import 'package:flutter/services.dart';
+import 'package:image_cropper/image_cropper.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:photo_picker_initial/shared/font_size.dart';
 import 'package:flutter/material.dart';
+
+import '../tabs/screens/select_photo_options_screen.dart';
 
 class EditProfilePage extends StatefulWidget {
   const EditProfilePage({Key? key}) : super(key: key);
@@ -11,6 +18,74 @@ class EditProfilePage extends StatefulWidget {
 }
 
 class _EditProfilePageState extends State<EditProfilePage> {
+  final descriptionController = TextEditingController();
+  final cityController = TextEditingController();
+  final countryController = TextEditingController();
+  final linkController = TextEditingController();
+  final addressController = TextEditingController();
+
+  File? _coverImage;
+  File? _avatarImage;
+  File? _image;
+
+  Future _pickImage(ImageSource source) async {
+    try {
+      final image = await ImagePicker().pickImage(source: source);
+      if (image == null) return;
+      File? img = File(image.path);
+      img = await _cropImage(imageFile: img);
+      setState(() {
+        _image = img;
+        Navigator.of(context).pop();
+      });
+    } on PlatformException catch (e) {
+      print(e);
+      Navigator.of(context).pop();
+    }
+  }
+
+  Future<File?> _cropImage({required File imageFile}) async {
+    CroppedFile? croppedImage =
+        await ImageCropper().cropImage(sourcePath: imageFile.path);
+    if (croppedImage == null) return null;
+    return File(croppedImage.path);
+  }
+
+  void _showSelectPhotoOptions(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(25.0),
+        ),
+      ),
+      builder: (context) => DraggableScrollableSheet(
+          initialChildSize: 0.28,
+          maxChildSize: 0.4,
+          minChildSize: 0.28,
+          expand: false,
+          builder: (context, scrollController) {
+            return SingleChildScrollView(
+              controller: scrollController,
+              child: SelectPhotoOptionsScreen(
+                onTap: _pickImage,
+              ),
+            );
+          }),
+    );
+  }
+
+  @override
+  void dispose() {
+    descriptionController.dispose();
+    cityController.dispose();
+    countryController.dispose();
+    linkController.dispose();
+    addressController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,7 +118,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
                               fontWeight: FontWeight.bold,
                               fontSize: 16)),
                       TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            _showSelectPhotoOptions(context);
+                          },
                           child: Text('Edit',
                               style:
                                   TextStyle(fontSize: 14, color: Colors.blue)))
@@ -70,7 +147,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
                               fontWeight: FontWeight.bold,
                               fontSize: 16)),
                       TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            _showSelectPhotoOptions(context);
+                          },
                           child: Text('Edit',
                               style:
                                   TextStyle(fontSize: 14, color: Colors.blue)))
@@ -91,76 +170,103 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 decoration: BoxDecoration(
                     color: Colors.white,
                     border: Border(bottom: BorderSide(color: Colors.grey))),
-                child: Column(children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Bio',
+                      Text('Description',
                           style: TextStyle(
                               color: Colors.black,
                               fontWeight: FontWeight.bold,
                               fontSize: 16)),
-                      TextButton(
-                          onPressed: () {},
-                          child: Text('Add',
-                              style:
-                                  TextStyle(fontSize: 14, color: Colors.blue)))
-                    ],
-                  ),
-                  SizedBox(height: 10),
-                  TextButton(
-                      onPressed: () {},
-                      child: Text('Describe yourself...',
-                          style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.grey)))
-                ])),
+                      SizedBox(height: 15),
+                      TextField(
+                        controller: descriptionController,
+                        maxLength: 101,
+                        minLines: 6,
+                        maxLines: null,
+                        decoration: InputDecoration(
+                            border: OutlineInputBorder(),
+                            hintText: 'Describe yourself...',
+                            hintStyle:
+                                TextStyle(fontSize: 18, color: Colors.grey),
+                            label: Text(
+                              'You can add a short bio to tell people more about yourself. This could be anything like a favorite quote or what makes you happy.',
+                              maxLines: 3,
+                            )),
+                      )
+                    ])),
             Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                    color: Colors.white,
-                    border: Border(bottom: BorderSide(color: Colors.grey))),
-                child: Column(children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  color: Colors.white,
+                ),
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text('Details',
                           style: TextStyle(
                               color: Colors.black,
                               fontWeight: FontWeight.bold,
                               fontSize: 16)),
-                      TextButton(
-                          onPressed: () {},
-                          child: Text('Edit',
-                              style:
-                                  TextStyle(fontSize: 14, color: Colors.blue)))
-                    ],
-                  ),
-                  SizedBox(height: 10),
-                ])),
+                      SizedBox(height: 10),
+                      TextField(
+                        controller: cityController,
+                        maxLength: 50,
+                        maxLines: null,
+                        decoration: InputDecoration(
+                            hintText: 'Address',
+                            hintStyle:
+                                TextStyle(fontSize: 14, color: Colors.grey),
+                            labelText: 'Address'),
+                      ),
+                      SizedBox(height: 10),
+                      TextField(
+                        controller: addressController,
+                        maxLength: 50,
+                        maxLines: null,
+                        decoration: InputDecoration(
+                            hintText: 'City',
+                            hintStyle:
+                                TextStyle(fontSize: 14, color: Colors.grey),
+                            labelText: 'City'),
+                      ),
+                      SizedBox(height: 10),
+                      TextField(
+                        controller: countryController,
+                        maxLength: 50,
+                        maxLines: null,
+                        decoration: InputDecoration(
+                            hintText: 'Country',
+                            hintStyle:
+                                TextStyle(fontSize: 14, color: Colors.grey),
+                            labelText: 'Country'),
+                      ),
+                    ])),
+            SizedBox(height: 10),
             Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                    color: Colors.white,
-                    border: Border(bottom: BorderSide(color: Colors.grey))),
-                child: Column(children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  color: Colors.white,
+                ),
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text('Link',
                           style: TextStyle(
                               color: Colors.black,
                               fontWeight: FontWeight.bold,
                               fontSize: 16)),
-                      TextButton(
-                          onPressed: () {},
-                          child: Text('Add',
-                              style:
-                                  TextStyle(fontSize: 14, color: Colors.blue)))
-                    ],
-                  )
-                ])),
+                      SizedBox(height: 10),
+                      TextField(
+                        controller: linkController,
+                        maxLines: null,
+                        decoration: InputDecoration(
+                            hintText: 'Link',
+                            hintStyle:
+                                TextStyle(fontSize: 14, color: Colors.grey),
+                            labelText: 'Link'),
+                      ),
+                    ])),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Container(
@@ -175,9 +281,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Icon(Icons.person_outline, color: Colors.blue),
+                        Icon(Icons.save, color: Colors.blue),
                         SizedBox(width: 5),
-                        Text('Edit Your About Info',
+                        Text('Save',
                             style: TextStyle(
                                 color: Colors.blue,
                                 fontSize: FontSize.contentSize)),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../models/user.dart';
-import '../network/user_request.dart';
+import '../network/auth_request.dart';
 
 class FriendSuggestionPage extends StatefulWidget {
   @override
@@ -10,16 +10,9 @@ class FriendSuggestionPage extends StatefulWidget {
 
 class _FriendSuggestionPage extends State<FriendSuggestionPage>
     with SingleTickerProviderStateMixin {
-  List<User> users = List<User>.empty();
   @override
   void initState() {
     super.initState();
-    // Call API get all users
-    UserRequest.getAllUser().then((userList) {
-      setState(() {
-        users = userList;
-      });
-    });
   }
 
   @override
@@ -67,7 +60,7 @@ class _FriendSuggestionPage extends State<FriendSuggestionPage>
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Text(users[0].username.toString(),
+                          Text("Neil Son",
                               style: TextStyle(
                                   fontSize: 16.0, fontWeight: FontWeight.bold)),
                           SizedBox(height: 15.0),
@@ -119,7 +112,7 @@ class _FriendSuggestionPage extends State<FriendSuggestionPage>
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Text(users[1].username.toString(),
+                          Text("Lucas",
                               style: TextStyle(
                                   fontSize: 16.0, fontWeight: FontWeight.bold)),
                           SizedBox(height: 15.0),
@@ -171,7 +164,7 @@ class _FriendSuggestionPage extends State<FriendSuggestionPage>
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Text(users[2].username.toString(),
+                          Text("Tiger",
                               style: TextStyle(
                                   fontSize: 16.0, fontWeight: FontWeight.bold)),
                           SizedBox(height: 15.0),

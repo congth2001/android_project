@@ -1,7 +1,10 @@
-import 'package:fakebook/tabs/profile_tab.dart';
+import 'package:photo_picker_initial/tabs/screens/profile_tab.dart';
 import 'package:flutter/material.dart';
 
 class ProfilePage extends StatefulWidget {
+  final String? userID;
+
+  const ProfilePage({Key? key, this.userID}) : super(key: key);
   @override
   _ProfilePageState createState() => _ProfilePageState();
 }
@@ -42,7 +45,7 @@ class _ProfilePageState extends State<ProfilePage>
         backgroundColor: Colors.white,
         elevation: 0.0,
       ),
-      body: ProfileTab(),
+      body: ProfileTab(userID: widget.userID!)
     );
   }
 }

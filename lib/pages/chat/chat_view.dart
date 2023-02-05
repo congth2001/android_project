@@ -1,6 +1,6 @@
-import 'package:fakebook/models/user.dart';
-import 'package:fakebook/pages/chat/chat_detail_view.dart';
-import 'package:fakebook/shared/font_size.dart';
+import 'package:photo_picker_initial/models/user.dart';
+import 'package:photo_picker_initial/pages/chat/chat_detail_view.dart';
+import 'package:photo_picker_initial/shared/font_size.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/container.dart';

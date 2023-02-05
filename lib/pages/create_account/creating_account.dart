@@ -2,7 +2,7 @@
 
 import 'dart:async';
 
-import 'package:fakebook/pages/create_account/signing_in.dart';
+import 'package:photo_picker_initial/pages/create_account/signing_in.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/container.dart';
@@ -19,7 +19,8 @@ class CreatingAccountPage extends StatefulWidget {
   State<CreatingAccountPage> createState() => _CreatingAccountPageState();
 }
 
-class _CreatingAccountPageState extends State<CreatingAccountPage> with SingleTickerProviderStateMixin {
+class _CreatingAccountPageState extends State<CreatingAccountPage>
+    with SingleTickerProviderStateMixin {
   bool isSuccess = false;
   late Animation<double> animation;
   late AnimationController controller;
@@ -33,8 +34,8 @@ class _CreatingAccountPageState extends State<CreatingAccountPage> with SingleTi
   @override
   void initState() {
     super.initState();
-    controller =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 1200));
+    controller = AnimationController(
+        vsync: this, duration: Duration(milliseconds: 1200));
     animation = Tween<double>(begin: 20, end: 40).animate(controller)
       ..addListener(() {
         setState(() {});
@@ -54,9 +55,13 @@ class _CreatingAccountPageState extends State<CreatingAccountPage> with SingleTi
         isSuccess = true;
       });
     });
-    Timer(Duration(seconds: 5), (){
-      Future((){
-        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (BuildContext context) => SigningInPage()), (route) => false);
+    Timer(Duration(seconds: 5), () {
+      Future(() {
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(
+                builder: (BuildContext context) => SigningInPage()),
+            (route) => false);
       });
     });
   }
@@ -130,8 +135,8 @@ class _CreatingAccountPageState extends State<CreatingAccountPage> with SingleTi
                           fontSize: FontSize.titleSize))
                 ])
               : Center(
-                  child:
-                      Icon(Icons.thumb_up, size: animation.value, color: Colors.blue))
+                  child: Icon(Icons.thumb_up,
+                      size: animation.value, color: Colors.blue))
         ]));
   }
 }

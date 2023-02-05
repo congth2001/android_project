@@ -1,8 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:fakebook/pages/create_account/create_account_name.dart';
-import 'package:fakebook/pages/landing_page.dart';
-import 'package:fakebook/shared/font_size.dart';
+import 'package:photo_picker_initial/pages/create_account/create_account_name.dart';
+import 'package:photo_picker_initial/pages/landing_page.dart';
+import 'package:photo_picker_initial/shared/font_size.dart';
 import 'package:flutter/material.dart';
 
 class CreateNewAccount extends StatefulWidget {
@@ -26,7 +26,8 @@ class _CreateAccountState extends State<CreateNewAccount> {
                 }),
             backgroundColor: Colors.white,
             title: Text('Create account',
-                style: TextStyle(color: Colors.black, fontSize: FontSize.titleSize))),
+                style: TextStyle(
+                    color: Colors.black, fontSize: FontSize.titleSize))),
         body: Container(
             color: Colors.white,
             padding: const EdgeInsets.all(8),
@@ -41,20 +42,26 @@ class _CreateAccountState extends State<CreateNewAccount> {
               Center(
                   child: Text('Join Facebook',
                       style: TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: FontSize.titleSize))),
+                          fontWeight: FontWeight.bold,
+                          fontSize: FontSize.titleSize))),
               SizedBox(height: 20),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Text(
-                "We'll help you create a new account in a few easy steps.",
-                textAlign: TextAlign.center, style: TextStyle(fontSize: FontSize.contentSize),),
+                  "We'll help you create a new account in a few easy steps.",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: FontSize.contentSize),
+                ),
               ),
               SizedBox(height: 30),
               SizedBox(
                 width: double.infinity,
                 height: 30,
                 child: ElevatedButton(
-                  child: Text('Next', style: TextStyle(fontSize: FontSize.contentSize),),
+                  child: Text(
+                    'Next',
+                    style: TextStyle(fontSize: FontSize.contentSize),
+                  ),
                   onPressed: () {
                     Navigator.push(
                         context,
@@ -75,7 +82,8 @@ class _CreateAccountState extends State<CreateNewAccount> {
                   showDialog(
                       context: context,
                       builder: (BuildContext context) => AlertDialog(
-                        insetPadding: EdgeInsets.symmetric(horizontal: 16),
+                              insetPadding:
+                                  EdgeInsets.symmetric(horizontal: 16),
                               title: Text(
                                   'Do you want to stop creating your account?',
                                   style: TextStyle(
@@ -90,7 +98,8 @@ class _CreateAccountState extends State<CreateNewAccount> {
                                 TextButton(
                                   child: Text('Continue creating account',
                                       style: TextStyle(
-                                          fontSize: FontSize.contentSize, color: Colors.black)),
+                                          fontSize: FontSize.contentSize,
+                                          color: Colors.black)),
                                   onPressed: () {
                                     Navigator.pop(context, 'Cancel');
                                   },

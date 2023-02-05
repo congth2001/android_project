@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
-import 'package:fakebook/pages/chat/chat_view.dart';
+import 'package:photo_picker_initial/pages/chat/chat_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/container.dart';
@@ -23,36 +23,26 @@ class _ChatMainPageState extends State<ChatMainPage> {
       child: Scaffold(
         backgroundColor: Colors.white,
         body: TabBarView(
-          children: [
-          ChatView()
-        ],),
+          children: [ChatView()],
+        ),
         bottomNavigationBar: Container(
           decoration: BoxDecoration(
-            border: Border(
-              top: BorderSide(color: Colors.grey)
-            )
-          ),
+              border: Border(top: BorderSide(color: Colors.grey))),
           child: BottomNavigationBar(
-            onTap: (value){
-              setState(() {
-                currentPage = value;
-              });
-            },
-            currentIndex: currentPage,
-            unselectedItemColor: Colors.grey[600],
-            selectedItemColor: Colors.blue,
-            items: [
+              onTap: (value) {
+                setState(() {
+                  currentPage = value;
+                });
+              },
+              currentIndex: currentPage,
+              unselectedItemColor: Colors.grey[600],
+              selectedItemColor: Colors.blue,
+              items: [
                 BottomNavigationBarItem(
-                  icon: Icon(FontAwesomeIcons.rocketchat),
-                  label: 'Chats'
-                ),
+                    icon: Icon(FontAwesomeIcons.rocketchat), label: 'Chats'),
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.people_outline),
-                  label: 'People'
-                ),
-                
-            ]
-          ),
+                    icon: Icon(Icons.people_outline), label: 'People'),
+              ]),
         ),
       ),
     );

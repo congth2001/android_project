@@ -3,19 +3,17 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
+import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/user.dart';
 
 class UserRequest {
+  // Hằng số
+  static const String subdomain = 'facebook-8qes.onrender.com';
+  static const String subdirectoryHead = "/it4788/user";
   // url of api
   static var url = Uri();
-
-  // get token
-  static Future<String> getToken() async {
-    final prefs = await SharedPreferences.getInstance();
-    return prefs.getString("token").toString();
-  }
 
   // get records list
   static List<User> parseUserList(List<dynamic> data) {
@@ -40,108 +38,94 @@ class UserRequest {
   }
 
   /*
-   * @desc API get info all of users
-   * @date 30/1/2023 
-   */
-  static Future<List<User>> getAllUser() async {
-    // get url
-    url = Uri.http('localhost:8000', 'api/v1/users/getAllUsers');
-    // get response
-    final res = await http.get(url);
-    // get return data
-    final data = jsonDecode(res.body);
-    // check and return
-    if (res.statusCode == 200) {
-      return compute(parseUserList, data['data'] as List<dynamic>);
-    } else if (res.statusCode == 404) {
-      throw Exception('Not Found');
-    } else {
-      throw Exception('Can\'t get users');
-    }
-  }
-
-  /*
-   * @desc API đăng ký tài khoản người dùng
-   * @date 30/1/2023 
-   */
-  static Future register(
-      String username, String phoneNumber, String password) async {
-    try {
-      // get url
-      url = Uri.http('localhost:8000', 'api/v1/users/register');
-      // get response
-      final res = await http.post(url, body: {
-        "username": username,
-        "phonenumber": phoneNumber,
-        "password": password
-      });
-      // check and return
-      if (res.statusCode == 201) {
-        return res;
-      } else if (res.statusCode == 400) {
-        throw Exception('Bad request');
-      } else {
-        throw Exception('Can\'t create user');
-      }
-    } catch (e) {
-      print(e.toString());
-    }
-  }
-
-  /*
-   * @desc API login
-   * @date 30/1/2023 
-   */
-  static Future login(String phoneNumber, String password) async {
-    try {
-      // get url
-      url = Uri.http('localhost:8000', 'api/v1/users/login');
-      // get response
-      final res = await http
-          .post(url, body: {"phonenumber": phoneNumber, "password": password});
-      // check and return
-      // if (res.statusCode == 200) {
-      //   return res;
-      // } else if (res.statusCode == 404) {
-      //   throw Exception('Not Found');
-      // } else {
-      //   throw Exception('Can\'t get users');
-      // }
-      return res;
-    } catch (e) {
-      print(e.toString());
-    }
-  }
-
-  /*
-   * @desc API lấy thông tin theo ID
+   * @desc API lấy thông tin người dùng theo ID
    * @date 30/1/2023 
    */
   static Future getUserByID(String id) async {
     try {
+      final queryParameters = {
+        'user_id': id,
+      };
       // get url
-      url = Uri.http('localhost:8000', 'api/v1/users/show/$id');
-      // get token
-      String token = await getToken();
+      url = Uri.https(
+          subdomain, '$subdirectoryHead/get_user_info', queryParameters);
+      print(url);
       // get response
-      final res = await http.get(
-        url,
-        headers: {
-          HttpHeaders.authorizationHeader: 'Bearer $token',
-        },
-      );
+      final res = await http.post(url);
+      // get return data
+      final resBody = jsonDecode(res.body);
+      if (resBody['code'] == '1000') {
+        return compute(parseUser, resBody['data'] as dynamic);
+      } else {
+        throw Exception('Exception in get user by id: $resBody');
+      }
+    } catch (e) {
+      print('Got error in get user by id: $e');
+    }
+  }
+
+  /*
+   * @desc API cập nhật thông tin người dùng (chưa có thay đổi ảnh)
+   * @date 30/1/2023 
+   */
+  static Future updateUser(User user) async {
+    try {
+      final queryParameters = {
+        'username': user.username,
+        'description': user.description,
+        'address': user.address,
+        'city': user.city,
+        'country': user.country,
+        'link': user.link
+      };
+      // get url
+      url = Uri.https(
+          subdomain, '$subdirectoryHead/set_user_info', queryParameters);
+      print(url);
+      // get response
+      final res = await http.post(url);
+      // get return data
+      final resBody = jsonDecode(res.body);
+      if (resBody['code'] == '1000') {
+        return compute(parseUser, resBody['data'] as dynamic);
+      } else {
+        throw Exception('Exception in get user by id: ' + resBody['message']);
+      }
+    } catch (e) {
+      print('Got error in get user by id: $e');
+    }
+  }
+
+  /*
+   * @desc API ấn like bài viết
+   * @return đối tượng chứa số like mới của bài viết
+   * @date 30/1/2023
+   */
+  static Future like(String postID, String token) async {
+    try {
+      // init query params
+      final queryParameters = {
+        'id': postID,
+        'token': token,
+      };
+      // get url
+      url = Uri.https(subdomain, 'it4788/like/like', queryParameters);
+      print(url);
+      // get response
+      final res = await http.post(url);
       // get return data
       final resBody = jsonDecode(res.body);
       // check and return
-      if (res.statusCode == 200) {
-        return compute(parseUser, resBody['data'] as dynamic);
-      } else if (res.statusCode == 404) {
-        throw Exception('Not Found');
+      if (resBody['code'] == '1000') {
+        /**
+         * Thành công: { "like": "1" }
+         */
+        return resBody['data'];
       } else {
-        throw Exception('Can\'t get users');
+        throw Exception(resBody['message']);
       }
     } catch (e) {
-      print(e.toString());
+      print('Got error in like: $e');
     }
   }
 }

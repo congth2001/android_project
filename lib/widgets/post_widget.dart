@@ -1,12 +1,17 @@
-import 'package:fakebook/models/user.dart';
+import 'package:photo_picker_initial/models/user.dart';
 import 'package:flutter/material.dart';
-import 'package:fakebook/models/post.dart';
+import 'package:photo_picker_initial/models/post.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:like_button/like_button.dart';
+import 'package:photo_picker_initial/network/user_request.dart';
+import 'package:photo_picker_initial/network/post_request.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import '../pages/profile_page.dart';
+import '../pages/request_report_page.dart';
 import '../shared/font_size.dart';
 import 'comment_widget.dart';
-import '../network/user_request.dart';
+import '../network/auth_request.dart';
 
 class PostWidget extends StatefulWidget {
   Post post;
@@ -17,23 +22,51 @@ class PostWidget extends StatefulWidget {
 }
 
 class _PostWidgetState extends State<PostWidget> {
-  User users = User();
-  int numberOfLike = 0;
+  Post postObj = Post();
+  String postImg = "";
+  String post = "";
+  bool isLiked = false;
+  String numberOfLikes = "0";
 
   @override
   void initState() {
     super.initState();
-    List<String> likes = widget.post.like as List<String>;
-
     setState(() {
-      numberOfLike = likes.length;
+      postObj = widget.post;
+      // Set up the image of post
+      postImg = postObj.image != null
+          ? postObj.image![0].url.toString()
+          : "https://firebasestorage.googleapis.com/v0/b/social-network-app-19cd7.appspot.com/o/images%2Frn_image_picker_lib_temp_19d714d4-09ee-45a2-a1b0-c44329bcd180.jpg?alt=media&token=2ed540ab-1944-4061-b5d6-4f3ee8b598f8";
+      // Set up the id of post
+      isLiked = postObj.isLiked == '0' ? false : true;
+      // Set up number of likes
+      numberOfLikes = postObj.like.toString();
     });
+    getData();
+  }
 
-    UserRequest.getUserByID(widget.post.author.toString()).then((result) {
-      setState(() {
-        users = result;
-      });
-    });
+  var userID = "";
+  var token = "";
+  getData() async {
+    try {
+      // Gọi đến storage
+      final prefs = await SharedPreferences.getInstance();
+      // Cập nhật dữ liệu
+      userID = prefs.getString('userID').toString();
+      token = prefs.getString('token').toString();
+    } catch (e) {
+      print('Exception in login_page: $e');
+    }
+  }
+
+  Comment(a) {
+    if (a == "0") {
+      return "";
+    }
+    if (a == "1") {
+      return "1 comment";
+    }
+    return a + " comments";
   }
 
   final now = DateTime.now();
@@ -46,27 +79,37 @@ class _PostWidgetState extends State<PostWidget> {
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              CircleAvatar(
-                backgroundImage: AssetImage(widget.post.images.toString()),
-                radius: 20.0,
+              InkWell(
+                hoverColor: Colors.white,
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              ProfilePage(userID: postObj.author!.id)));
+                },
+                child: CircleAvatar(
+                  backgroundImage:
+                      NetworkImage(postObj.author!.avatar.toString()),
+                  radius: 20.0,
+                ),
               ),
               SizedBox(width: 7.0),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(users.username.toString(),
+                  Text(postObj.author!.username.toString(),
                       style: TextStyle(
                           fontWeight: FontWeight.bold, fontSize: 17.0)),
                   SizedBox(height: 5.0),
-                  Text(DateTime.parse(widget.post.createdAt.toString())
-                      .toString())
+                  Text(DateTime.parse(postObj.created.toString()).toString())
                 ],
               ),
               Spacer(),
               IconButton(
                   onPressed: () {
-                    if (widget.post.author == 'Sam Wilson') {
+                    if (postObj.author!.id.toString() == userID) {
                       showModalBottomSheet(
                           context: context,
                           builder: (BuilderContext) {
@@ -119,7 +162,10 @@ class _PostWidgetState extends State<PostWidget> {
                                                             "You can edit the post if you need to make changes.",
                                                             style: TextStyle(
                                                                 color: Color.fromARGB(
-                                                                    255, 88, 88, 88),
+                                                                    255,
+                                                                    88,
+                                                                    88,
+                                                                    88),
                                                                 fontSize: FontSize
                                                                     .contentSize)),
                                                         actions: [
@@ -132,7 +178,19 @@ class _PostWidgetState extends State<PostWidget> {
                                                                             .contentSize,
                                                                     color: Colors
                                                                         .blue)),
-                                                            onPressed: () {},
+                                                            onPressed: () {
+                                                              print(postObj.id);
+                                                              PostRequest.deletePost(
+                                                                      postObj.id
+                                                                          .toString(),
+                                                                      token)
+                                                                  .then(
+                                                                      (result) async {
+                                                                print(result);
+                                                                Navigator.pop(
+                                                                    context);
+                                                              });
+                                                            },
                                                           ),
                                                           TextButton(
                                                             child: Text('EDIT',
@@ -226,7 +284,13 @@ class _PostWidgetState extends State<PostWidget> {
                                       children: [
                                         InkWell(
                                           hoverColor: Colors.white,
-                                          onTap: () {},
+                                          onTap: () {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        RequestReportPage()));
+                                          },
                                           child: Row(
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.center,
@@ -278,8 +342,14 @@ class _PostWidgetState extends State<PostWidget> {
             ],
           ),
           SizedBox(height: 20.0),
-          Text(widget.post.described.toString(),
-              style: TextStyle(fontSize: 15.0)),
+          // Hiển thị nội dung bài viết
+          Align(
+              alignment: Alignment.centerLeft,
+              child: Text(postObj.described.toString(),
+                  style: TextStyle(fontSize: 15.0))),
+          // Hiển thị ảnh của bài viết
+          Container(
+              padding: EdgeInsets.only(top: 10), child: Image.network(postImg)),
           SizedBox(height: 10.0),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -300,12 +370,13 @@ class _PostWidgetState extends State<PostWidget> {
                               Shadow(color: Colors.black, blurRadius: 4.0)
                             ])),
                   ]),
-                  Text(' ${numberOfLike}'),
+                  SizedBox(width: 3),
+                  Text(numberOfLikes),
                 ],
               ),
               Row(
                 children: [
-                  Text('${widget.post.countComments} comments'),
+                  Text(Comment(postObj.comment.toString())),
                 ],
               ),
             ],
@@ -317,42 +388,37 @@ class _PostWidgetState extends State<PostWidget> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
-                width: MediaQuery.of(context).size.width / 3 - 30,
-                height: 45,
-                child: (LikeButton(
-                  size: 60.0,
-                  circleColor: const CircleColor(
-                      start: Color(0xff00ddff), end: Color(0xff0099cc)),
-                  bubblesColor: const BubblesColor(
-                    dotPrimaryColor: Color(0xff33b5e5),
-                    dotSecondaryColor: Color(0xff0099cc),
-                  ),
-                  likeBuilder: (isLiked) {
-                    numberOfLike =
-                        isLiked ? numberOfLike + 1 : numberOfLike - 1;
-                    return isLiked
-                        ? Row(
-                            children: [
-                              Icon(Icons.thumb_up,
-                                  color: Colors.blue[700], size: 20.0),
-                              Text('  Like',
-                                  style: TextStyle(
-                                      fontSize: 14.0,
-                                      fontWeight: FontWeight.w400,
-                                      color: Colors.blue[700]))
-                            ],
-                          )
-                        : Row(children: const [
-                            Icon(Icons.thumb_up_outlined,
-                                color: Colors.black54, size: 20.0),
-                            Text('  Like',
-                                style: TextStyle(
-                                    fontSize: 14.0,
-                                    fontWeight: FontWeight.w400))
-                          ]);
-                  },
-                )),
-              ),
+                  width: MediaQuery.of(context).size.width / 3 - 30,
+                  height: 45,
+                  child: InkWell(
+                    onTap: () {
+                      setState(() {
+                        isLiked = !isLiked;
+                      });
+                      print(postObj.id);
+
+                      UserRequest.like(postObj.id.toString(), token)
+                          .then((result) async {
+                        // print(result.statusCode);
+                        // Direct to next page
+                        setState(() {
+                          numberOfLikes = result['like'];
+                        });
+                      });
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.thumb_up,
+                            color: !isLiked ? Colors.black54 : Colors.blue,
+                            size: 20.0),
+                        SizedBox(width: 5),
+                        Text('Like',
+                            style: TextStyle(
+                                fontSize: 14.0, fontWeight: FontWeight.w400))
+                      ],
+                    ),
+                  )),
               Container(
                   width: MediaQuery.of(context).size.width / 3,
                   height: 45,
@@ -361,7 +427,8 @@ class _PostWidgetState extends State<PostWidget> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => CommentPage()));
+                                builder: (context) =>
+                                    CommentPage(post: postObj)));
                       },
                       child: Row(
                         children: [
@@ -369,7 +436,7 @@ class _PostWidgetState extends State<PostWidget> {
                               color: Colors.black54, size: 20.0),
                           Text('  Comment',
                               style: TextStyle(
-                                  fontSize: 14.0, fontWeight: FontWeight.w400))
+                                  fontSize: 12.0, fontWeight: FontWeight.w400))
                         ],
                         mainAxisAlignment: MainAxisAlignment.center,
                       )))),

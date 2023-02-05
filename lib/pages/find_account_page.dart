@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:fakebook/pages/landing_page.dart';
+import 'package:photo_picker_initial/pages/landing_page.dart';
 import 'package:flutter/material.dart';
 import '../../shared/font_size.dart';
 import 'login_page.dart';
@@ -52,9 +52,11 @@ class _FindAccountPageState extends State<FindAccountPage> {
                     SizedBox(height: 40),
                     Center(
                         child: Text(
-                            !isFound ? (type == 'Phone'
-                                ? 'Enter Your Phone Number'
-                                : 'Enter Your Email') : 'Enter Your Phone number or Choose Your Account',
+                            !isFound
+                                ? (type == 'Phone'
+                                    ? 'Enter Your Phone Number'
+                                    : 'Enter Your Email')
+                                : 'Enter Your Phone number or Choose Your Account',
                             style: TextStyle(
                                 fontSize: FontSize.titleSize,
                                 fontWeight: FontWeight.bold))),
@@ -96,121 +98,138 @@ class _FindAccountPageState extends State<FindAccountPage> {
                     SizedBox(
                       height: 10,
                     ),
-                    !isFound ? SizedBox(
-                      width: double.infinity,
-                      height: 30,
-                      child: ElevatedButton(
-                          onPressed: () {
-                            if (inputController.text.isEmpty) {
-                              setState(() {
-                                isValid = false;
-                              });
-                            } else {
-                              setState(() {
-                                isFound = true;
-                              });
-                              if (!isFound) {
-                                showDialog(
-                                    context: context,
-                                    builder: (BuildContext context) =>
-                                        AlertDialog(
-                                            insetPadding: EdgeInsets.symmetric(
-                                                horizontal: 16),
-                                            title: Text(
-                                                'No accounts match that information.',
-                                                style: TextStyle(
-                                                    fontSize:
-                                                        FontSize.titleSize,
-                                                    fontWeight:
-                                                        FontWeight.bold)),
-                                            content: Text(
-                                                "Make sure you've entered the correct phone number or email address.",
-                                                style: TextStyle(
-                                                    fontSize:
-                                                        FontSize.contentSize,
-                                                    color: Color.fromARGB(
-                                                        255, 88, 88, 88))),
-                                            actions: [
-                                              TextButton(
-                                                child: Text(
-                                                    'SEARCH AGAIN',
-                                                    style: TextStyle(
-                                                        fontSize: FontSize
-                                                            .contentSize,
-                                                        color: Color.fromARGB(
-                                                            255, 10, 90, 156))),
-                                                onPressed: () {
-                                                  inputController.clear();
-                                                  Navigator.pop(context, 'Search again');
-                                                },
-                                              ),
-                                            ]));
-                              }
-                            }
-                          },
-                          child: Text(
-                            'Find Your Account',
-                            style: TextStyle(fontSize: FontSize.contentSize),
-                          )),
-                    )
-                    : Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        TextButton(
-                        style: TextButton.styleFrom(
-                            foregroundColor: Colors.white,
-                            textStyle: TextStyle()),
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => LoginPage()),
-                          );
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(children: [
-                              Container(
-                                  margin: const EdgeInsets.only(right: 20),
-                                  child: CircleAvatar(
-                                    backgroundImage:
-                                        AssetImage('assets/andrew.jpg'),
-                                    radius: 25,
-                                  )),
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text('Andrew',
-                                      style: TextStyle(
-                                          fontSize: FontSize.titleSize,
-                                          color: Colors.black)),
-                                          Text('Facebook User', style: TextStyle(color: Colors.grey, fontSize: 13))
-                                ],
-                              )
-                            ]),
-                          ])),
-                          Divider(thickness: 1,color: Colors.grey[400]),
-                          
-                      ],
-                    )
+                    !isFound
+                        ? SizedBox(
+                            width: double.infinity,
+                            height: 30,
+                            child: ElevatedButton(
+                                onPressed: () {
+                                  if (inputController.text.isEmpty) {
+                                    setState(() {
+                                      isValid = false;
+                                    });
+                                  } else {
+                                    setState(() {
+                                      isFound = true;
+                                    });
+                                    if (!isFound) {
+                                      showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) =>
+                                              AlertDialog(
+                                                  insetPadding:
+                                                      EdgeInsets.symmetric(
+                                                          horizontal: 16),
+                                                  title: Text(
+                                                      'No accounts match that information.',
+                                                      style: TextStyle(
+                                                          fontSize: FontSize
+                                                              .titleSize,
+                                                          fontWeight:
+                                                              FontWeight.bold)),
+                                                  content: Text(
+                                                      "Make sure you've entered the correct phone number or email address.",
+                                                      style: TextStyle(
+                                                          fontSize: FontSize
+                                                              .contentSize,
+                                                          color: Color.fromARGB(
+                                                              255, 88, 88, 88))),
+                                                  actions: [
+                                                    TextButton(
+                                                      child: Text(
+                                                          'SEARCH AGAIN',
+                                                          style: TextStyle(
+                                                              fontSize: FontSize
+                                                                  .contentSize,
+                                                              color: Color
+                                                                  .fromARGB(
+                                                                      255,
+                                                                      10,
+                                                                      90,
+                                                                      156))),
+                                                      onPressed: () {
+                                                        inputController.clear();
+                                                        Navigator.pop(context,
+                                                            'Search again');
+                                                      },
+                                                    ),
+                                                  ]));
+                                    }
+                                  }
+                                },
+                                child: Text(
+                                  'Find Your Account',
+                                  style:
+                                      TextStyle(fontSize: FontSize.contentSize),
+                                )),
+                          )
+                        : Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              TextButton(
+                                  style: TextButton.styleFrom(
+                                      foregroundColor: Colors.white,
+                                      textStyle: TextStyle()),
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => LoginPage()),
+                                    );
+                                  },
+                                  child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Row(children: [
+                                          Container(
+                                              margin: const EdgeInsets.only(
+                                                  right: 20),
+                                              child: CircleAvatar(
+                                                backgroundImage: AssetImage(
+                                                    'assets/andrew.jpg'),
+                                                radius: 25,
+                                              )),
+                                          Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text('Andrew',
+                                                  style: TextStyle(
+                                                      fontSize:
+                                                          FontSize.titleSize,
+                                                      color: Colors.black)),
+                                              Text('Facebook User',
+                                                  style: TextStyle(
+                                                      color: Colors.grey,
+                                                      fontSize: 13))
+                                            ],
+                                          )
+                                        ]),
+                                      ])),
+                              Divider(thickness: 1, color: Colors.grey[400]),
+                            ],
+                          )
                   ],
                 ),
-                if(!isFound) Center(
-                    child: TextButton(
-                  child: Text(
-                      type == 'Phone'
-                          ? 'Search by your email instead'
-                          : 'Search by your phone instead',
-                      style: TextStyle(
-                          fontSize: FontSize.contentSize, color: Colors.blue)),
-                  onPressed: () {
-                    setState(() {
-                      type = type == 'Phone' ? 'Email' : 'Phone';
-                    });
-                  },
-                ))
+                if (!isFound)
+                  Center(
+                      child: TextButton(
+                    child: Text(
+                        type == 'Phone'
+                            ? 'Search by your email instead'
+                            : 'Search by your phone instead',
+                        style: TextStyle(
+                            fontSize: FontSize.contentSize,
+                            color: Colors.blue)),
+                    onPressed: () {
+                      setState(() {
+                        type = type == 'Phone' ? 'Email' : 'Phone';
+                      });
+                    },
+                  ))
               ]),
         )));
   }
