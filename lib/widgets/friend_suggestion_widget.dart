@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:photo_picker_initial/network/user_request.dart';
+import '../widgets/friend_request_widget.dart';
+import 'package:photo_picker_initial/network/friend_request.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SuggestionWidget extends StatefulWidget {
   var friendSuggestObj = {};
@@ -12,6 +15,9 @@ class SuggestionWidget extends StatefulWidget {
 class _SuggestionWidgetState extends State<SuggestionWidget> {
   var friendSuggest;
   var user;
+  var userID = "";
+  var token = "";
+  bool isAdd = false;
   @override
   void initState() {
     super.initState();
@@ -25,6 +31,21 @@ class _SuggestionWidgetState extends State<SuggestionWidget> {
       });
     });
     // print(widget.friendObj['id'].toString());
+    getData();
+  }
+
+  getData() async {
+    try {
+      // Gọi đến storage
+      final prefs = await SharedPreferences.getInstance();
+      // Cập nhật dữ liệu
+      setState(() {
+        userID = prefs.getString('userID').toString();
+        token = prefs.getString('token').toString();
+      });
+    } catch (e) {
+      print('Exception in login_page: $e');
+    }
   }
 
   @override
@@ -60,11 +81,25 @@ class _SuggestionWidgetState extends State<SuggestionWidget> {
                                 color: Colors.blue[700],
                                 borderRadius: BorderRadius.circular(5.0)),
                             child: MaterialButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                setState(() {
+                                  isAdd = !isAdd;
+                                });
+                                print(isAdd);
+                                FriendRequest.sendFriendInvitation(
+                                        token, friendSuggest['user_id'])
+                                    .then((data) {
+                                  print(data);
+                                });
+                              },
                               height: 12,
-                              child: Text('Add Friend',
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 15.0)),
+                              child: !isAdd
+                                  ? Text('Add Friend',
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 15.0))
+                                  : Text('Invitation sent',
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 15.0)),
                             ),
                           ),
                           SizedBox(width: 15),

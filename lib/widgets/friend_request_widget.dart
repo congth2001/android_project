@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:photo_picker_initial/network/user_request.dart';
+import 'package:photo_picker_initial/network/friend_request.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class RequestWidget extends StatefulWidget {
   var friendRequestObj = {};
@@ -12,6 +14,9 @@ class RequestWidget extends StatefulWidget {
 class _RequestWidgetState extends State<RequestWidget> {
   var friendRequest;
   var user;
+  var userID = "";
+  var token = "";
+  bool isConfirm = false;
   @override
   void initState() {
     super.initState();
@@ -25,6 +30,21 @@ class _RequestWidgetState extends State<RequestWidget> {
       });
     });
     // print(widget.friendObj['id'].toString());
+    getData();
+  }
+
+  getData() async {
+    try {
+      // Gọi đến storage
+      final prefs = await SharedPreferences.getInstance();
+      // Cập nhật dữ liệu
+      setState(() {
+        userID = prefs.getString('userID').toString();
+        token = prefs.getString('token').toString();
+      });
+    } catch (e) {
+      print('Exception in login_page: $e');
+    }
   }
 
   @override
@@ -67,11 +87,30 @@ class _RequestWidgetState extends State<RequestWidget> {
                               color: Colors.blue[700],
                               borderRadius: BorderRadius.circular(5.0)),
                           child: MaterialButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              setState(() {
+                                isConfirm = !isConfirm;
+                              });
+                              FriendRequest.setAcceptFriend(
+                                      token, friendRequest['id'], '1')
+                                  .then((data) {
+                                //setState(() {
+                                // print(data)t;
+                                // friendSuggestList = data['list_users'];
+
+                                // print(friendRequestList);
+                                //});
+                                print(data);
+                              });
+                            },
                             height: 12,
-                            child: Text('Confirm',
-                                style: TextStyle(
-                                    color: Colors.white, fontSize: 15.0)),
+                            child: !isConfirm
+                                ? Text('Confirm',
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 15.0))
+                                : Text('Friend',
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 15.0)),
                           ),
                         ),
                         SizedBox(width: 15),

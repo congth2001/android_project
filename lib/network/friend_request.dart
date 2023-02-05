@@ -118,8 +118,8 @@ class FriendRequest {
         'user_id': userID,
       };
       // get url
-      url = Uri.https(subdomain, '$subdirectoryHead/get_requested_friends',
-          queryParameters);
+      url = Uri.https(
+          subdomain, '$subdirectoryHead/set_request_friend', queryParameters);
       print(url);
       // get response
       final res = await http.post(url);
