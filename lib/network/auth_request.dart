@@ -84,12 +84,7 @@ class AuthRequest {
       // get return data
       final resBody = jsonDecode(res.body);
       // check and return
-      if (resBody['code'] == '1000') {
-        // Trả về dữ liệu
-        return resBody['data'];
-      } else {
-        throw Exception(resBody['message']);
-      }
+      return resBody;
     } catch (e) {
       print(e.toString());
     }

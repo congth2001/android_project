@@ -161,9 +161,9 @@ class LoginPageState extends State<LoginPage> {
                           );
                         } else {
                           // print(result.statusCode);
-                          String errorTitle = 'Incorrect Password';
+                          String errorTitle = 'Error';
                           String errorDetail =
-                              'The password you entered is incorrect. Please try again.';
+                              result['message'];
                           showDialog(
                               context: context,
                               builder: (BuildContext context) => AlertDialog(

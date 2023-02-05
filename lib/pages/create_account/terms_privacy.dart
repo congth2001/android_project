@@ -50,91 +50,129 @@ class _TermsAndPrivacyPageState extends State<TermsAndPrivacyPage> {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
-    return !isLoading ? Scaffold(
-      appBar: AppBar(
-          toolbarHeight: 40,
-          leading: IconButton(
-              icon: Icon(Icons.arrow_back, color: Colors.black, size: 20),
-              onPressed: () {
-                showDialog(
-                    context: context,
-                    builder: (BuildContext context) => AlertDialog(
-                            insetPadding: EdgeInsets.symmetric(horizontal: 16),
-                            title: Text(
-                                'Do you want to stop creating your account?',
-                                style: TextStyle(
-                                    fontSize: FontSize.titleSize,
-                                    fontWeight: FontWeight.bold)),
-                            content: Text(
-                                "If you stop now, you'll lose any progress you've made.",
-                                style: TextStyle(
-                                    fontSize: FontSize.contentSize,
-                                    color: Color.fromARGB(255, 88, 88, 88))),
-                            actions: [
-                              TextButton(
-                                child: Text('Continue creating account',
-                                    style: TextStyle(
-                                        fontSize: FontSize.contentSize,
-                                        color: Colors.black)),
-                                onPressed: () {
-                                  Navigator.pop(context, 'Cancel');
-                                },
-                              ),
-                              TextButton(
-                                child: Text('Stop creating account',
-                                    style: TextStyle(
-                                        fontSize: FontSize.contentSize,
-                                        color:
-                                            Color.fromARGB(255, 10, 90, 156))),
-                                onPressed: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => LandingPage()));
-                                },
-                              ),
-                            ]));
-              }),
-          backgroundColor: Colors.white,
-          title: Text('Terms & Privacy',
-              style: TextStyle(
-                  color: Colors.black, fontSize: FontSize.titleSize))),
-      body: Column(
-        children: [
-          Expanded(
-            child: InAppWebView(
-              initialUrlRequest: URLRequest(url: Uri.parse(initialUrl)),
+    return !isLoading
+        ? Scaffold(
+            appBar: AppBar(
+                toolbarHeight: 40,
+                leading: IconButton(
+                    icon: Icon(Icons.arrow_back, color: Colors.black, size: 20),
+                    onPressed: () {
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) => AlertDialog(
+                                  insetPadding:
+                                      EdgeInsets.symmetric(horizontal: 16),
+                                  title: Text(
+                                      'Do you want to stop creating your account?',
+                                      style: TextStyle(
+                                          fontSize: FontSize.titleSize,
+                                          fontWeight: FontWeight.bold)),
+                                  content: Text(
+                                      "If you stop now, you'll lose any progress you've made.",
+                                      style: TextStyle(
+                                          fontSize: FontSize.contentSize,
+                                          color:
+                                              Color.fromARGB(255, 88, 88, 88))),
+                                  actions: [
+                                    TextButton(
+                                      child: Text('Continue creating account',
+                                          style: TextStyle(
+                                              fontSize: FontSize.contentSize,
+                                              color: Colors.black)),
+                                      onPressed: () {
+                                        Navigator.pop(context, 'Cancel');
+                                      },
+                                    ),
+                                    TextButton(
+                                      child: Text('Stop creating account',
+                                          style: TextStyle(
+                                              fontSize: FontSize.contentSize,
+                                              color: Color.fromARGB(
+                                                  255, 10, 90, 156))),
+                                      onPressed: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    LandingPage()));
+                                      },
+                                    ),
+                                  ]));
+                    }),
+                backgroundColor: Colors.white,
+                title: Text('Terms & Privacy',
+                    style: TextStyle(
+                        color: Colors.black, fontSize: FontSize.titleSize))),
+            body: Column(
+              children: [
+                Expanded(
+                  child: InAppWebView(
+                    initialUrlRequest: URLRequest(url: Uri.parse(initialUrl)),
+                  ),
+                )
+              ],
+            ),
+            floatingActionButton: SizedBox(
+              width: width - 32,
+              height: 30,
+              child: FloatingActionButton(
+                onPressed: () {
+                  setState(() {
+                    isLoading = true;
+                  });
+                  // Call API đăng ký tài khoản
+                  AuthRequest.signUp(username, phoneNumber, password)
+                      .then((data) async {
+                    // Get local storage
+                    if (data['code'] == '1000') {
+                      final prefs = await SharedPreferences.getInstance();
+                      // Save an String value to 'username' key.
+                      await prefs.setString('userID', data['data']['id']);
+                      // Direct to next page
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => CreatingAccountPage()));
+                    } else {
+                      String errorTitle = 'Error';
+                      String errorDetail = data['message'];
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) => AlertDialog(
+                                  insetPadding:
+                                      EdgeInsets.symmetric(horizontal: 32),
+                                  title: Text(errorTitle,
+                                      style: TextStyle(
+                                          fontSize: FontSize.titleSize,
+                                          fontWeight: FontWeight.bold)),
+                                  content: Text(errorDetail,
+                                      style: TextStyle(
+                                          fontSize: FontSize.contentSize,
+                                          color:
+                                              Color.fromARGB(255, 88, 88, 88))),
+                                  actions: [
+                                    TextButton(
+                                      child: Text('OK',
+                                          style: TextStyle(
+                                              fontSize: FontSize.contentSize,
+                                              color: Colors.black)),
+                                      onPressed: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(builder: (context)=>LandingPage())
+                                        );
+                                      },
+                                    )
+                                  ]));
+                    }
+                  });
+                },
+                child: Text('Sign up', style: TextStyle(color: Colors.white)),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(5.0))),
+              ),
             ),
           )
-        ],
-      ),
-      floatingActionButton: SizedBox(
-        width: width - 32,
-        height: 30,
-        child: FloatingActionButton(
-          onPressed: () {
-            setState(() {
-              isLoading = true;
-            });
-            // Call API đăng ký tài khoản
-            AuthRequest.signUp(username, phoneNumber, password)
-                .then((data) async {
-              // Get local storage
-              final prefs = await SharedPreferences.getInstance();
-              // Save an String value to 'username' key.
-              await prefs.setString('userID', data['id']);
-              // Direct to next page
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => CreatingAccountPage()));
-            });
-          },
-          child: Text('Sign up', style: TextStyle(color: Colors.white)),
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(5.0))),
-        ),
-      ),
-    ) : Center(child: CircularProgressIndicator());
+        : Center(child: CircularProgressIndicator());
   }
 }
