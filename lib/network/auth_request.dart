@@ -57,6 +57,7 @@ class AuthRequest {
       final res = await http.post(url);
       // get return data
       final resBody = jsonDecode(res.body);
+      // login để lấy token
       return resBody;
     } catch (e) {
       print(e.toString());
@@ -84,12 +85,7 @@ class AuthRequest {
       // get return data
       final resBody = jsonDecode(res.body);
       // check and return
-      if (resBody['code'] == '1000') {
-        // Trả về dữ liệu
-        return resBody['data'];
-      } else {
-        throw Exception(resBody['message']);
-      }
+      return resBody;
     } catch (e) {
       print(e.toString());
     }
@@ -157,8 +153,7 @@ class AuthRequest {
    * @desc API login
    * @date 30/1/2023 
    */
-  static Future login(
-      String username, String phoneNumber, String password) async {
+  static Future login(String phoneNumber, String password) async {
     try {
       // init query params
       final queryParameters = {
@@ -172,17 +167,10 @@ class AuthRequest {
       final res = await http.post(url);
       // get response body
       final resBody = jsonDecode(res.body);
-      // update username
-      if (resBody['code'] == '1000') {
-        if (resBody['data']['username'] == null) {
-          String token = resBody['data']['token'];
-          // Call API
-          await changeUsername(token, username);
-        }
-      }
+      // return
       return resBody;
     } catch (e) {
-      print('Got error in login: $e');
+      print('Exception in login: $e');
     }
   }
 }
