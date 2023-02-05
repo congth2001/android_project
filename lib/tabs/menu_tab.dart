@@ -20,7 +20,7 @@ class MenuTab extends StatefulWidget {
 class _MenuTabState extends State<MenuTab> {
   var user = User();
   bool isLoading = true;
-
+  String avatar = "";
   @override
   void initState() {
     // TODO: implement initState
@@ -32,6 +32,9 @@ class _MenuTabState extends State<MenuTab> {
     // Obtain shared preferences.
     final prefs = await SharedPreferences.getInstance();
     String userID = prefs.getString('userID').toString();
+    setState(() {
+      avatar = prefs.getString('avatar').toString();
+    });
     // Gọi API lấy thông tin người dùng
     UserRequest.getUserByID(userID).then((data) {
       setState(() {
@@ -108,7 +111,7 @@ class _MenuTabState extends State<MenuTab> {
                         const SizedBox(width: 15.0),
                         CircleAvatar(
                           radius: 25.0,
-                          backgroundImage: NetworkImage(user.avatar.toString()),
+                          backgroundImage: NetworkImage(avatar),
                         ),
                         const SizedBox(width: 20.0),
                         Column(
