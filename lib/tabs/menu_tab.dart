@@ -89,7 +89,7 @@ class _MenuTabState extends State<MenuTab> {
               onPressed: () => {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => ProfilePage()),
+                  MaterialPageRoute(builder: (context) => ProfilePage(userID: user.id)),
                 )
               },
               child: Row(

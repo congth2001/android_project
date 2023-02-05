@@ -80,6 +80,7 @@ class _LoginAnotherAccountState extends State<LoginAnotherAccount> {
                         padding: const EdgeInsets.symmetric(horizontal: 16),
                         child: TextField(
                           controller: phonenumberController,
+                          keyboardType: TextInputType.number,
                           style: TextStyle(fontSize: FontSize.contentSize),
                           decoration: InputDecoration(
                             hintText: 'Phone or email',

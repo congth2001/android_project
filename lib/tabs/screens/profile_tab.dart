@@ -23,16 +23,20 @@ import 'select_photo_options_screen.dart';
 class ProfileTab extends StatefulWidget {
   // const ProfileTab({super.key});
   static const id = 'set_photo_screen';
+  final String? userID;
+
+  const ProfileTab({Key? key, this.userID}) : super(key: key);
 
   @override
   State<ProfileTab> createState() => _ProfileTabState();
 }
 
 class _ProfileTabState extends State<ProfileTab> {
-  bool isMe = true;
+  bool isMe = false;
   bool isFriend = false;
   bool isReceivedRequestFromMe = false;
   bool isSendRequestToMe = false;
+  bool isLoading = true;
   var user = User();
   @override
   void initState() {
@@ -42,20 +46,31 @@ class _ProfileTabState extends State<ProfileTab> {
   }
 
   getData() async {
-    // Lấy dữ liệu từ storage
     final prefs = await SharedPreferences.getInstance();
-    String userID = prefs.getString('userID').toString();
-    // Gọi API lấy thông tin người dùng
-    UserRequest.getUserByID(userID).then((data) {
+    String meID = prefs.getString('userID').toString();
+    if(widget.userID != null){
+      if(widget.userID == meID){
+        setState(() {
+          isMe = true;
+        });
+      }else{
+        setState((){
+          isMe = false;
+          isFriend = true;
+        });
+      }
+      UserRequest.getUserByID(widget.userID!).then((data) {
       setState(() {
         user = data;
+        isLoading = false;
       });
     });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
+    return !isLoading ? SingleChildScrollView(
         child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -501,8 +516,8 @@ class _ProfileTabState extends State<ProfileTab> {
                 ),
               ),
               const SizedBox(height: 15),
-              WriteSomethingWidget(),
-              Container(
+              if(isMe) WriteSomethingWidget(),
+              if(isMe) Container(
                 margin: EdgeInsets.all(15),
                 height: 35.0,
                 decoration: BoxDecoration(
@@ -585,6 +600,6 @@ class _ProfileTabState extends State<ProfileTab> {
         ),
         SeparatorWidget(),
       ],
-    ));
+    )) : Center(child: CircularProgressIndicator());
   }
 }
