@@ -91,6 +91,7 @@ class FriendRequest {
       url = Uri.https(subdomain, '$subdirectoryHead/get_requested_friends',
           queryParameters);
       // get response
+      print(url);
       final res = await http.post(url);
       // get return data
       final resBody = jsonDecode(res.body);

@@ -1,5 +1,4 @@
 // ignore_for_file: prefer_const_constructors
-
 import 'dart:async';
 import 'dart:io';
 import 'package:photo_picker_initial/network/post_request.dart';
@@ -276,7 +275,6 @@ class _CreatePostMainState extends State<CreatePostMain> {
                       if (contentController.text != "") {
                         // Get description
                         String described = contentController.text;
-                        String token = "";
                         // Call API
                         PostRequest.addPost(described, token)
                             .then((result) async {

@@ -1,7 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:photo_picker_initial/network/user_request.dart';
 
-class FriendListWidget extends StatelessWidget {
+class FriendWidget extends StatefulWidget {
+  var friendObj = {};
+  FriendWidget({required this.friendObj});
+
+  @override
+  State<FriendWidget> createState() => _FriendWidgetState();
+}
+
+class _FriendWidgetState extends State<FriendWidget> {
+  var friend;
+  var user;
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      friend = widget.friendObj;
+      print(friend);
+      UserRequest.getUserByID(friend['id'].toString()).then((data) {
+        setState(() {
+          user = data;
+          print(user);
+        });
+      });
+    });
+    // print(widget.friendObj['id'].toString());
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -13,18 +40,25 @@ class FriendListWidget extends StatelessWidget {
           children: <Widget>[
             Row(
               children: <Widget>[
-                CircleAvatar(
-                  backgroundImage: AssetImage('assets/adelle.jpg'),
-                  radius: 40.0,
+                Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.white, width: 5),
+                    borderRadius: const BorderRadius.all(Radius.circular(100)),
+                  ),
+                  child: CircleAvatar(
+                    backgroundImage: NetworkImage(user.avatar.toString()),
+                    radius: 30.0,
+                  ),
                 ),
                 SizedBox(width: 20.0),
-                Text('Adelle', style: TextStyle(
-                    fontSize: 16.0, fontWeight: FontWeight.bold)),
+                Text(user.username.toString(),
+                    style:
+                        TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold)),
                 SizedBox(height: 15.0),
                 Spacer(),
                 IconButton(
-                  onPressed: (){
-                    showModalBottomSheet(
+                    onPressed: () {
+                      showModalBottomSheet(
                           context: context,
                           builder: (BuilderContext) {
                             return SizedBox(
@@ -61,15 +95,16 @@ class FriendListWidget extends StatelessWidget {
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.center,
                                             children: [
-                                              Icon(FontAwesomeIcons.facebookMessenger,
+                                              Icon(
+                                                  FontAwesomeIcons
+                                                      .facebookMessenger,
                                                   color: Colors.black),
                                               SizedBox(width: 10),
                                               Column(
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
                                                 children: [
-                                                  Text(
-                                                      'Message Andrew',
+                                                  Text('Message Andrew',
                                                       style: TextStyle(
                                                         fontSize: 14,
                                                         color: Colors.black,
@@ -94,8 +129,7 @@ class FriendListWidget extends StatelessWidget {
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
                                                 children: [
-                                                  Text(
-                                                      "See Andrew's profile",
+                                                  Text("See Andrew's profile",
                                                       style: TextStyle(
                                                         fontSize: 14,
                                                         color: Colors.black,
@@ -120,8 +154,7 @@ class FriendListWidget extends StatelessWidget {
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
                                                 children: [
-                                                  Text(
-                                                      'Block Andrew',
+                                                  Text('Block Andrew',
                                                       style: TextStyle(
                                                         fontSize: 14,
                                                         color: Colors.black,
@@ -146,8 +179,7 @@ class FriendListWidget extends StatelessWidget {
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
                                                 children: [
-                                                  Text(
-                                                      'Unfriend Andrew',
+                                                  Text('Unfriend Andrew',
                                                       style: TextStyle(
                                                         fontSize: 14,
                                                         color: Colors.black,
@@ -161,136 +193,8 @@ class FriendListWidget extends StatelessWidget {
                                       ],
                                     )));
                           });
-                  },
-                  icon: Icon(Icons.more_horiz, color: Colors.black)
-                )
-              ],
-            ),
-
-            SizedBox(height: 20.0),
-
-            Row(
-              children: <Widget>[
-                CircleAvatar(
-                  backgroundImage: AssetImage('assets/dan.jpg'),
-                  radius: 40.0,
-                ),
-                SizedBox(width: 20.0),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text('Danny smith', style: TextStyle(
-                        fontSize: 16.0, fontWeight: FontWeight.bold)),
-                    SizedBox(height: 15.0),
-                  ],
-                ),
-                
-              ],
-            ),
-
-            SizedBox(height: 20.0),
-
-            Row(
-              children: <Widget>[
-                CircleAvatar(
-                  backgroundImage: AssetImage('assets/eddison.jpg'),
-                  radius: 40.0,
-                ),
-                SizedBox(width: 20.0),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text('Eddison', style: TextStyle(
-                        fontSize: 16.0, fontWeight: FontWeight.bold)),
-                    SizedBox(height: 15.0),
-                  ],
-                )
-              ],
-            ),
-
-            SizedBox(height: 20.0),
-
-            Row(
-              children: <Widget>[
-                CircleAvatar(
-                  backgroundImage: AssetImage('assets/jeremy.jpg'),
-                  radius: 40.0,
-                ),
-                SizedBox(width: 20.0),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text('Jeremy', style: TextStyle(
-                        fontSize: 16.0, fontWeight: FontWeight.bold)),
-                    SizedBox(height: 15.0),
-                  ],
-                )
-              ],
-            ),
-
-            SizedBox(height: 20.0),
-
-            Row(
-              children: <Widget>[
-                CircleAvatar(
-                  backgroundImage: AssetImage('assets/joey.jpg'),
-                  radius: 40.0,
-                ),
-                SizedBox(width: 20.0),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text('Joey', style: TextStyle(
-                        fontSize: 16.0, fontWeight: FontWeight.bold)),
-                    SizedBox(height: 15.0),
-                  ],
-                )
-              ],
-            ),
-
-            SizedBox(height: 20.0),
-
-            Row(
-              children: <Widget>[
-                CircleAvatar(
-                  backgroundImage: AssetImage('assets/kalle.jpg'),
-                  radius: 40.0,
-                ),
-                SizedBox(width: 20.0),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text('Kalle Jackson', style: TextStyle(
-                        fontSize: 16.0, fontWeight: FontWeight.bold)),
-                    SizedBox(height: 15.0),
-                  ],
-                )
-              ],
-            ),
-
-            SizedBox(height: 20.0),
-
-            Row(
-              children: <Widget>[
-                CircleAvatar(
-                  backgroundImage: AssetImage('assets/marcus.jpg'),
-                  radius: 40.0,
-                ),
-                SizedBox(width: 20.0),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text('Marcus Fenix', style: TextStyle(
-                        fontSize: 16.0, fontWeight: FontWeight.bold)),
-                    SizedBox(height: 15.0),
-                  ],
-                ),
+                    },
+                    icon: Icon(Icons.more_horiz, color: Colors.black))
               ],
             ),
           ],
