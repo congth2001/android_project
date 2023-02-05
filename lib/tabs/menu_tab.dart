@@ -2,6 +2,7 @@ import 'package:photo_picker_initial/network/user_request.dart';
 import 'package:photo_picker_initial/pages/landing_page.dart';
 import 'package:flutter/material.dart';
 
+import '../pages/changePassword/changePasword.dart';
 import '../pages/friend_page.dart';
 import '../pages/profile_page.dart';
 import '../pages/search_page.dart';
@@ -60,7 +61,10 @@ class _MenuTabState extends State<MenuTab> {
                     color: Colors.grey[300],
                     shape: const CircleBorder(),
                     child: const Icon(Icons.settings, color: Colors.black87),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => changePassword()));
+                    },
                   ),
                   MaterialButton(
                     elevation: 0,

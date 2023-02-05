@@ -7,6 +7,7 @@ import 'package:photo_picker_initial/network/user_request.dart';
 import 'package:photo_picker_initial/network/post_request.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../pages/request_report_page.dart';
 import '../shared/font_size.dart';
 import 'comment_widget.dart';
 import '../network/auth_request.dart';
@@ -272,7 +273,10 @@ class _PostWidgetState extends State<PostWidget> {
                                       children: [
                                         InkWell(
                                           hoverColor: Colors.white,
-                                          onTap: () {},
+                                          onTap: () {
+                                            Navigator.push(context,
+                                            MaterialPageRoute(builder: (context) => RequestReportPage()));
+                                          },
                                           child: Row(
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.center,
