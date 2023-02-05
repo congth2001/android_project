@@ -33,6 +33,14 @@ class _TermsAndPrivacyPageState extends State<TermsAndPrivacyPage> {
     super.initState();
     getData();
   }
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: GridView(
+        gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+          maxCrossAxisExtent: 200,
+          childAspectRatio: 4 / 1,
+        ),
 
   getData() async {
     // Obtain shared preferences.
