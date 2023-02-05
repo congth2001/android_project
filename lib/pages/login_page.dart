@@ -4,7 +4,6 @@ import 'home_page.dart';
 import 'find_account_page.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:fakebook/network/user_request.dart';
 import 'dart:convert';
 
 import 'package:flutter/services.dart';
